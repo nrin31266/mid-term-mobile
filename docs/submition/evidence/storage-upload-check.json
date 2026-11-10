@@ -1,0 +1,9 @@
+{
+  "bucket": "crested-mercury-452707-e8.firebasestorage.app",
+  "object": "midterm-demo/diagnostics/upload-check-20261110-88e03207-0b85-4c8f-af1f-ab6f1972de4f.jpg",
+  "bytes": 2108,
+  "contentType": "image/jpeg",
+  "roundtripMatches": true,
+  "method": "Google Cloud Storage API with existing Firebase CLI account; app rules not tested",
+  "metadataStatus": 200
+}

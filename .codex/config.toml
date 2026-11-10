@@ -1,0 +1,5 @@
+[mcp_servers.firebase]
+command = "firebase"
+args = ["mcp", "--dir", ".", "--tools", "firebase_get_project,firebase_get_environment,firebase_list_apps,firebase_get_sdk_config,firebase_get_security_rules,firebase_validate_security_rules,firestore_query_collection,storage_get_object_download_url"]
+startup_timeout_sec = 60
+tool_timeout_sec = 60

@@ -44,4 +44,4 @@ Xuất JSON là phần phục vụ bài nộp, cần làm dù không tính là s
 
 ## Điều kiện duyệt
 
-Chấp nhận Firestore trong hạn mức miễn phí, ảnh nhỏ lưu trong `hinhanh`, API Node chạy trên máy demo để băm mật khẩu, và đăng nhập admin. Bảng đối chiếu hướng tới đủ yêu cầu; không cam kết điểm số khi chưa triển khai và nghiệm thu.
+Chấp nhận Firestore trong hạn mức miễn phí, ảnh JPEG trên Storage và URL trong `hinhanh`, API Node chạy trên máy demo để băm mật khẩu, và đăng nhập admin. Bảng đối chiếu hướng tới đủ yêu cầu; không cam kết điểm số khi chưa triển khai và nghiệm thu.

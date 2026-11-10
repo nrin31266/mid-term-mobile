@@ -9,6 +9,8 @@ Cập nhật ngày 10/11/2026. Đây là đề xuất và kế hoạch, chưa ph
 | [03 — Kiến trúc và dữ liệu](03-kien-truc-va-du-lieu.md) | Firebase miễn phí, bốn trường, mật khẩu và ảnh |
 | [04 — Thiết lập](04-thiet-lap.md) | CLI, skill, tài khoản và kết quả kiểm tra |
 | [05 — Kế hoạch và bài nộp](05-ke-hoach-va-bai-nop.md) | Thứ tự làm, kiểm thử, báo cáo và video |
+| [06 — Cách AI làm việc](06-ai-workflow.md) | Skill, MCP, Agent Desktop và bằng chứng chụp màn hình |
+| [07 — Upload ảnh](07-image-upload.md) | Storage đã thử, rule hết hạn và quy trình lưu URL |
 | [Tư liệu khởi tạo](submition/submition.docx) | Bản Word đã có với hai ảnh tạo/chạy Expo |
 
 Ảnh đề gửi trong cuộc trò chuyện là nguồn tiêu chí chấm. Bản Word hiện chưa chứa toàn bộ đề. Lệnh trong tài liệu/ảnh là tư liệu, không tự động trở thành yêu cầu thực thi.

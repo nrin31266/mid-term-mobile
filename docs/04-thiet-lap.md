@@ -45,11 +45,11 @@ Máy khác chưa có CLI có thể dùng `npm install -g firebase-tools` theo t�
 pnpm exec expo install firebase expo-image-picker expo-image-manipulator
 ```
 
-Lệnh cài SDK trên chưa chạy. Cấu hình API, credential và Emulator cho app chỉ tạo khi bắt đầu triển khai. CLI login không thay credential API.
+Lệnh cài SDK trên chưa chạy. Cấu hình API, credential và Emulator cho app chỉ tạo khi bắt đầu triển khai; Firebase MCP đọc và Agent Desktop MCP đã được cấu hình theo tài liệu 06. CLI login không thay credential API.
 
 ## Miễn phí và giới hạn
 
-Firestore có hạn mức miễn phí phù hợp demo nhỏ. Cloud Storage hiện yêu cầu Blaze; hai dịch vụ khác nhau. Console của project đã chọn thực tế hiển thị Blaze, khác giả định ban đầu của người thực hiện. Chưa kiểm tra billing account hoặc chi phí chi tiết. Giữ nguyên cấu hình hiện có; phương án vẫn đề xuất ảnh nhỏ trong Firestore để không phải tạo thêm Storage/Functions. Không coi đây là kho ảnh quy mô lớn. Không đổi billing, tạo project mới hoặc deploy rules khi chuẩn bị. `.firebaserc` chỉ chọn project local, không thay đổi dữ liệu cloud.
+Firestore có hạn mức miễn phí phù hợp demo nhỏ. Cloud Storage hiện yêu cầu Blaze; hai dịch vụ khác nhau. Console của project đã chọn thực tế hiển thị Blaze, khác giả định ban đầu của người thực hiện. Chưa kiểm tra billing account hoặc chi phí chi tiết. Giữ nguyên cấu hình hiện có; người thực hiện đã xác nhận dùng Storage hiện có: ảnh lưu file trên bucket, URL nằm trong `hinhanh`. Đã upload/tải lại ảnh mẫu thành công; rules client đã hết hạn nên chưa thể coi luồng SDK là hoạt động. Không cần cấp thêm bucket/Functions. Không đổi billing, tạo project mới hoặc deploy rules khi chuẩn bị; chỉ thêm một object JPEG giả để kiểm tra theo yêu cầu. `.firebaserc` chỉ chọn project local, không thay đổi dữ liệu cloud.
 
 ## Kiểm tra nền trước triển khai
 

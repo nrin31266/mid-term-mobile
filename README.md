@@ -10,6 +10,8 @@ Hiện tại: lên ý tưởng, thiết lập công cụ và tài liệu; chưa 
 - [Kiến trúc và dữ liệu](docs/03-kien-truc-va-du-lieu.md)
 - [Thiết lập và kết quả kiểm tra](docs/04-thiet-lap.md)
 - [Kế hoạch thực hiện và bài nộp](docs/05-ke-hoach-va-bai-nop.md)
+- [AI, skill và MCP](docs/06-ai-workflow.md)
+- [Upload ảnh Storage đã kiểm tra](docs/07-image-upload.md)
 
 ## Chạy dự án mẫu
 

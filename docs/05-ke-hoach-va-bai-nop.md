@@ -2,11 +2,11 @@
 
 ## 0 — Duyệt ý tưởng
 
-Duyệt MemberDesk, admin login, ưu tiên hạn mức miễn phí, ảnh nhỏ trong Firestore và API Node local. Thống nhất cách nghiệm thu nếu giảng viên yêu cầu đọc lại mật khẩu cũ hoặc đăng nhập từng thành viên. Chưa code tính năng trước khi duyệt.
+Duyệt MemberDesk, admin login, ưu tiên hạn mức miễn phí, ảnh nhỏ trên Storage, URL trong Firestore và API Node local. Thống nhất cách nghiệm thu nếu giảng viên yêu cầu đọc lại mật khẩu cũ hoặc đăng nhập từng thành viên. Chưa code tính năng trước khi duyệt.
 
 ## 1 — Nền tảng và quyền
 
-Xử lý hai lỗi code mẫu đã ghi ở tài liệu 04, chạy lint/typecheck. Kiểm tra chỉ đọc dịch vụ, database, rules và dữ liệu project cũ. Chọn collection riêng, cài SDK bằng Expo installer, thiết lập credential API và admin qua công cụ tin cậy. Kiểm thử quyền/schema/hash trong Emulator trước khi thay đổi cloud. Không mở server ra internet để demo.
+Xử lý hai lỗi code mẫu đã ghi ở tài liệu 04, chạy lint/typecheck. Kiểm tra chỉ đọc dịch vụ, database, rules và dữ liệu project cũ. Chọn collection riêng, cài SDK bằng Expo installer, thiết lập credential API và admin qua công cụ tin cậy. Kiểm thử rule riêng cho prefix Storage của bài vì rule hiện tại hết hạn; không kéo dài rule public. Kiểm thử quyền/schema/hash trong Emulator trước khi thay đổi cloud. Không mở server ra internet để demo.
 
 Nghiệm thu: login/logout hoạt động, không token/không admin bị từ chối, không ảnh hưởng ứng dụng cũ. Thay đổi credential hoặc quyền cloud phải xem xét cụ thể ở thời điểm làm.
 
@@ -20,7 +20,7 @@ Sửa tên/email/ảnh; ô mật khẩu trống khi sửa nghĩa là giữ hash,
 
 ## 4 — Android và ảnh
 
-Thư viện/camera, xử lý hủy/từ chối quyền, nén JPEG, xem trước và lưu. Form cuộn, tránh bàn phím. Hồ sơ mở lại còn ảnh; web tải lại thấy cùng ảnh. Android cần host LAN/giả lập phù hợp vì localhost trên điện thoại không phải máy dev. Chốt CORS/firewall khi triển khai, chỉ dùng dữ liệu giả trong LAN HTTP.
+Thư viện/camera, xử lý hủy/từ chối quyền, nén JPEG, xem trước, upload Storage rồi lưu URL. Form cuộn, tránh bàn phím. Hồ sơ mở lại còn ảnh; web tải lại thấy cùng ảnh. Android cần host LAN/giả lập phù hợp vì localhost trên điện thoại không phải máy dev. Chốt CORS/firewall khi triển khai, chỉ dùng dữ liệu giả trong LAN HTTP.
 
 ## 5 — Điểm nhấn và kiểm thử
 

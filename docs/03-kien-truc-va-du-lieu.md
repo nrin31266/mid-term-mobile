@@ -2,13 +2,13 @@
 
 ## Phương án hạn chế phát sinh chi phí
 
-Giữ Expo/React Native SDK 58. Firebase JS SDK đăng nhập admin. Cloud Firestore Standard lưu người dùng trong hạn mức miễn phí. Console project đã chọn hiện hiển thị Blaze; phương án không yêu cầu đổi billing hay cấp thêm dịch vụ. `hinhanh` chứa data URI JPEG thu nhỏ; không dùng Cloud Storage/Functions trong phương án này.
+Giữ Expo/React Native SDK 58. Firebase JS SDK đăng nhập admin. Cloud Firestore Standard lưu người dùng trong hạn mức miễn phí. Console project đã chọn hiện hiển thị Blaze; phương án không yêu cầu đổi billing hay cấp thêm dịch vụ. `hinhanh` chứa URL JPEG đã upload vào bucket Storage hiện có theo xác nhận của người thực hiện. Không cần tạo bucket mới; chưa đề xuất triển khai Functions.
 
-API Node nhỏ chạy trên máy demo dùng Firebase Admin SDK truy cập Firestore. Mỗi request xác minh ID token Firebase Auth và claim `admin`. API băm mật khẩu bằng `node:crypto` scrypt bất đồng bộ với salt ngẫu nhiên; chọn tham số qua kiểm thử. API hồ sơ không trả `matkhau`, không ghi credential vào log.
+API Node nhỏ chạy trên máy demo dùng Firebase Admin SDK truy cập Firestore. Mỗi request xác minh ID token Firebase Auth và claim `admin`. API băm mật khẩu bằng `node:crypto` scrypt bất đồng bộ với salt ngẫu nhiên; chọn tham số qua kiểm thử. API hồ sơ không trả `matkhau`, không ghi credential vào log. Ảnh upload qua Storage SDK sau khi có rules đúng quyền, rồi API kiểm tra URL/object trước khi lưu hồ sơ.
 
 Luồng: giao diện → Firebase Auth → ID token gửi API → kiểm tra quyền/schema → Firestore. ID trả cho giao diện nằm ngoài payload lưu trong document.
 
-Đánh đổi: Firebase miễn phí nhưng phải chạy API trên máy và cho Android truy cập mạng LAN. Đây chưa phải hệ thống cloud hoạt động độc lập 24/7. Khi muốn public phải chốt nơi host API/HTTPS và hạn mức riêng; không tự thay đổi billing.
+Đánh đổi: ưu tiên hạn mức miễn phí của dịch vụ hiện có nhưng vẫn phải chạy API trên máy và cho Android truy cập mạng LAN; không bảo đảm Blaze sẽ không phát sinh phí. Đây chưa phải hệ thống cloud hoạt động độc lập 24/7. Khi muốn public phải chốt nơi host API/HTTPS và hạn mức riêng; không tự thay đổi billing.
 
 ## Bốn trường
 
@@ -19,7 +19,7 @@ Collection dự kiến `midterm_users`, cần kiểm tra tên chưa trùng nghi�
 | `email` | string | Trim, chuẩn hóa nhất quán, hợp lệ và duy nhất |
 | `matkhau` | string | Bản băm chứa phiên bản, tham số, salt và hash; không lưu mật khẩu thô |
 | `hoten` | string | Trim, bắt buộc, giới hạn độ dài |
-| `hinhanh` | string | JPEG data URI sau nén; rỗng nếu chưa có ảnh; hồ sơ nghiệm thu chính phải có ảnh |
+| `hinhanh` | string | URL ảnh JPEG trên Storage; rỗng nếu chưa có ảnh; hồ sơ nghiệm thu chính phải có ảnh |
 
 Không thêm `id`, `role`, `createdAt`, `updatedAt`, `status` hoặc `searchName`. Claim admin nằm trong dịch vụ Auth, không phải collection vai trò.
 
@@ -29,11 +29,13 @@ Khóa document dự kiến SHA-256 của email chuẩn hóa. Tạo dùng thao t�
 
 ## Ảnh và hiệu năng
 
-- Đề xuất tối đa 384 × 384, JPEG; nhị phân tối đa 100 KiB và toàn data URI tối đa 140 KiB. Client/API đều kiểm tra; máy chủ xác minh chữ ký và giải mã được, không chỉ tin MIME.
-- Firestore giới hạn document 1 MiB; base64 tăng khoảng một phần ba. Giới hạn ảnh cố ý thấp hơn trần document.
-- Không lưu ảnh nguyên bản lớn hoặc đường dẫn file tạm; giữ ảnh cũ nếu xử lý ảnh mới thất bại.
-- Tắt index `hinhanh` và `matkhau` trong phạm vi collection sau khi kiểm tra index hiện có.
+Chọn phương án Storage theo yêu cầu mới của người thực hiện, thay phương án base64 dự phòng ban đầu. Đã upload/tải lại JPEG mẫu 2.108 byte thành công bằng credential quản trị. Storage Rules hiện hết hạn từ 03/08/2026 nên app SDK chưa được xác nhận có quyền upload. Chi tiết và bằng chứng nằm trong [quy trình upload](07-image-upload.md).
+
+- JPEG tối đa 512 × 512, mục tiêu 200 KiB, từ chối trên 500 KiB sau xử lý. Client, rules và phía tin cậy phải kiểm tra tương ứng.
+- Object UUID mới ở `midterm-mobile/avatars/`; không ghi đè theo email. Upload thành công rồi mới lưu URL, giữ ảnh cũ nếu thao tác lỗi.
+- Không lưu ảnh base64 hay URI `file://` vào Firestore. Document người dùng chỉ chứa bốn trường, không có trường đường dẫn Storage phụ.
 - Demo 10–30 hồ sơ, danh sách có giới hạn; tải lại khi vào màn hình/nút làm mới. Chưa hứa đồng bộ thời gian thực.
+- Chỉ bỏ index `matkhau`/`hinhanh` nếu có nhu cầu và sau khi kiểm tra cấu hình đang dùng; không tự thay index toàn project.
 
 ## Quyền và credential
 
@@ -45,6 +47,6 @@ Firestore cloud qua Admin SDK cần Application Default Credentials hoặc crede
 
 ## JSON bài nộp
 
-Xuất JSON ứng dụng bằng công cụ máy chủ có quyền; không dựa vào managed export yêu cầu billing. File dạng array, mỗi object đúng bốn trường, khôi phục ID từ email khi nhập. Dùng dữ liệu giả và mật khẩu demo đã băm, không dùng tài khoản thật.
+Xuất JSON ứng dụng bằng công cụ máy chủ có quyền để có định dạng dễ nộp/nhập lại; không phụ thuộc định dạng managed export của dịch vụ. File dạng array, mỗi object đúng bốn trường, khôi phục ID từ email khi nhập. Dùng dữ liệu giả và mật khẩu demo đã băm, không dùng tài khoản thật.
 
-Nhập lại phải kiểm tra toàn bộ schema, trùng email, hash và ảnh trước khi ghi. Chỉ thử ở Emulator hoặc collection thử được chỉ định; không ghi đè dữ liệu cloud cũ. Chưa tạo JSON giả rồi gọi là CSDL đã triển khai.
+Nhập lại phải kiểm tra toàn bộ schema, trùng email, hash và URL ảnh trước khi ghi. Kèm bản sao ảnh demo để khôi phục được, xem tài liệu 07. Chỉ thử ở Emulator hoặc collection thử được chỉ định; không ghi đè dữ liệu cloud cũ. Chưa tạo JSON giả rồi gọi là CSDL đã triển khai.

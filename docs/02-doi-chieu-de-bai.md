@@ -19,7 +19,7 @@ Nguồn: ảnh đề giữa kỳ gửi trong cuộc trò chuyện. Word hiện g
 - `matkhau` lưu bản băm có salt, không phải mật khẩu thô; không thay bằng chuỗi giả hay bỏ trường.
 - Đề xuất “hiển thị mật khẩu” bằng ô nhập có hiện/ẩn khi tạo/đặt lại và trạng thái đã đặt mật khẩu trên hồ sơ. Nếu giảng viên yêu cầu đọc lại mật khẩu cũ, cần thống nhất cách nghiệm thu an toàn trước khi code.
 - Auth là dịch vụ danh tính quản trị viên, tách khỏi collection bốn trường; không thêm collection vai trò cho bài.
-- Ảnh là data URI ảnh nén, không phải URI tạm `file://` trên điện thoại.
+- Ảnh là file JPEG trong Storage; `hinhanh` lưu URL, không phải URI tạm `file://` trên điện thoại. Rule hiện hết hạn cần xử lý trước khi nghiệm thu SDK.
 - Nếu tuyên bố dùng Firestore cloud, bằng chứng phải có dữ liệu cloud; chỉ ảnh Emulator chưa đủ chứng minh.
 
 ## Kiểm tra cuối
