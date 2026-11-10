@@ -72,7 +72,7 @@ Trước khi chụp báo cáo: mở đúng màn hình, kiểm tra không có tok
 
 ## Quy trình checkpoint và ảnh báo cáo
 
-Thực hiện bảng checkpoint trong tài liệu 05: kiểm thử → mở màn hình thật → chụp đủ bước/kiểm tra ảnh → ghi chú ngắn/cập nhật chỉ mục → commit/push → xác minh commit remote. Cuối bài mới ráp Word, giữ hai ảnh gốc; render rồi xem hết các trang. Chụp ngay sau khi hoàn thành chức năng, không đợi cuối mới dựng lại toàn bộ bằng chứng. Công cụ chụp: browser cho web, Agent Desktop cho desktop/Console, ADB cho Android theo thiết bị đã xác định.
+Thực hiện bảng checkpoint trong tài liệu 05: kiểm thử → mở màn hình thật → chụp đủ bước/kiểm tra ảnh → ghi chú ngắn/cập nhật chỉ mục → commit/push → xác minh commit remote. Cuối bài mới ráp Word, giữ hai ảnh gốc; render rồi xem hết các trang. Chụp ngay khi làm từng bước quan trọng, gồm lệnh cài/chạy, cấu hình Console, cây source, code chính, thao tác UI, CSDL và kiểm thử. Không đợi cuối mới dựng lại toàn bộ bằng chứng. Code chụp từ editor có tên file/số dòng, kèm file/hàm/commit và ảnh chạy liên quan. Công cụ chụp: browser cho web, Agent Desktop cho desktop/Console, ADB cho Android theo thiết bị đã xác định.
 
 [Chỉ mục minh chứng](submition/README.md) ghi ảnh đã có và ảnh còn thiếu. Hai ảnh Word cũ là bằng chứng khởi tạo/chạy starter, không chứng minh CRUD. Ảnh upload mẫu chỉ chứng minh IAM; ảnh đề là tư liệu tham chiếu. Không tạo ảnh terminal giả hoặc ảnh mockup rồi gọi là kết quả chạy.
 

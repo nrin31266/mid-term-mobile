@@ -20,6 +20,14 @@ Một checkpoint chỉ hoàn thành khi: chạy kiểm tra, chụp đủ các b�
 
 Các commit có thể tách nhỏ khi cần; vẫn phải push ở tất cả mốc lớn. C1 chỉ bắt đầu sau khi duyệt. Những cloud change cần làm trong phạm vi được duyệt phải xem rules/consumer trước; không đổi billing hoặc mở public để cho chạy nhanh.
 
+## Chụp đủ quy trình, code và kết quả
+
+Không chỉ chụp màn hình sau khi xong. Mỗi phần cần lưu các bước quan trọng: lệnh cài/chạy, cấu hình trong Console, cấu trúc source, code xử lý, thao tác và kết quả kiểm tra. Danh sách chi tiết theo C1–C6 nằm trong [chỉ mục minh chứng](submition/README.md).
+
+Ví dụ phần thêm hồ sơ: cài thư viện → cấu hình Firebase → code kiểm tra bốn trường/băm mật khẩu/API tạo → code form → nhập và lưu → danh sách sau tải lại → document Firestore → thử email trùng. Phần ảnh mobile cũng có code xin quyền/chọn/nén/upload, thao tác trên thiết bị và kết quả mở lại.
+
+Chụp code từ source thật, có tên file/số dòng, khoảng 15–35 dòng đọc được. Ghi đường dẫn/hàm/commit và ảnh kết quả liên quan. Không dùng ảnh code thay kiểm thử. Code đổi thì cập nhật ảnh cũ bị sai.
+
 ## Quy tắc chụp ảnh và đưa vào Word
 
 Ảnh lưu tại `docs/submition/screenshots/`, tên tiếng Anh có mã bước. Chụp đủ từng bước, đúng trình tự lúc làm; không dùng mockup thay ảnh app, không dựng terminal giả. Mỗi ảnh có số, chú thích tiếng Việt, bước/lệnh thao tác, kết quả quan sát và mã tiêu chí trong [chỉ mục minh chứng](submition/README.md). Log kiểm thử là bằng chứng bổ sung, không thay ảnh UI/CSDL mà đề yêu cầu.

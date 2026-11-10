@@ -158,7 +158,12 @@ for credentials and unrelated private content before putting them in Word or Git
 screens, traces, and private diagnostics in `/tmp` or ignored `docs/private/`. Curated report
 images belong in `docs/submition/screenshots/` with descriptive English names.
 At each major checkpoint in `docs/05-ke-hoach-va-bai-nop.md`, run relevant checks, capture
-all actual steps with numbered English filenames, update concise Vietnamese notes and the
+all important steps, not just final screens: real install/run commands, Console setup, source
+structure, key code, UI actions, database state, and tests. Use numbered English filenames.
+Capture real source in an editor with filename/line numbers and readable short excerpts; link
+each code image to runtime evidence and its file/function/commit. Refresh stale code images.
+Use terminal, editor, Chrome/in-app browser, and ADB as appropriate; do not simulate a human
+workflow or replay risky operations just to manufacture evidence. Update concise Vietnamese notes and the
 evidence index, then commit and push source/docs/screenshots. Assemble the final Word report
 at C6; preserve its existing two images until then. Write naturally and briefly: action, result,
 and any real error/fix, without generic AI prose. Verify the remote commit after pushing;
