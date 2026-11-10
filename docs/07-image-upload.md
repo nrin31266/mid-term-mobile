@@ -48,7 +48,7 @@ URL tải có token hoạt động như một liên kết có quyền truy cập
 
 ## Xuất dữ liệu để nộp
 
-JSON người dùng vẫn đủ bốn trường. Chỉ nộp URL cloud có thể làm ảnh mất nếu bucket bị dọn, nên kèm thư mục ảnh demo và hướng dẫn khôi phục. Đề xuất gói gồm `users.json`, `images/` và README tiếng Việt. Bản JSON di động có thể ghi đường dẫn tương đối ở `hinhanh`; khi nhập lại, công cụ upload ảnh trước rồi thay bằng URL mới, không thêm trường. Giữ riêng bản export nguyên gốc nếu cần đối chiếu URL đã dùng.
+JSON người dùng vẫn đủ bốn trường. Chỉ nộp URL cloud có thể làm ảnh mất nếu bucket bị dọn, nên kèm thư mục ảnh demo và hướng dẫn khôi phục. Đề xuất gói gồm `users.json`, `images/` và README tiếng Việt. Bản JSON di động có thể ghi đường dẫn tương đối ở `hinhanh`; khi nhập lại, công cụ upload ảnh trước rồi thay bằng URL mới, không thêm trường. Giữ riêng bản export nguyên gốc nếu cần đối chiếu URL đã dùng. Form import JSON trong app chỉ nhận URL cloud hợp lệ; bản có đường dẫn tương đối và thư mục ảnh phải đi qua công cụ khôi phục server, không nhập trực tiếp qua form.
 
 Trước nộp phải thử khôi phục trên môi trường thử, không ghi đè cloud đang dùng. Chưa tạo gói dữ liệu nộp cuối vì app chưa triển khai.
 

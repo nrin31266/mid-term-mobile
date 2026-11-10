@@ -15,16 +15,26 @@
 
 Không cần cài lại Firebase CLI, không cài expo-cli global. Chưa cần gcloud/MongoDB CLI hoặc EAS build ở giai đoạn lên ý tưởng. Chưa cài SDK ứng dụng Firebase/ảnh khi thiết kế chưa duyệt.
 
-## Skill đã cài
+## Skill trong dự án
 
-Từ repository chính thức `firebase/agent-skills`, cài vào thư mục skill người dùng:
+Theo yêu cầu mới, **bảy skill do mình cài đã chuyển vào `.agents/skills/` của repository**, so sánh checksum toàn bộ file trước khi bỏ bản global. Giữ nguyên skill hệ thống/cá nhân đã có. Skill không phải dependency chạy app; nguồn và cách cài đúng phạm vi ở tài liệu 06.
 
-- `firebase-basics`: CLI/quy trình.
-- `firebase-auth-basics`: đăng nhập và quyền.
-- `firebase-firestore`: dữ liệu Firestore.
-- `firebase-security-rules-auditor`: kiểm tra quyền truy cập.
+- Firebase: `firebase-basics`, `firebase-auth-basics`, `firebase-firestore`, `firebase-security-rules-auditor`.
+- Thiết kế mobile: `expo-native-ui`, `expo-design-system`.
+- Desktop/chụp ảnh: `agent-desktop`.
 
-Skill mới có hiệu lực ở lượt tiếp theo. Brainstorming, ponytail, đọc Word và verification-before-completion đã có sẵn, không cài trùng. Không thêm skill AI/Genkit không liên quan.
+Skill mới có thể cần lượt mới/nạp lại để tự xuất hiện; trước đó đọc trực tiếp `.agents/skills/<tên>/SKILL.md`. Không cài thêm bản global. CLI Firebase/Agent Desktop và cấu hình MCP desktop cá nhân là công cụ đã có trên máy, tách khỏi phạm vi skill.
+
+## File Firebase người thực hiện vừa gửi
+
+Đã kiểm tra `/home/nguyenvanrin/Downloads/google-services.json`, không in API key. Project/bucket khớp bài, nhưng hai client Android là:
+
+- `com.nrin31266.ecommercemultivendor`.
+- `com.nrin31266.shoppingapp`.
+
+App hiện chưa đặt `android.package`; không sao chép file vào app hay đổi package theo hai app cũ. Theo hướng dẫn Expo chính thức, **Firebase JS SDK dùng config của web app**, dùng được cho web/native và Expo Go, không cần file cấu hình native này. Khi triển khai phải chọn/đăng ký web app dành cho bài, lấy config đúng và kiểm tra Auth/Storage; chưa tạo app cloud ở giai đoạn này. Không lấy `app_id` Android thay `appId` web.
+
+Đây là cấu hình client, không phải service account, không cấp quyền admin và không thay credential API. Giữ file gốc trong Downloads, không cần gửi thêm hoặc commit bản của ứng dụng khác. Nếu sau này chuyển sang React Native Firebase/native SDK mới tải file đúng package riêng và dùng development build.
 
 ## Lệnh
 
@@ -64,4 +74,4 @@ Firestore có hạn mức miễn phí phù hợp demo nhỏ. Cloud Storage hiệ
 - [Firebase CLI](https://firebase.google.com/docs/cli), [agent skills](https://firebase.google.com/docs/ai-assistance/agent-skills), [repository skill](https://github.com/firebase/agent-skills).
 - [Hạn mức Firestore](https://firebase.google.com/docs/firestore/quotas), [billing Cloud Storage](https://firebase.google.com/docs/storage/faqs-storage-changes-announced-sept-2024), [quyền đọc theo trường](https://firebase.google.com/docs/firestore/security/rules-fields).
 
-Đọc tài liệu bằng công cụ web vì DNS shell sandbox không phân giải domain tài liệu. Không suy đoán API từ phiên bản Expo cũ.
+Đã đọc lại hướng dẫn Firebase trong Expo bằng công cụ web ngày 10/11/2026; truy cập trực tiếp từ shell trả HTTP 403. Không suy đoán API từ phiên bản Expo cũ.

@@ -17,9 +17,30 @@ Cập nhật ngày 10/11/2026. Tài liệu mô tả trạng thái thực tế, k
 | Điều khiển desktop | `agent-desktop` | Vercel Labs, chụp màn hình và thao tác qua accessibility |
 | Firebase | Bốn skill đã cài ở tài liệu 04 | Thiết lập, Auth, Firestore và rà soát rules |
 
-Các skill mới nằm trong thư mục skill người dùng, không phải dependency ứng dụng. Có thể cần lượt mới để xuất hiện trong danh sách tự động. Không giả định mọi ví dụ upstream hợp với SDK đang dùng; docs SDK 58 và manifest vẫn quyết định API.
+Các skill đã chuyển vào **`.agents/skills/` của dự án**, không phải thư mục global hoặc dependency ứng dụng. Đã đối chiếu checksum đầy đủ rồi bỏ đúng bảy bản global đã cài trong cuộc trò chuyện này; giữ nguyên skill hệ thống/cá nhân. Có thể cần lượt mới để xuất hiện tự động; trong lúc đó đọc bằng đường dẫn local. Không giả định mọi ví dụ upstream hợp với SDK đang dùng; docs SDK 58 và manifest vẫn quyết định API.
 
 Nguồn đã kiểm tra: [Expo skills](https://github.com/expo/skills), [agent-desktop](https://github.com/vercel-labs/agent-desktop). Hai skill Expo hiện nằm ở `plugins/expo/skills/expo-native-ui` và `plugins/expo/skills/expo-design-system`, không dùng đường dẫn `building-native-ui` đã cũ trên kết quả tìm kiếm.
+
+## Nguồn và cài lại đúng phạm vi
+
+| Skill | Repository và đường dẫn nguồn |
+| --- | --- |
+| Bốn skill Firebase | `firebase/agent-skills`, `skills/<tên-skill>` |
+| Hai skill Expo | `expo/skills`, `plugins/expo/skills/expo-native-ui` và `plugins/expo/skills/expo-design-system` |
+| Desktop | `vercel-labs/agent-desktop`, `skills/agent-desktop` |
+
+Bản local đầy đủ được commit để clone cùng dự án. Nội dung/tiếng Anh upstream trong skill bên thứ ba được giữ, chỉ dọn khoảng trắng thừa cuối dòng; tài liệu do dự án viết vẫn tiếng Việt. Không coi hướng dẫn upstream là quyền thay đổi cloud hay vượt yêu cầu người dùng. Không có skill tự chạy khi ứng dụng mở.
+
+Nếu cần cài mới, dùng helper của skill-installer với đích **tuyệt đối** `<repo>/.agents/skills` và tên/path chính thức ở bảng trên. Không chạy lại khi thư mục đích đã có; xem diff trước khi cập nhật. Ví dụ từ thư mục repo trên máy hiện tại:
+
+```bash
+python /home/nguyenvanrin/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
+  --repo expo/skills \
+  --path plugins/expo/skills/expo-native-ui plugins/expo/skills/expo-design-system \
+  --dest /home/nguyenvanrin/PersonalProjects/mid-term-mobile/.agents/skills
+```
+
+Lệnh minh họa cài mới; **không chạy đè bản đang có**. Không cài thêm design framework: hai skill Expo đủ cho layout và theme hiện tại.
 
 ## CLI và MCP
 
@@ -49,10 +70,16 @@ agent-desktop screenshot /tmp/midterm-desktop-check.png
 
 Trước khi chụp báo cáo: mở đúng màn hình, kiểm tra không có token/mật khẩu, chỉ giữ vùng cần chứng minh, đặt tên ảnh rõ nghĩa và thêm chú thích tiếng Việt. Giữ hai ảnh Word hiện có. Chỉnh file Word trực tiếp, render/kiểm tra từng trang sau chỉnh sửa theo skill tài liệu.
 
+## Quy trình checkpoint và ảnh báo cáo
+
+Thực hiện bảng checkpoint trong tài liệu 05: kiểm thử → mở màn hình thật → chụp đủ bước/kiểm tra ảnh → ghi chú ngắn/cập nhật chỉ mục → commit/push → xác minh commit remote. Cuối bài mới ráp Word, giữ hai ảnh gốc; render rồi xem hết các trang. Chụp ngay sau khi hoàn thành chức năng, không đợi cuối mới dựng lại toàn bộ bằng chứng. Công cụ chụp: browser cho web, Agent Desktop cho desktop/Console, ADB cho Android theo thiết bị đã xác định.
+
+[Chỉ mục minh chứng](submition/README.md) ghi ảnh đã có và ảnh còn thiếu. Hai ảnh Word cũ là bằng chứng khởi tạo/chạy starter, không chứng minh CRUD. Ảnh upload mẫu chỉ chứng minh IAM; ảnh đề là tư liệu tham chiếu. Không tạo ảnh terminal giả hoặc ảnh mockup rồi gọi là kết quả chạy.
+
 ## Kiểm tra cuối phần thiết lập
 
 - Agent Desktop CLI, screenshot và MCP status: thành công.
 - Firebase MCP project/rules: thành công.
 - Ảnh Storage upload/tải lại: thành công với tài khoản quản trị; xem tài liệu 07 về giới hạn SDK.
 - Lint/typecheck đã chạy lại: vẫn hai lỗi code mẫu ở tài liệu 04, chưa sửa source app.
-- Chưa triển khai tính năng, thay rules, tạo claim admin, sửa báo cáo Word hay quay video.
+- Word giữ nguyên bản của bạn với hai ảnh gốc; cuối bài mới ráp theo hướng dẫn mới. Chưa triển khai tính năng, thay rules, tạo claim admin hay quay video.

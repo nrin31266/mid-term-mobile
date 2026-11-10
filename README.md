@@ -9,7 +9,8 @@ Hiện tại: lên ý tưởng, thiết lập công cụ và tài liệu; chưa 
 - [Đối chiếu tiêu chí chấm](docs/02-doi-chieu-de-bai.md)
 - [Kiến trúc và dữ liệu](docs/03-kien-truc-va-du-lieu.md)
 - [Thiết lập và kết quả kiểm tra](docs/04-thiet-lap.md)
-- [Kế hoạch thực hiện và bài nộp](docs/05-ke-hoach-va-bai-nop.md)
+- [Checkpoint GitHub, ảnh Word và bài nộp](docs/05-ke-hoach-va-bai-nop.md)
+- [Chỉ mục minh chứng hiện có/cần chụp](docs/submition/README.md)
 - [AI, skill và MCP](docs/06-ai-workflow.md)
 - [Upload ảnh Storage đã kiểm tra](docs/07-image-upload.md)
 
@@ -28,3 +29,5 @@ Dự án dùng Expo SDK 58 và pnpm. Xem các lỗi nền đã phát hiện tron
 Code/định danh tiếng Anh; comment ngắn ở chỗ quan trọng bằng tiếng Việt. Tài liệu tiếng Việt, riêng AGENTS.md tiếng Anh. Dữ liệu chỉ có email, matkhau, hoten, hinhanh theo đề.
 
 Repository: https://github.com/nrin31266/mid-term-mobile
+
+Bảy skill dành riêng cho dự án nằm trong `.agents/skills/`, gồm hai skill thiết kế Expo. Mỗi checkpoint lớn chụp đủ bước, ghi chú ngắn rồi commit/push source, docs và ảnh lên GitHub. Cuối bài mới ráp Word, giữ hai ảnh đã có.

@@ -36,7 +36,8 @@ its read-by-risk and evidence-based workflow informed this file, not this app's 
 - Managed user documents contain exactly `email`, `matkhau`, `hoten`, `hinhanh`. No persisted
   ID, role, timestamps, status, search fields, or hidden metadata fields. Document IDs are external keys.
 - Deliver web create/read/update/delete, admin login, mobile image input/profile display,
-  database JSON export, report evidence, GitHub source, and demo video before optional features.
+  database JSON export, report evidence, GitHub source, and demo video. Advanced features
+  accepted in `docs/01-y-tuong-va-pham-vi.md` are deliverables too; complete the core flow first.
 - Never store plaintext passwords, expose password hashes through profile APIs, or log credentials.
   The proposed server-side salted hashing design is not implemented yet.
 - Do not claim managed members have Firebase Auth accounts or can log in unless that flow is implemented.
@@ -95,7 +96,15 @@ Skill advice never overrides user instructions, assignment limits, or installed 
 | Word report | `documents` skill; edit the file directly and render/visually verify changes |
 | Unexpected behavior/completion | `systematic-debugging`, `verification-before-completion` |
 
-`agent-desktop` is installed globally with its skill. Before first desktop use in a session, run
+The seven project-specific skills live in `.agents/skills/` and are versioned with this repo:
+`expo-native-ui`, `expo-design-system`, `agent-desktop`, `firebase-basics`,
+`firebase-auth-basics`, `firebase-firestore`, and `firebase-security-rules-auditor`.
+Install future project skills here, never in the global user skill directory. Preserve upstream
+resources and language; the Vietnamese documentation rule applies to authored project docs.
+System/personal skills supplied by the host remain host-managed. Read project skills by local
+path if discovery has not refreshed. See `docs/06-ai-workflow.md` for sources.
+
+The `agent-desktop` CLI is global; its skill is project-local. Before first desktop use in a session, run
 `agent-desktop skills get desktop`, `agent-desktop skills get platform`, and `agent-desktop status`.
 Observe, act using fresh qualified refs, then verify. Do not blindly retry an action that may
 already have landed. Respect Wayland/portal limitations and user-controlled permission dialogs.
@@ -148,4 +157,12 @@ Only commit/push authorized work. Capture only relevant windows/regions; inspect
 for credentials and unrelated private content before putting them in Word or Git. Keep raw full
 screens, traces, and private diagnostics in `/tmp` or ignored `docs/private/`. Curated report
 images belong in `docs/submition/screenshots/` with descriptive English names.
+At each major checkpoint in `docs/05-ke-hoach-va-bai-nop.md`, run relevant checks, capture
+all actual steps with numbered English filenames, update concise Vietnamese notes and the
+evidence index, then commit and push source/docs/screenshots. Assemble the final Word report
+at C6; preserve its existing two images until then. Write naturally and briefly: action, result,
+and any real error/fix, without generic AI prose. Verify the remote commit after pushing;
+report failures without claiming GitHub is updated. Keep blocked checkpoints incomplete.
+Never substitute mockups, log renders, or IAM-only diagnostics for successful app screenshots.
+Render and inspect every Word page after edits; preserve its existing two images.
 Report the outcome, checks actually run, blockers, and remaining risk in concise Vietnamese.

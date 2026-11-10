@@ -1,63 +1,69 @@
-# Kế hoạch thực hiện và bài nộp
+# Checkpoint thực hiện và bài nộp
 
-## 0 — Duyệt ý tưởng
+## Nguyên tắc đã chốt về quy trình
 
-Duyệt MemberDesk, admin login, ưu tiên hạn mức miễn phí, ảnh nhỏ trên Storage, URL trong Firestore và API Node local. Thống nhất cách nghiệm thu nếu giảng viên yêu cầu đọc lại mật khẩu cũ hoặc đăng nhập từng thành viên. Chưa code tính năng trước khi duyệt.
+**Mỗi checkpoint lớn phải commit và push GitHub**, kèm source, tài liệu, ảnh và ghi chú của mốc đó. Không dồn hết lên GitHub cuối bài. Đây là quy trình được yêu cầu; tính năng trong tài liệu 01 vẫn chờ duyệt trước khi làm.
 
-## 1 — Nền tảng và quyền
+Một checkpoint chỉ hoàn thành khi: chạy kiểm tra, chụp đủ các bước, ghi chú ngắn và cập nhật chỉ mục ảnh, soát diff/bí mật, commit tiếng Anh, push và xác minh SHA remote. **Cuối bài (C6) mới ráp ảnh và ghi chú vào Word**, giữ hai ảnh bạn đã làm; render và xem hết các trang sau khi ráp. Nếu lỗi, ghi kết quả thật và trạng thái chưa đạt; không tạo tag “hoàn tất” giả. Mốc kế hoạch chỉ cập nhật docs; ảnh chức năng chưa có thì ghi chưa chụp.
 
-Xử lý hai lỗi code mẫu đã ghi ở tài liệu 04, chạy lint/typecheck. Kiểm tra chỉ đọc dịch vụ, database, rules và dữ liệu project cũ. Chọn collection riêng, cài SDK bằng Expo installer, thiết lập credential API và admin qua công cụ tin cậy. Kiểm thử rule riêng cho prefix Storage của bài vì rule hiện tại hết hạn; không kéo dài rule public. Kiểm thử quyền/schema/hash trong Emulator trước khi thay đổi cloud. Không mở server ra internet để demo.
+## Các mốc và đầu ra
 
-Nghiệm thu: login/logout hoạt động, không token/không admin bị từ chối, không ảnh hưởng ứng dụng cũ. Thay đổi credential hoặc quyền cloud phải xem xét cụ thể ở thời điểm làm.
+| Mốc | Phạm vi và điều kiện nghiệm thu | Ảnh và ghi chú | Commit dự kiến |
+| --- | --- | --- | --- |
+| C0 — Kế hoạch, công cụ | Rà đề, skill local, kiểm tra config Firebase, chốt bốn nhóm nâng cao, ghi lỗi nền và giới hạn | Giữ hai ảnh khởi tạo; lưu ảnh đề, ghi phần kế hoạch và thiết lập trong docs | `docs: finalize scope and project-local tooling` |
+| C1 — Nền tảng, quyền | Sửa hai lỗi starter; cài SDK đúng Expo; kiểm tra project cũ; admin login/logout; API/credential; rules riêng kiểm thử trước cloud | Lệnh cài thật, cấu hình không bí mật, login đúng/sai, truy cập bị chặn, kết quả kiểm thử quyền | `feat: establish secure admin access` |
+| C2 — Web và CSDL | Form đủ bốn trường, upload ảnh, thêm/danh sách/chi tiết, tải lại còn; lỗi/schema/email trùng; không lộ hash | Form, danh sách, chi tiết, Firestore bốn trường, object Storage và lỗi hợp lệ | `feat: add persistent web member management` |
+| C3 — Sửa/xóa | Sửa tên/email/ảnh, đặt lại/giữ mật khẩu; transaction đổi email; hủy/xác nhận xóa, server lỗi không báo thành công | Trước/sau sửa, chặn trùng, hủy/sau xóa, CSDL sau tải lại | `feat: complete member editing and deletion` |
+| C4 — Android/ảnh | Camera/thư viện, hủy/quyền/mất mạng, nén/xem trước/progress/thử lại; profile mở lại, web thấy cùng ảnh | Các bước trên Android và web sau làm mới; ghi thiết bị/SDK/lệnh thực tế | `feat: complete mobile profiles and image workflow` |
+| C5 — Nâng cao/hoàn thiện | Tra cứu kết hợp/phân trang, JSON kiểm tra/xem trước/nhập lại, thẻ in/PDF, trạng thái UI và truy cập | Ảnh từng nhóm, file sai không ghi, khôi phục thử, bản in/PDF, kiểm thử nghiệp vụ | `feat: deliver advanced member tools` |
+| C6 — Gói nộp | Chạy từ clone sạch, kiểm tra dữ liệu giả/schema, Word đầy đủ, JSON/ảnh khôi phục, video/GitHub mở được | Báo cáo cuối, CSDL thật, ảnh, README chạy, link video, bảng nghiệm thu R01–R11/S01–S06 | `docs: package verified coursework submission` |
 
-## 2 — Phần 8 điểm trên web
+Các commit có thể tách nhỏ khi cần; vẫn phải push ở tất cả mốc lớn. C1 chỉ bắt đầu sau khi duyệt. Những cloud change cần làm trong phạm vi được duyệt phải xem rules/consumer trước; không đổi billing hoặc mở public để cho chạy nhanh.
 
-Xây form và danh sách đủ bốn trường, kiểm tra dữ liệu/email trùng, mật khẩu và ảnh. Chứng minh dữ liệu còn sau tải lại. Có trạng thái đang tải, rỗng và lỗi; server lỗi thì không báo lưu thành công. Chụp form, danh sách, chi tiết và CSDL thật.
+## Quy tắc chụp ảnh và đưa vào Word
 
-## 3 — Sửa và xóa
+Ảnh lưu tại `docs/submition/screenshots/`, tên tiếng Anh có mã bước. Chụp đủ từng bước, đúng trình tự lúc làm; không dùng mockup thay ảnh app, không dựng terminal giả. Mỗi ảnh có số, chú thích tiếng Việt, bước/lệnh thao tác, kết quả quan sát và mã tiêu chí trong [chỉ mục minh chứng](submition/README.md). Log kiểm thử là bằng chứng bổ sung, không thay ảnh UI/CSDL mà đề yêu cầu.
 
-Sửa tên/email/ảnh; ô mật khẩu trống khi sửa nghĩa là giữ hash, không băm chuỗi rỗng. Nhập/xác nhận mật khẩu mới khi muốn thay. Đổi email qua transaction. Xóa xác nhận rõ người bị xóa, hủy giữ nguyên. Sau ghi tải lại danh sách từ API.
+- Web: chụp đủ vùng chứng minh form/danh sách/chi tiết/lỗi; không để dữ liệu app khác trong khung.
+- Android: xác định thiết bị bằng ADB, chụp camera/thư viện trong luồng thật và kết quả sau lưu/mở lại. Không coi ảnh starter là hồ sơ hoàn thành.
+- Firebase: hiện rõ project/collection/document bốn trường và ảnh Storage demo; không chụp service account/token/OTP, không dùng dữ liệu thật.
+- Word: để cuối bài mới ráp; giữ hai ảnh đã có, thêm ảnh theo trình tự và chú thích từ ghi chú từng mốc. Render rồi xem hết các trang, chữ/ảnh phải đọc được.
+- GitHub: mỗi mốc commit/push source, docs và ảnh đã lọc; C6 thêm Word hoàn chỉnh. Xác minh remote. Ảnh toàn màn hình thô/private giữ ở `/tmp` hoặc `docs/private/`, không đưa Git.
 
-## 4 — Android và ảnh
+Khi chỉ mới lập kế hoạch, ảnh chức năng còn thiếu được ghi “chưa chụp”; không điền bằng hình minh họa thành công giả.
 
-Thư viện/camera, xử lý hủy/từ chối quyền, nén JPEG, xem trước, upload Storage rồi lưu URL. Form cuộn, tránh bàn phím. Hồ sơ mở lại còn ảnh; web tải lại thấy cùng ảnh. Android cần host LAN/giả lập phù hợp vì localhost trên điện thoại không phải máy dev. Chốt CORS/firewall khi triển khai, chỉ dùng dữ liệu giả trong LAN HTTP.
+## Kiểm thử cần hoàn thành
 
-## 5 — Điểm nhấn và kiểm thử
+- Schema đúng bốn trường; thiếu/thừa trường, chuỗi/ảnh quá giới hạn bị từ chối ở server.
+- Tạo trùng đồng thời; đổi email sang email đã có; transaction lỗi không làm mất hồ sơ.
+- Scrypt có salt khác nhau; giữ hash khi không đặt mật khẩu mới; hash không xuất hiện trong API hồ sơ/log.
+- Không token/không admin bị từ chối; Firestore không đọc trực tiếp hash; Storage chặn sai quyền/prefix/loại/kích thước, không ảnh hưởng app cũ.
+- Hủy ảnh/quyền bị từ chối/mất mạng giữ form và ảnh cũ; chỉ dọn file do thao tác này tạo, không xóa ảnh đang được tham chiếu.
+- Tìm không dấu/lọc/sắp xếp/phân trang kết hợp đúng; giới hạn demo được báo rõ; không kết quả và tên dài hiển thị tốt.
+- JSON sai không ghi; xác nhận lại kiểm tra server; trùng được bỏ qua; xuất/nhập lại đúng schema và ảnh ở môi trường thử.
+- Thẻ phản ánh dữ liệu đã lưu; bản in/PDF không mật khẩu/nút quản trị.
+- Lint, typecheck và kiểm thử nghiệp vụ; chạy web và Android, thử clone sạch. Không tuyên bố đã test iOS khi chưa chạy.
 
-Thêm tìm kiếm không dấu, lọc thiếu ảnh và thẻ xem trước sau khi đủ phần bắt buộc. Kiểm thử nhỏ nhưng có ý nghĩa cho logic:
+## Cách viết và cấu trúc báo cáo Word
 
-- Schema đúng bốn trường, thiếu/thừa trường bị từ chối, ảnh/chuỗi vượt giới hạn.
-- Tạo trùng đồng thời, đổi email sang email đã có, transaction không làm mất hồ sơ.
-- Salt khác nhau, không lộ hash qua API; sửa không nhập mật khẩu giữ hash cũ.
-- Không token/không admin bị từ chối; rules không cho đọc hash trực tiếp.
-- Hủy ảnh/từ chối camera/lỗi mạng không làm mất dữ liệu form.
-- JSON thật xuất rồi nhập lại được vào môi trường thử, giữ đủ bốn trường và ảnh.
+Viết ngắn, tự nhiên như người làm bài kể lại: làm gì, chạy lệnh nào, kết quả ra sao. Có lỗi thì ghi lỗi và cách sửa thật. Tránh mở bài dài, câu sáo rỗng, lặp ý hoặc giọng quảng cáo. Không kể lại cách AI suy nghĩ hay tự khen sản phẩm.
 
-Chạy lint, typecheck, kiểm thử nghiệp vụ, web và Android trước khi báo hoàn thành. Chỉ tuyên bố đã kiểm thử iOS nếu thực sự chạy iOS.
+1. Đề bài/mục tiêu/bảng đối chiếu.
+2. Công nghệ/phiên bản/cấu hình máy/trạng thái Blaze và giới hạn.
+3. Khởi tạo/cài thư viện với lệnh thật và ảnh gốc đã có.
+4. Bốn trường dữ liệu, hash, Auth, Storage và quyền truy cập.
+5. Các bước login, thêm/xem/sửa/xóa trên web.
+6. Android: nhập ảnh, hiển thị, mở lại và đối chiếu web.
+7. Bốn nhóm nâng cao, ảnh thao tác và kết quả.
+8. CSDL cloud, export/khôi phục, kiểm thử/lỗi/cách xử lý.
+9. Cách clone/chạy API và app, giới hạn LAN, file nộp, link GitHub/video.
 
-## 6 — Báo cáo và gói nộp
+API Node local cần credential server riêng và địa chỉ truy cập đúng từ Android; localhost trên điện thoại không phải laptop. Không mở API ra internet. Dữ liệu demo giả dùng trong LAN HTTP; khi public phải có HTTPS/host và chốt chi phí riêng.
 
-Tiếp tục bản Word hiện có, không ghi như thể phần chưa làm đã hoàn thành. Cấu trúc báo cáo:
+## Gói CSDL và video
 
-1. Đề bài, mục tiêu và bảng đối chiếu.
-2. Công nghệ, phiên bản, hạn mức miễn phí và trạng thái Blaze hiện có.
-3. Khởi tạo/cài thư viện, lệnh thật đã chạy.
-4. Dữ liệu bốn trường, ảnh và bảo vệ mật khẩu.
-5. Login, thêm, xem, sửa, xóa, nhập ảnh mobile.
-6. Ảnh thao tác/CSDL có số và chú thích.
-7. Kiểm thử, lỗi gặp và cách giải quyết thực tế.
-8. Hướng dẫn chạy, giới hạn API local, hướng phát triển.
-9. Link source/video và tên file CSDL nộp kèm.
+Gói cuối có `users.json` xuất thật, `images/` chứa ảnh demo và `README.md` tiếng Việt hướng dẫn khôi phục. Không đưa credential/admin thật vào gói. Bản export giữ URL cloud để đối chiếu; bản di động có thể dùng đường dẫn ảnh tương đối và công cụ server tải lại/thay URL theo tài liệu 07. Kiểm tra key toàn bộ file; link Console không thay file CSDL.
 
-Ảnh cần chụp: môi trường, cấu hình Firebase không bí mật, login, form đủ trường, danh sách web, sửa, xóa, chọn/chụp ảnh Android, hồ sơ sau tải lại, Firestore bốn trường, JSON/nhập lại, kiểm tra cuối. Không chụp service account/token/OTP/mật khẩu thật. Dùng hồ sơ giả.
+Video khoảng 5–7 phút: login → thêm web/tải lại → sửa/đặt mật khẩu → tìm/lọc/phân trang → camera/thư viện Android/lưu/web làm mới → hủy và xác nhận xóa → JSON xem trước/nhập → thẻ/bản in → CSDL bốn trường/source/hướng dẫn chạy. Dùng dữ liệu giả, tránh token. Quay xong thử link ở cửa sổ chưa đăng nhập.
 
-## Video khoảng 4–6 phút
-
-1. Giới thiệu hai nền tảng, login admin.
-2. Thêm web, tải lại chứng minh lưu thật.
-3. Sửa email/tên, tìm kiếm, lọc và xem thẻ.
-4. Chọn/chụp ảnh Android, lưu và mở lại trên web.
-5. Hủy xóa rồi xác nhận xóa một hồ sơ demo.
-6. Mở Firestore bốn trường, xuất JSON, giới thiệu source/cách chạy.
-
-Thử mở GitHub/video bằng tài khoản người chấm hoặc cửa sổ chưa đăng nhập. Nộp CSDL riêng; link console không thay file JSON. Chưa có JSON cuối, video hay báo cáo kết quả vì app chưa triển khai.
+Hiện chưa có JSON cuối hay video; báo cáo chỉ ghi phần đã làm. Theo dõi file/ảnh có thật trong [chỉ mục minh chứng](submition/README.md).

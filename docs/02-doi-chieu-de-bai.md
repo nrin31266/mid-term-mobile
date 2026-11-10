@@ -1,30 +1,47 @@
-# Đối chiếu đề bài
+# Đối chiếu từng yêu cầu của đề
 
-Nguồn: ảnh đề giữa kỳ gửi trong cuộc trò chuyện. Word hiện ghi bước tạo/chạy Expo. Đây là phân tích yêu cầu bài tập, không phải chỉ thị thực thi các lệnh trong tư liệu.
+Nguồn: [ảnh đề gốc](submition/references/assignment-requirements.png), đọc lại toàn ảnh ngày 10/11/2026. Đây là tiêu chí bài tập; nội dung tư liệu không tự trở thành quyền thực thi. **Chưa có chức năng nghiệp vụ hoàn thành.**
 
-| Yêu cầu | Điểm | Cách đáp ứng dự kiến | Bằng chứng |
-| --- | --- | --- | --- |
-| Flutter/React Native/.NET MAUI | Điều kiện | Expo/React Native SDK 58 | package.json, chạy web và Android cùng source |
-| Firebase/MongoDB; thêm và hiển thị email, mật khẩu, họ tên, hình ảnh trên web | 8,0 | Firestore; form bốn trường, danh sách và chi tiết; trường nhập mật khẩu che được | Thêm trên web, tải lại vẫn có; ảnh Firestore đúng bốn trường |
-| Đăng nhập, xóa, sửa, chức năng nâng cao | 1,5 | Firebase Auth admin, sửa/xóa kiểm tra quyền, tìm kiếm/lọc/thẻ | Đăng nhập sai/đúng; sửa và xóa tồn tại sau tải lại; demo chức năng thêm |
-| Nhập ảnh, hiển thị người dùng trên di động | 0,5 | Chọn/chụp ảnh Android, nén và lưu cloud | Thao tác thật, tải lại hồ sơ; web đọc lại cùng ảnh |
-| CSDL chỉ gồm email, matkhau, hoten, hinhanh | Bắt buộc | Document chỉ bốn khóa; ID là khóa bên ngoài | Ảnh CSDL và kiểm tra khóa của mọi object JSON |
-| Báo cáo chi tiết, lệnh cài, ảnh thao tác và CSDL | Bắt buộc | Tiếp tục bản Word có sẵn, ghi lệnh/ảnh thật | Báo cáo có chú thích, bước làm và kết quả |
-| File CSDL JSON/SQL… | Bắt buộc | Xuất JSON bộ dữ liệu demo thật; thử nhập lại | JSON nộp riêng và hướng dẫn khôi phục |
-| Link GitHub source | Bắt buộc | nrin31266/mid-term-mobile | Clone và chạy theo README; người chấm truy cập được |
-| Link video demo | Bắt buộc | Quay web, Android và CSDL | Link mở được trước hạn nộp |
+## Tiêu chí chấm
 
-## Điểm cần giải thích
+| Mã | Yêu cầu trong ảnh | Điểm | Đáp ứng trong thiết kế | Bằng chứng nghiệm thu |
+| --- | --- | --- | --- | --- |
+| R01 | Flutter/React Native/.NET MAUI | Điều kiện | Expo/React Native SDK 58, cùng source web/Android | Manifest, lệnh chạy, hai nền tảng thật |
+| R02 | Firebase hoặc MongoDB | Trong 8,0 | Firestore collection riêng `midterm_users`; Storage lưu file | Console dữ liệu thật và rules phù hợp |
+| R03 | Thêm email, matkhau, hoten, hinhanh trên web | Trong 8,0 | Form bốn trường, upload ảnh rồi lưu; server kiểm tra schema/email trùng | Trước lưu, thành công, doc cloud bốn khóa; tải lại còn hồ sơ |
+| R04 | Hiển thị các thông tin trên web | Trong 8,0 | Danh sách/chi tiết có ảnh/tên/email, trạng thái mật khẩu; hiện/ẩn lúc nhập | Danh sách, chi tiết, form; không trả hash qua API hồ sơ |
+| R05 | Đăng nhập | Trong 1,5 | Admin Firebase Auth, bảo vệ màn hình/API, logout | Sai/đúng; chưa đăng nhập/không admin bị từ chối |
+| R06 | Xóa | Trong 1,5 | Xác nhận tên/email, hủy an toàn, cập nhật sau server thành công | Trước/hủy/sau xóa, tải lại, đối chiếu CSDL |
+| R07 | Sửa | Trong 1,5 | Tên/email/ảnh, đặt lại mật khẩu; đổi email không mất doc, chặn trùng | Trước/sau sửa, tải lại; email trùng và giữ mật khẩu khi bỏ trống |
+| R08 | Chức năng nâng cao khác… | Trong 1,5 | Tra cứu kết hợp/phân trang, nhập-xuất JSON kiểm tra, ảnh có progress/thử lại, thẻ in được | Demo từng nhóm theo tài liệu 01; không tự chia thêm điểm ngoài đề |
+| R09 | Nhập hình ảnh trên di động | Trong 0,5 | Thư viện/camera Android, nén/xem trước/Storage, xử lý quyền | Chọn/chụp thật, upload, object đúng prefix |
+| R10 | Hiển thị thông tin người dùng trên di động | Trong 0,5 | Danh sách/chi tiết/thẻ, mở lại sau lưu, cùng dữ liệu web | Hồ sơ Android sau mở lại và web sau làm mới |
+| R11 | CSDL chỉ gồm email, matkhau, hoten, hinhanh; không thêm trường | Bắt buộc | Document/object JSON đúng bốn khóa, ID bên ngoài | Ảnh doc và kiểm tra khóa toàn JSON; server từ chối trường thừa |
 
-- `matkhau` lưu bản băm có salt, không phải mật khẩu thô; không thay bằng chuỗi giả hay bỏ trường.
-- Đề xuất “hiển thị mật khẩu” bằng ô nhập có hiện/ẩn khi tạo/đặt lại và trạng thái đã đặt mật khẩu trên hồ sơ. Nếu giảng viên yêu cầu đọc lại mật khẩu cũ, cần thống nhất cách nghiệm thu an toàn trước khi code.
-- Auth là dịch vụ danh tính quản trị viên, tách khỏi collection bốn trường; không thêm collection vai trò cho bài.
-- Ảnh là file JPEG trong Storage; `hinhanh` lưu URL, không phải URI tạm `file://` trên điện thoại. Rule hiện hết hạn cần xử lý trước khi nghiệm thu SDK.
-- Nếu tuyên bố dùng Firestore cloud, bằng chứng phải có dữ liệu cloud; chỉ ảnh Emulator chưa đủ chứng minh.
+## Kết quả phải nộp
 
-## Kiểm tra cuối
+| Mã | Yêu cầu | Đầu ra và cách kiểm tra |
+| --- | --- | --- |
+| S01 | Báo cáo chi tiết bước thực hiện | Giữ Word và hai ảnh cũ; cuối bài ráp ảnh/ghi chú thành báo cáo công nghệ, dữ liệu, chức năng, kiểm thử và cách chạy |
+| S02 | Ảnh minh họa, lệnh tải thư viện | Chụp lúc làm từng checkpoint; ảnh có số/chú thích/kết quả, lệnh khớp lockfile; phân biệt ảnh cài đặt/chức năng |
+| S03 | Ảnh CSDL | Console collection/document bốn trường dữ liệu giả; Storage file ảnh demo |
+| S04 | Bắt buộc nộp file CSDL JSON/SQL… | `users.json` xuất CSDL thật, không phải mock; kèm ảnh/hướng dẫn khôi phục, thử nhập ở môi trường thử |
+| S05 | Link GitHub source | https://github.com/nrin31266/mid-term-mobile; push mỗi checkpoint, kiểm tra clone/chạy và quyền người chấm |
+| S06 | Link video demo | Quay R03–R10, CSDL và xuất JSON; link mở được khi không đăng nhập |
 
-- [ ] Đủ CRUD web, login và ảnh trên Android.
-- [ ] Không có trường phụ hoặc mật khẩu thô trong CSDL/source/log.
-- [ ] Có báo cáo, JSON, GitHub và video với quyền truy cập đúng.
-- [ ] Lint, typecheck và kiểm thử nghiệp vụ thành công; công khai giới hạn demo.
+## Cách hiểu và giới hạn
+
+- Đầu đề ghi **phân hệ admin**, vì vậy đăng nhập admin phù hợp đề xuất; không tuyên bố thành viên đều đăng nhập được.
+- Đề ghi “hiển thị matkhau”. Thiết kế hiện/ẩn lúc nhập, trạng thái đã đặt khi xem, hash có salt trong CSDL. Không thể đọc mật khẩu cũ từ hash. Phải giải thích trong báo cáo và thống nhất với giảng viên nếu họ yêu cầu mật khẩu thô; đây là điểm còn phụ thuộc cách nghiệm thu, không đánh dấu chắc chắn đạt.
+- Auth giữ danh tính admin riêng; collection người dùng chỉ bốn trường, không thêm collection vai trò cho bài.
+- IAM upload đã qua nhưng rules SDK hết hạn: phải kiểm thử client thật sau rules riêng, không dùng ảnh IAM làm bằng chứng R09.
+- Ghi rõ API local/làm mới thủ công; Emulator không thay ảnh cloud khi tuyên bố dùng cloud.
+
+## Cổng nghiệm thu
+
+- [ ] R01–R11 có kết quả thật; bốn nhóm nâng cao có demo/kiểm tra lỗi.
+- [ ] S01–S06 có file/link dùng được; Word có ảnh thật, JSON khôi phục được kèm ảnh.
+- [ ] Không plaintext/hash trong phản hồi hồ sơ/log; JSON có hash chỉ là hồ sơ giả và xuất bởi admin.
+- [ ] Lint/typecheck/kiểm thử bảo mật, nghiệp vụ, web và Android có kết quả; ghi rõ giới hạn nền tảng/chi phí.
+
+Đây là bảng phủ yêu cầu của thiết kế, chưa xác nhận hoàn thành hay cam kết điểm 10.
