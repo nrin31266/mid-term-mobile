@@ -86,11 +86,11 @@ Code gốc ở commit `feat: establish secure cloud admin access`; ảnh 08/09/2
 | `c2-03-create-api-code.png` | Code | API tạo hồ sơ, kiểm tra email trùng đồng thời ở server | R03 | Chưa chụp |
 | `c2-04-profile-response-code.png` | Code | API danh sách/chi tiết bỏ hash khỏi dữ liệu trả về | R04 | Chưa chụp |
 | `c2-05-member-form-code.png` | Code | Form và xử lý submit, hiện/ẩn mật khẩu, lỗi và chống bấm hai lần | R03–R04 | Chưa chụp |
-| `c2-06-web-create-before.jpg` | Thao tác | Nhập đủ email/mật khẩu/họ tên/ảnh, xem trước khi lưu | R03–R04 | Đã chụp Chrome: Lê Bảo Trân, ảnh 512 px / 44 KiB, mật khẩu được che |
+| `c2-06-web-create-before.jpg` | Thao tác | Nhập đủ email/mật khẩu/họ tên/ảnh, xem trước khi lưu | R03–R04 | Đã chụp lại Chrome sau góp ý: Lê Bảo Trân, ảnh áo dài, 45 KB, mật khẩu che |
 | `c2-07-web-upload.png` | Thao tác | Ảnh đang upload và trạng thái lưu; không báo thành công sớm | R03 | Chưa chụp |
 | `c2-08-web-list.jpg` | Kết quả | Danh sách vừa thêm có tên/email/ảnh | R04 | Đã chụp Chrome sau làm mới; ba hồ sơ giả từ web và Android |
 | `c2-09-web-detail.png` | Kết quả | Chi tiết hồ sơ đã lưu, ảnh và trạng thái đã đặt mật khẩu | R04 | Gộp vào ảnh 10 sau tải lại để tránh trùng |
-| `c2-10-web-detail-reloaded.jpg` | Kết quả | Tải lại trình duyệt, hồ sơ vẫn còn | R02–R04 | Đã chụp Chrome: tải lại vẫn còn tên/email/ảnh |
+| `c2-10-web-detail-reloaded.jpg` | Kết quả | Tải lại trình duyệt, hồ sơ vẫn còn | R02–R04 | Đã chụp lại Chrome: Nguyễn Minh Anh, ảnh chân dung, nút sửa/xóa mới |
 | `c2-11-firestore-four-fields-marked.jpg` | CSDL | Console hiển thị document đúng email, matkhau, hoten, hinhanh | R02, R11, S03 | Đã chụp Chrome Console; bốn trường, URL và hash bị rút gọn sẵn trong Console |
 | `c2-12-storage-avatar.jpg` | CSDL | File ảnh demo đúng bucket/prefix, không lộ token tải | R02, S03 | Đã chụp Chrome Console: đúng prefix, ba object JPEG; không mở download token |
 | `c2-13-duplicate-email.jpg` | Kiểm tra | Thêm email đã có bị từ chối, không tạo thêm document | R03 | Đã chụp Chrome: server từ chối email trùng, form còn nguyên |
@@ -114,12 +114,21 @@ Tên và email là dữ liệu minh họa; nguồn ảnh ở `demo-assets/README
 | `c3-02-email-transaction-code.png` | Code | Đổi email qua transaction, không mất hồ sơ hoặc ghi đè email cũ | R07 | Chưa chụp |
 | `c3-03-delete-api-code.png` | Code | Kiểm tra quyền rồi xóa đúng document; xử lý ảnh được tham chiếu | R06 | Chưa chụp |
 | `c3-04-delete-confirm-code.png` | Code | Hộp xác nhận đúng người và nhánh hủy không gửi lệnh xóa | R06 | Chưa chụp |
-| `c3-05-edit-before.png` | Thao tác | Hồ sơ và form trước khi đổi tên/email/ảnh | R07 | Chưa chụp |
-| `c3-06-edit-after.png` | Kết quả | Sau lưu/tải lại, UI và CSDL có thay đổi tương ứng | R07, S03 | Chưa chụp |
-| `c3-07-edit-duplicate-email.png` | Kiểm tra | Đổi sang email trùng bị chặn, hồ sơ cũ còn nguyên | R07 | Chưa chụp |
-| `c3-08-delete-cancel.png` | Thao tác | Mở xác nhận rồi hủy, hồ sơ không mất | R06 | Chưa chụp |
+| `c3-05-edit-before.jpg` | Thao tác | Form đổi tên/email/ảnh trước khi lưu | R07 | Đã chụp Chrome: Nguyễn Văn Rin, rin@example.com, ảnh mới, mật khẩu trống |
+| `c3-06-edit-after.jpg` | Kết quả | Sau lưu/tải lại, UI và CSDL có thay đổi tương ứng | R07, S03 | Đã chụp Chrome sau tải lại; kiểm tra riêng hash không đổi |
+| `c3-07-edit-duplicate-email.jpg` | Kiểm tra | Đổi sang email trùng bị chặn, hồ sơ cũ còn nguyên | R07 | Đã chụp lỗi baotran@example.com; server trả 409 |
+| `c3-08-delete-cancel.jpg` | Thao tác | Mở xác nhận rồi hủy, hồ sơ không mất | R06 | Đã chụp hộp có đúng tên/email; Hủy rồi tải lại còn hồ sơ |
 | `c3-09-delete-after.png` | Kết quả | Xác nhận xóa, tải lại danh sách và đối chiếu CSDL | R06, S03 | Chưa chụp |
 | `c3-10-crud-tests.png` | Kiểm tra | Test transaction/email trùng/giữ mật khẩu và lỗi server | R06–R07, R11 | Chưa chụp |
+| `c3-11-unsaved-cancel.jpg` | Thao tác | Rời form đã sửa rồi chọn Hủy | R07 | Đã chụp Chrome; nội dung và ảnh chọn được giữ để lưu tiếp |
+
+### Ghi chú C3 ngày 10/11/2026
+
+Đã deploy PATCH/DELETE và giao diện sửa/xóa lên Function/site MemberDesk. Đổi email dùng transaction; mật khẩu trống giữ hash mới nhất, có nhập mới thì băm lại. Chrome đã sửa tên/email/ảnh thành Nguyễn Văn Rin, tải lại còn đúng dữ liệu; email trùng bị chặn. Hủy xóa và hủy rời form không làm mất hồ sơ/nội dung.
+
+`pnpm test`: 6/6; Firebase Emulator: 15/15; lint, TypeScript và export web đều qua. `MEMBERDESK_ENV=cloud node scripts/check-crud-cloud.mjs` kiểm tra API cloud thật: tạo, đổi email, giữ/đặt lại mật khẩu, chặn trùng, xóa, GET sau xóa 404. Hồ sơ thử của script đã dọn. Biên nhận không chứa hash/token: [CRUD API](evidence/cloud-crud-api-check.json), [đối chiếu hồ sơ đã sửa](evidence/cloud-crud-check.json). Ảnh thao tác xóa thành công/Console sau xóa và ảnh code/terminal vẫn còn thiếu; chưa đánh dấu đủ minh chứng C3.
+
+Ảnh Chrome 05–08, 11 dùng source ở commit `feat: complete member editing and deletion`. Ảnh 05/11 đối chiếu `MemberForm`; ảnh 06/07 đối chiếu `createMemberStore.update`; ảnh 08 đối chiếu `MemberScreen`/`ConfirmDialog`. Đã thay ảnh C2 06/08/10/13 sau góp ý giao diện và dữ liệu. Bản cũ không giữ trong bộ nộp; bản chụp thô ở vùng riêng. Hai ảnh gốc trong Word giữ nguyên.
 
 ### C4 — Chạy Android và xử lý ảnh
 

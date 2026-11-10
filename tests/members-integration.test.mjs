@@ -6,7 +6,7 @@ import test from 'node:test';
 import { createApi } from '../server/api.mjs';
 import { backendBucket, backendDatabase } from '../server/firebase.mjs';
 import { createMemberStore } from '../server/members.mjs';
-import { memberFields } from '../server/member-validation.mjs';
+import { memberFields, memberId } from '../server/member-validation.mjs';
 
 const { default: sharp } = await import(createRequire(new URL('../server/package.json', import.meta.url)).resolve('sharp'));
 
@@ -25,6 +25,8 @@ test('member API persists exact fields, rejects duplicates atomically and valida
   const base = `http://127.0.0.1:${server.address().port}`;
   const post = (body) => fetch(`${base}/members`, { method: 'POST', headers: {
     Authorization: 'Bearer test-admin', 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const change = (id, body, method = 'PATCH') => fetch(`${base}/members/${id}`, { method, headers: {
+    Authorization: 'Bearer test-admin', 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
   const input = { email: 'one@example.com', hoten: 'Nguyễn An', matkhau: 'demo-password', hinhanh: '' };
   const paths = [];
   context.after(async () => { await clear(); for (const path of paths) await bucket.file(path).delete({ ignoreNotFound: true });
@@ -57,6 +59,35 @@ test('member API persists exact fields, rejects duplicates atomically and valida
       assert.equal(response.status, expected, await response.text());
     }
     assert.equal((await collection.get()).size, 2);
+  });
+  await context.test('editing preserves or replaces the hash and rejects duplicate email without data loss', async () => {
+    const id = memberId(input.email); const original = (await collection.doc(id).get()).data();
+    assert.equal((await change(id, { ...input, hoten: 'Nguyễn Văn Rin', matkhau: '' })).status, 200);
+    let stored = (await collection.doc(id).get()).data();
+    assert.equal(stored.hoten, 'Nguyễn Văn Rin'); assert.equal(stored.matkhau, original.matkhau);
+    assert.equal((await change(id, { ...input, email: 'image0@example.com', matkhau: '' })).status, 409);
+    assert.deepEqual((await collection.doc(id).get()).data(), stored);
+    const response = await change(id, { ...input, email: 'renamed@example.com', matkhau: 'another-demo-password' });
+    assert.equal(response.status, 200); const result = await response.json();
+    assert.equal(result.id, memberId('renamed@example.com')); assert.equal('matkhau' in result, false);
+    assert.equal((await collection.doc(id).get()).exists, false);
+    stored = (await collection.doc(result.id).get()).data();
+    assert.notEqual(stored.matkhau, original.matkhau); assert.deepEqual(Object.keys(stored).sort(), memberFields);
+    assert.equal((await change(id, input)).status, 404);
+  });
+  await context.test('two renames cannot overwrite a shared destination and deletion does not resurrect the source', async () => {
+    const source = memberId('renamed@example.com'); const other = memberId('image0@example.com');
+    const responses = await Promise.all([change(source, { ...input, email: 'target@example.com', matkhau: '' }),
+      change(other, { ...input, email: 'target@example.com', matkhau: '' })]);
+    assert.deepEqual(responses.map((response) => response.status).sort(), [200, 409]);
+    assert.equal((await collection.get()).size, 2);
+    const winner = responses[0].status === 200 ? source : other;
+    assert.equal((await collection.doc(winner).get()).exists, false);
+    assert.equal((await change(memberId('target@example.com'), null, 'DELETE')).status, 200);
+    assert.equal((await collection.doc(memberId('target@example.com')).get()).exists, false);
+    assert.equal((await change(memberId('target@example.com'), null, 'DELETE')).status, 404);
+    assert.equal((await change(memberId('target@example.com'), input)).status, 404);
+    assert.equal((await collection.get()).size, 1);
   });
   await context.test('concurrent writes cannot exceed the 200 member cap', async () => {
     await clear(); const batch = database.batch();

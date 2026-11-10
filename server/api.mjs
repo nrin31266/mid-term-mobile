@@ -57,6 +57,12 @@ export function createHandler(auth, origins = ['http://localhost:8081', 'http://
       if (members && memberRoute && request.method === 'GET') {
         send(200, await members.get(memberRoute[1])); return;
       }
+      if (members && memberRoute && request.method === 'PATCH') {
+        send(200, await members.update(memberRoute[1], await readJson(request))); return;
+      }
+      if (members && memberRoute && request.method === 'DELETE') {
+        send(200, await members.remove(memberRoute[1])); return;
+      }
       throw new ApiError(404, 'Không tìm thấy nội dung.');
     } catch (error) {
       // Không trả stack/token hay thông tin credential cho client.

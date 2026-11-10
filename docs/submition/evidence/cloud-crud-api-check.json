@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-11-10T12:15:46.616Z",
+  "projectId": "crested-mercury-452707-e8",
+  "create": 201,
+  "rename": 200,
+  "duplicateRename": 409,
+  "blankPasswordPreserved": true,
+  "passwordReplaced": true,
+  "exactFourFields": true,
+  "profileOmitsHash": true,
+  "delete": 200,
+  "deletedProfile": 404,
+  "repeatedDelete": 404,
+  "fixtureRemoved": true
+}

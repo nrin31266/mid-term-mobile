@@ -18,7 +18,7 @@ Một checkpoint chỉ hoàn thành khi: chạy kiểm tra, chụp đủ các b�
 | C5 — Nâng cao/hoàn thiện | Tra cứu kết hợp/phân trang, JSON kiểm tra/xem trước/nhập lại, thẻ in/PDF, trạng thái UI và truy cập | Ảnh từng nhóm, file sai không ghi, khôi phục thử, bản in/PDF, kiểm thử nghiệp vụ | `feat: deliver advanced member tools` |
 | C6 — Gói nộp | Chạy từ clone sạch, kiểm tra dữ liệu giả/schema, Word đầy đủ, JSON/ảnh khôi phục, video/GitHub mở được | Báo cáo cuối, CSDL thật, ảnh, README chạy, link video, bảng nghiệm thu R01–R11/S01–S06 | `docs: package verified coursework submission` |
 
-Các commit có thể tách nhỏ khi cần; vẫn phải push ở tất cả mốc lớn. C1 đã kiểm tra Auth/API/rules/SDK Storage cloud và lưu minh chứng. C1 đã push (`7efe840`, `d44de64`). C2 đã có thêm/xem/upload cloud trên Chrome và Android; đang bổ sung minh chứng và chốt source. C3–C6 chưa hoàn thành. Những cloud change cần làm trong phạm vi được duyệt phải xem rules/consumer trước; không đổi billing hoặc mở public để cho chạy nhanh.
+Các commit có thể tách nhỏ khi cần; vẫn phải push ở tất cả mốc lớn. C1 đã push (`7efe840`, `d44de64`). C2 đã push source (`a13c23b`), thêm/xem/upload cloud chạy trên Chrome và Android. C3 đã deploy sửa/xóa; API cloud và 15 kiểm thử Emulator qua, có ảnh sửa/chặn trùng/hủy. C2/C3 còn ảnh code/terminal và một số ảnh thao tác cần bổ sung. C4–C6 chưa hoàn thành. Những cloud change phải giữ phạm vi của bài, không đổi billing hoặc mở public để cho chạy nhanh.
 
 ## Chụp đủ quy trình, code và kết quả
 

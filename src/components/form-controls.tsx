@@ -5,16 +5,17 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View, type T
 import { ControlHeight, Radius, Spacing, TypeSize } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
-export function ActionButton({ title, onPress, busy = false, secondary = false, disabled = false, icon: Icon }: {
-  title: string; onPress: () => void; busy?: boolean; secondary?: boolean; disabled?: boolean; icon?: LucideIcon;
+export function ActionButton({ title, onPress, busy = false, secondary = false, disabled = false, danger = false, icon: Icon }: {
+  title: string; onPress: () => void; busy?: boolean; secondary?: boolean; disabled?: boolean; danger?: boolean; icon?: LucideIcon;
 }) {
   const theme = useTheme();
+  const color = secondary ? danger ? theme.danger : theme.text : theme.onAccent;
   return <Pressable accessibilityRole="button" accessibilityLabel={title} accessibilityState={{ disabled: disabled || busy, busy }}
     disabled={disabled || busy} onPress={onPress} style={({ pressed }) => [styles.button,
-      { backgroundColor: secondary ? theme.backgroundSelected : theme.accent, opacity: disabled || busy ? 0.6 : pressed ? 0.8 : 1 }]}>
-    {busy && <ActivityIndicator color={secondary ? theme.text : theme.onAccent} />}
-    {!busy && Icon && <Icon size={20} color={secondary ? theme.text : theme.onAccent} accessible={false} />}
-    <Text style={{ color: secondary ? theme.text : theme.onAccent, fontSize: TypeSize.body, fontWeight: '600', flexShrink: 1 }}>{title}</Text>
+      { backgroundColor: secondary ? theme.backgroundSelected : danger ? theme.danger : theme.accent, opacity: disabled || busy ? 0.6 : pressed ? 0.8 : 1 }]}>
+    {busy && <ActivityIndicator color={color} />}
+    {!busy && Icon && <Icon size={20} color={color} accessible={false} />}
+    <Text style={{ color, fontSize: TypeSize.body, fontWeight: '600', flexShrink: 1 }}>{title}</Text>
   </Pressable>;
 }
 

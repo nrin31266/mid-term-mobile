@@ -30,5 +30,31 @@ export function createMemberStore(database, bucket, mode) {
       });
       return { id, email: member.email, hoten: member.hoten, hinhanh: member.hinhanh, hasPassword: true };
     },
+    async update(id, input) {
+      if (!/^[a-f0-9]{64}$/.test(id)) throw new ApiError(404, 'Không tìm thấy thành viên.');
+      const member = validateMember(input);
+      const hash = member.matkhau ? await hashPassword(member.matkhau) : null;
+      await validateImage(member.hinhanh, bucket, mode);
+      const nextId = memberId(member.email);
+      const currentRef = collection.doc(id); const nextRef = collection.doc(nextId);
+      await database.runTransaction(async (transaction) => {
+        const [current, destination] = await transaction.getAll(currentRef, nextRef);
+        if (!current.exists) throw new ApiError(404, 'Không tìm thấy thành viên.');
+        if (nextId !== id && destination.exists) throw new ApiError(409, 'Email này đã có trong danh sách.');
+        // Đọc hash mới nhất trong transaction khi người sửa không đặt mật khẩu mới.
+        transaction.set(nextRef, { ...member, matkhau: hash ?? current.data().matkhau });
+        if (nextId !== id) transaction.delete(currentRef);
+      });
+      return { id: nextId, email: member.email, hoten: member.hoten, hinhanh: member.hinhanh, hasPassword: true };
+    },
+    async remove(id) {
+      if (!/^[a-f0-9]{64}$/.test(id)) throw new ApiError(404, 'Không tìm thấy thành viên.');
+      await database.runTransaction(async (transaction) => {
+        const ref = collection.doc(id); const current = await transaction.get(ref);
+        if (!current.exists) throw new ApiError(404, 'Không tìm thấy thành viên.');
+        transaction.delete(ref);
+      });
+      return { deleted: true };
+    },
   };
 }
