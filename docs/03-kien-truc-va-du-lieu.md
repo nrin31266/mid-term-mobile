@@ -1,18 +1,24 @@
 # Kiến trúc và dữ liệu đề xuất
 
-## Phương án hạn chế phát sinh chi phí
+## Cloud và môi trường thử
 
-Giữ Expo/React Native SDK 58. Firebase JS SDK đăng nhập admin. Cloud Firestore Standard lưu người dùng trong hạn mức miễn phí. Console project đã chọn hiện hiển thị Blaze; phương án không yêu cầu đổi billing hay cấp thêm dịch vụ. `hinhanh` chứa URL JPEG đã upload vào bucket Storage hiện có theo xác nhận của người thực hiện. Không cần tạo bucket mới; chưa đề xuất triển khai Functions.
+Theo yêu cầu triển khai cloud ngày 10/11/2026, web và API dùng HTTPS, hoạt động độc lập với laptop. Giữ project Blaze và bucket đang có, không đổi billing.
 
-API Node nhỏ chạy trên máy demo dùng Firebase Admin SDK truy cập Firestore. Mỗi request xác minh ID token Firebase Auth và claim `admin`. API băm mật khẩu bằng `node:crypto` scrypt bất đồng bộ với salt ngẫu nhiên; chọn tham số qua kiểm thử. API hồ sơ không trả `matkhau`, không ghi credential vào log. Ảnh upload qua Storage SDK sau khi có rules đúng quyền, rồi API kiểm tra URL/object trước khi lưu hồ sơ.
+- Web Expo SDK 58: https://memberdesk-801885728284.web.app, site riêng `memberdesk-801885728284`.
+- API Node 22: Function gen 2 `memberdeskApi`, codebase `memberdesk`, vùng `us-central1`. Hosting chuyển `/api/**` tới Function. Không sửa Function `app` và site mặc định của project cũ.
+- Firebase Auth Email/Password đăng nhập admin, claim `admin: true`. API xác minh token và tài khoản bị khóa/thu hồi. Đã kiểm tra phiên HTTPS; CRUD/băm mật khẩu thuộc C2–C3, chưa hoàn thành ở C1.
+- Firestore Standard `(default)`, collection riêng `midterm_users`. Client bị chặn hoàn toàn; Admin SDK chỉ truy cập sau kiểm tra quyền ở API.
+- Storage giữ bucket cũ; prefix `midterm-mobile/avatars/`. Admin SDK của Function dùng danh tính runtime, không đóng gói key. ADC trên laptop phục vụ cấu hình/kiểm thử, không gửi lên app.
 
-Luồng: giao diện → Firebase Auth → ID token gửi API → kiểm tra quyền/schema → Firestore. ID trả cho giao diện nằm ngoài payload lưu trong document.
+Function đặt `minInstances: 0`, `maxInstances: 1`, RAM 256 MiB, concurrency 1, timeout 30 giây. Có thể khởi động chậm và phát sinh phí theo sử dụng/lưu artifact; đây không phải cam kết miễn phí hay giới hạn tiền cứng. Không bật thêm các sản phẩm Firebase không thuộc bài.
 
-Đánh đổi: ưu tiên hạn mức miễn phí của dịch vụ hiện có nhưng vẫn phải chạy API trên máy và cho Android truy cập mạng LAN; không bảo đảm Blaze sẽ không phát sinh phí. Đây chưa phải hệ thống cloud hoạt động độc lập 24/7. Khi muốn public phải chốt nơi host API/HTTPS và hạn mức riêng; không tự thay đổi billing.
+Luồng: giao diện → Firebase Auth → ID token gửi API → kiểm tra quyền/schema → Firestore. Ảnh upload qua SDK rồi gửi URL cho API kiểm tra trước khi lưu. ID document nằm ngoài bốn trường dữ liệu.
+
+Emulator Auth/Firestore/Storage và API loopback vẫn dùng để thử lỗi/quyền/khôi phục mà không tác động dữ liệu cloud. Chế độ cloud/emulator phải chọn rõ ràng, không trộn host hay credential.
 
 ## Bốn trường
 
-Collection dự kiến `midterm_users`, cần kiểm tra tên chưa trùng nghiệp vụ cũ trước khi tạo.
+Collection `midterm_users` đã kiểm tra trống trước triển khai; không dùng dữ liệu các app cũ.
 
 | Trường | Kiểu | Quy tắc |
 | --- | --- | --- |
@@ -29,7 +35,7 @@ Khóa document dự kiến SHA-256 của email chuẩn hóa. Tạo dùng thao t�
 
 ## Ảnh và hiệu năng
 
-Chọn phương án Storage theo yêu cầu mới của người thực hiện, thay phương án base64 dự phòng ban đầu. Đã upload/tải lại JPEG mẫu 2.108 byte thành công bằng credential quản trị. Storage Rules hiện hết hạn từ 03/08/2026 nên app SDK chưa được xác nhận có quyền upload. Chi tiết và bằng chứng nằm trong [quy trình upload](07-image-upload.md).
+Chọn Storage thay base64. Đã kiểm tra upload/tải lại JPEG 2.108 byte bằng cả IAM và SDK đăng nhập admin. Rules riêng chặn khách, ghi đè, sai prefix/loại/dung lượng; wildcard cũ vẫn hết hạn. Luồng ảnh trong form/mobile chưa triển khai ở C1. Chi tiết và bằng chứng nằm trong [quy trình upload](07-image-upload.md).
 
 - JPEG tối đa 512 × 512, mục tiêu 200 KiB, từ chối trên 500 KiB sau xử lý. Client, rules và phía tin cậy phải kiểm tra tương ứng.
 - Object UUID mới ở `midterm-mobile/avatars/`; không ghi đè theo email. Upload thành công rồi mới lưu URL, giữ ảnh cũ nếu thao tác lỗi.
@@ -43,7 +49,7 @@ Client không đọc/ghi trực tiếp collection chứa hash. Rules chặn truy
 
 API cần giới hạn request, dung lượng, chiều dài chuỗi, CORS origin cụ thể, lỗi không rò dữ liệu và kiểm tra admin từ token đã xác minh. Không cho client tự gán claim. HTTPS khi truy cập công khai; LAN HTTP chỉ dùng hồ sơ giả để phát triển/demo.
 
-Firestore cloud qua Admin SDK cần Application Default Credentials hoặc credential máy chủ quản lý riêng. `firebase login` của CLI không tự cung cấp credential cho Admin SDK. Không đặt khóa trong `EXPO_PUBLIC_*` hoặc Git. Chưa tạo key, tài khoản admin hay claim trong bước lên ý tưởng.
+Firestore cloud qua Admin SDK cần Application Default Credentials hoặc credential máy chủ quản lý riêng. `firebase login` của CLI không tự cung cấp credential cho Admin SDK. Không đặt khóa trong `EXPO_PUBLIC_*` hoặc Git. Đã tạo tài khoản admin demo và claim, credential chỉ giữ trong file ignored quyền 0600; không tạo service-account key.
 
 ## JSON bài nộp
 

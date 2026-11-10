@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "crested-mercury-452707-e8"
-  }
+  },
+  "targets": {
+    "crested-mercury-452707-e8": {
+      "hosting": {
+        "memberdesk": [
+          "memberdesk-801885728284"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

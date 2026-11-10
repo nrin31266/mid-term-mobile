@@ -2,7 +2,7 @@
 
 ## Nguyên tắc đã chốt về quy trình
 
-**Mỗi checkpoint lớn phải commit và push GitHub**, kèm source, tài liệu, ảnh và ghi chú của mốc đó. Không dồn hết lên GitHub cuối bài. Đây là quy trình được yêu cầu; tính năng trong tài liệu 01 vẫn chờ duyệt trước khi làm.
+**Mỗi checkpoint lớn phải commit và push GitHub**, kèm source, tài liệu, ảnh và ghi chú của mốc đó. Không dồn hết lên GitHub cuối bài. Phạm vi tài liệu 01 đã được duyệt bằng yêu cầu bắt đầu làm full. User yêu cầu web/API triển khai cloud trong phase này.
 
 Một checkpoint chỉ hoàn thành khi: chạy kiểm tra, chụp đủ các bước, ghi chú ngắn và cập nhật chỉ mục ảnh, soát diff/bí mật, commit tiếng Anh, push và xác minh SHA remote. **Cuối bài (C6) mới ráp ảnh và ghi chú vào Word**, giữ hai ảnh bạn đã làm; render và xem hết các trang sau khi ráp. Nếu lỗi, ghi kết quả thật và trạng thái chưa đạt; không tạo tag “hoàn tất” giả. Mốc kế hoạch chỉ cập nhật docs; ảnh chức năng chưa có thì ghi chưa chụp.
 
@@ -18,7 +18,7 @@ Một checkpoint chỉ hoàn thành khi: chạy kiểm tra, chụp đủ các b�
 | C5 — Nâng cao/hoàn thiện | Tra cứu kết hợp/phân trang, JSON kiểm tra/xem trước/nhập lại, thẻ in/PDF, trạng thái UI và truy cập | Ảnh từng nhóm, file sai không ghi, khôi phục thử, bản in/PDF, kiểm thử nghiệp vụ | `feat: deliver advanced member tools` |
 | C6 — Gói nộp | Chạy từ clone sạch, kiểm tra dữ liệu giả/schema, Word đầy đủ, JSON/ảnh khôi phục, video/GitHub mở được | Báo cáo cuối, CSDL thật, ảnh, README chạy, link video, bảng nghiệm thu R01–R11/S01–S06 | `docs: package verified coursework submission` |
 
-Các commit có thể tách nhỏ khi cần; vẫn phải push ở tất cả mốc lớn. C1 chỉ bắt đầu sau khi duyệt. Những cloud change cần làm trong phạm vi được duyệt phải xem rules/consumer trước; không đổi billing hoặc mở public để cho chạy nhanh.
+Các commit có thể tách nhỏ khi cần; vẫn phải push ở tất cả mốc lớn. C1 đã kiểm tra Auth/API/rules/SDK Storage cloud và lưu minh chứng. Đang chốt commit/push trước C2; C2–C6 chưa hoàn thành. Những cloud change cần làm trong phạm vi được duyệt phải xem rules/consumer trước; không đổi billing hoặc mở public để cho chạy nhanh.
 
 ## Chụp đủ quy trình, code và kết quả
 
@@ -65,9 +65,9 @@ Viết ngắn, tự nhiên như người làm bài kể lại: làm gì, chạy 
 6. Android: nhập ảnh, hiển thị, mở lại và đối chiếu web.
 7. Bốn nhóm nâng cao, ảnh thao tác và kết quả.
 8. CSDL cloud, export/khôi phục, kiểm thử/lỗi/cách xử lý.
-9. Cách clone/chạy API và app, giới hạn LAN, file nộp, link GitHub/video.
+9. Cách clone/chạy app, môi trường cloud/Emulator, file nộp, link GitHub/video.
 
-API Node local cần credential server riêng và địa chỉ truy cập đúng từ Android; localhost trên điện thoại không phải laptop. Không mở API ra internet. Dữ liệu demo giả dùng trong LAN HTTP; khi public phải có HTTPS/host và chốt chi phí riêng.
+Web/API cloud dùng Hosting/Function riêng và HTTPS theo tài liệu 03. API loopback chỉ dành cho Emulator; khi thử Android phải dùng host tương ứng của emulator/thiết bị. Không nhúng credential server vào app.
 
 ## Gói CSDL và video
 

@@ -1,0 +1,34 @@
+import assert from 'node:assert/strict';
+import { randomBytes } from 'node:crypto';
+import { once } from 'node:events';
+import { test } from 'node:test';
+import { initializeApp, deleteApp } from 'firebase/app';
+import { connectAuthEmulator, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { backendAuth } from '../server/firebase.mjs';
+import { createApi } from '../server/api.mjs';
+
+test('real Auth SDK token passes API only with admin claim; disabled account is blocked', async (context) => {
+  assert.equal(process.env.MEMBERDESK_ENV, 'emulator');
+  const admin = backendAuth();
+  const password = randomBytes(18).toString('base64url');
+  const email = `check-${randomBytes(8).toString('hex')}@example.test`;
+  const user = await admin.createUser({ email, password });
+  const app = initializeApp({ apiKey: 'demo-key', projectId: 'demo-memberdesk' }, 'auth-integration');
+  const client = getAuth(app);
+  connectAuthEmulator(client, 'http://127.0.0.1:9099', { disableWarnings: true });
+  const server = createApi(admin);
+  server.listen(0, '127.0.0.1'); await once(server, 'listening');
+  context.after(async () => { await deleteApp(app); await admin.deleteUser(user.uid); await new Promise((resolve) => server.close(resolve)); });
+  const url = `http://127.0.0.1:${server.address().port}/session`;
+  await assert.rejects(signInWithEmailAndPassword(client, email, `${password}-wrong`));
+  const signedIn = await signInWithEmailAndPassword(client, email, password);
+  const request = async (refresh = false) => fetch(url, { headers: { Authorization: `Bearer ${await signedIn.user.getIdToken(refresh)}` } });
+  assert.equal((await request()).status, 403);
+  await admin.setCustomUserClaims(user.uid, { admin: true });
+  const allowed = await request(true);
+  assert.equal(allowed.status, 200);
+  assert.equal((await allowed.json()).uid, user.uid);
+  await admin.updateUser(user.uid, { disabled: true });
+  assert.equal((await request()).status, 401);
+  await signOut(client);
+});

@@ -1,98 +1,44 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+import { ActionButton } from '@/components/form-controls';
+import { MaxContentWidth, Spacing, TypeSize } from '@/constants/theme';
+import { useTheme } from '@/hooks/use-theme';
+import { useAuth } from '@/providers/auth-provider';
+import { apiRequest } from '@/services/api';
 
 export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+  const theme = useTheme();
+  const { logOut } = useAuth();
+  const [session, setSession] = useState<{ email: string } | null>(null);
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(true);
+  const [attempt, setAttempt] = useState(0);
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+  useEffect(() => {
+    let active = true;
+    apiRequest<{ email: string }>('/session').then((result) => {
+      if (active) { setSession(result); setError(''); }
+    }).catch((failure) => { if (active) setError(failure.message); })
+      .finally(() => { if (active) setBusy(false); });
+    return () => { active = false; };
+  }, [attempt]);
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+  async function leave() {
+    try { await logOut(); } catch { setError('Chưa đăng xuất được. Vui lòng thử lại.'); }
+  }
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
-  );
+  return <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: Spacing.four }}>
+    <View style={{ width: '100%', maxWidth: MaxContentWidth, alignSelf: 'center', gap: Spacing.four }}>
+      <Text accessibilityRole="header" style={{ color: theme.text, fontSize: TypeSize.section, fontWeight: '700' }}>Không gian quản trị</Text>
+      {busy ? <ActivityIndicator accessibilityLabel="Đang xác minh quyền truy cập" color={theme.accent} /> : error ? <>
+        <Text selectable accessibilityRole="alert" style={{ color: theme.danger }}>{error}</Text>
+        <ActionButton title="Thử lại" onPress={() => { setBusy(true); setAttempt(attempt + 1); }} />
+      </> : <>
+        <Text style={{ color: theme.text, fontSize: TypeSize.body }}>Bạn đã đăng nhập với quyền quản trị.</Text>
+        <Text selectable style={{ color: theme.textSecondary, fontSize: TypeSize.body }}>{session?.email}</Text>
+      </>}
+      <ActionButton title="Đăng xuất" secondary onPress={() => void leave()} />
+    </View>
+  </ScrollView>;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
-});

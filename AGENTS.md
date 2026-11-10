@@ -1,9 +1,9 @@
 # AGENTS.md — MemberDesk working agreement
 
 This is an Expo/React Native coursework application. Prioritize mobile-first behavior,
-performance, accessibility, and web/Android/iOS compatibility. Current phase: planning
-and tooling setup. Implement product features only after the user approves
-`docs/01-y-tuong-va-pham-vi.md`. Tool installation and upload diagnostics are authorized.
+performance, accessibility, and web/Android/iOS compatibility. Current phase: implementation.
+The user approved `docs/01-y-tuong-va-pham-vi.md` by starting the full implementation goal
+on 2026-11-10. Complete C1–C6, including advanced features and submission evidence.
 
 ## Read only what the task needs
 
@@ -96,9 +96,10 @@ Skill advice never overrides user instructions, assignment limits, or installed 
 | Word report | `documents` skill; edit the file directly and render/visually verify changes |
 | Unexpected behavior/completion | `systematic-debugging`, `verification-before-completion` |
 
-The seven project-specific skills live in `.agents/skills/` and are versioned with this repo:
+The eight project-specific skills live in `.agents/skills/` and are versioned with this repo:
 `expo-native-ui`, `expo-design-system`, `agent-desktop`, `firebase-basics`,
-`firebase-auth-basics`, `firebase-firestore`, and `firebase-security-rules-auditor`.
+`firebase-auth-basics`, `firebase-firestore`, `firestore-rules-creation`, and
+`firebase-security-rules-auditor`.
 Install future project skills here, never in the global user skill directory. Preserve upstream
 resources and language; the Vietnamese documentation rule applies to authored project docs.
 System/personal skills supplied by the host remain host-managed. Read project skills by local
@@ -120,12 +121,16 @@ small read request; configuration alone is not evidence of a connected server.
 ## Firebase and image uploads
 
 - Project: `crested-mercury-452707-e8` (Nguyen Van Rin). Existing plan: Blaze. Do not change billing,
-  enable paid services, create a new bucket, or provision Functions without task authorization.
+  change billing or create a new bucket. The user authorized cloud deployment and Cloud SDK ADC
+  on 2026-11-10: use dedicated Function `memberdeskApi` (codebase `memberdesk`) and Hosting
+  site `memberdesk-801885728284`; preserve the unrelated Function `app` and default site.
 - User confirmed using existing Storage. Bucket: `crested-mercury-452707-e8.firebasestorage.app`.
   Store an image file in Storage and its URL in `hinhanh`; base64 is no longer the selected design.
-- The existing Storage rule allows client access only before 2026-08-03 and has expired. An IAM
-  admin upload passed, but client SDK uploads are not verified. Never extend an open test-mode
-  deadline as a fix. Propose authenticated, path-scoped rules and test them before deployment.
+- The legacy Storage wildcard expired on 2026-08-03 and stays expired. Scoped admin-only JPEG
+  rules were tested and deployed. Real client SDK upload/download and denied overwrite/guest
+  checks passed; this diagnostic does not prove the future app image workflow.
+- Firestore rules exclude `midterm_users` from the legacy wildcard. Other collections retain
+  their pre-existing public access; do not claim the whole shared project is secured.
 - This personal project has other apps and data. Inspect live rules, wildcard grants, resources,
   and consumers before changes. Use a dedicated collection and object prefix. Never replace
   project-wide rules blindly. Do not delete old objects until references and authorization are checked.
@@ -149,10 +154,13 @@ validation, authorization, accessibility, and error handling that prevents data 
 Changed non-trivial logic needs a focused regression check; prose/styling alone needs no new test suite.
 
 Always run `pnpm exec expo lint` and `pnpm exec tsc --noEmit` before declaring the task complete.
-Add affected tests or platform checks when needed. The current starter has known lint/type failures;
-report exact failures instead of disabling checks or claiming success. Repeat passed checks only
+Add affected tests or platform checks when needed. The starter lint/type failures were addressed
+in C1; report any new failures instead of disabling checks or claiming success. Repeat passed checks only
 when new changes or unresolved concerns justify it. Review final diff/status and staged scope.
 
+Keep all task GUI windows on the left monitor; the right monitor is reserved for the user.
+Check current display/window bounds before placement or capture. Prefer window/tab/device captures,
+then crop to the relevant content. Never include AI chat or unrelated user content in report images.
 Only commit/push authorized work. Capture only relevant windows/regions; inspect screenshots
 for credentials and unrelated private content before putting them in Word or Git. Keep raw full
 screens, traces, and private diagnostics in `/tmp` or ignored `docs/private/`. Curated report
@@ -160,7 +168,8 @@ images belong in `docs/submition/screenshots/` with descriptive English names.
 At each major checkpoint in `docs/05-ke-hoach-va-bai-nop.md`, run relevant checks, capture
 all important steps, not just final screens: real install/run commands, Console setup, source
 structure, key code, UI actions, database state, and tests. Use numbered English filenames.
-Capture real source in an editor with filename/line numbers and readable short excerpts; link
+Capture real source in the existing VS Code window on the left, with filename/line numbers and
+readable short excerpts; use terminals for commands and check results; link
 each code image to runtime evidence and its file/function/commit. Refresh stale code images.
 Use terminal, editor, Chrome/in-app browser, and ADB as appropriate; do not simulate a human
 workflow or replay risky operations just to manufacture evidence. Update concise Vietnamese notes and the

@@ -15,9 +15,9 @@ Cập nhật ngày 10/11/2026. Tài liệu mô tả trạng thái thực tế, k
 | Thiết kế mobile | `expo-native-ui` | Đội Expo, bố cục native, điều khiển và hành vi từng nền tảng |
 | Nhất quán giao diện | `expo-design-system` | Đội Expo, màu/khoảng cách/kiểu chữ; tái sử dụng theme đang có |
 | Điều khiển desktop | `agent-desktop` | Vercel Labs, chụp màn hình và thao tác qua accessibility |
-| Firebase | Bốn skill đã cài ở tài liệu 04 | Thiết lập, Auth, Firestore và rà soát rules |
+| Firebase | Năm skill đã cài ở tài liệu 04 | Thiết lập, Auth, Firestore và rà soát rules |
 
-Các skill đã chuyển vào **`.agents/skills/` của dự án**, không phải thư mục global hoặc dependency ứng dụng. Đã đối chiếu checksum đầy đủ rồi bỏ đúng bảy bản global đã cài trong cuộc trò chuyện này; giữ nguyên skill hệ thống/cá nhân. Có thể cần lượt mới để xuất hiện tự động; trong lúc đó đọc bằng đường dẫn local. Không giả định mọi ví dụ upstream hợp với SDK đang dùng; docs SDK 58 và manifest vẫn quyết định API.
+Các skill đã chuyển vào **`.agents/skills/` của dự án**, không phải thư mục global hoặc dependency ứng dụng. Bảy bản ban đầu đã đối chiếu checksum rồi bỏ đúng bản global do cuộc trò chuyện này cài. Sau đó bổ sung `firestore-rules-creation` trực tiếp trong repo; tổng cộng tám skill. Giữ nguyên skill hệ thống/cá nhân. Có thể cần lượt mới để xuất hiện tự động; trong lúc đó đọc bằng đường dẫn local. Không giả định mọi ví dụ upstream hợp với SDK đang dùng; docs SDK 58 và manifest vẫn quyết định API.
 
 Nguồn đã kiểm tra: [Expo skills](https://github.com/expo/skills), [agent-desktop](https://github.com/vercel-labs/agent-desktop). Hai skill Expo hiện nằm ở `plugins/expo/skills/expo-native-ui` và `plugins/expo/skills/expo-design-system`, không dùng đường dẫn `building-native-ui` đã cũ trên kết quả tìm kiếm.
 
@@ -25,7 +25,7 @@ Nguồn đã kiểm tra: [Expo skills](https://github.com/expo/skills), [agent-d
 
 | Skill | Repository và đường dẫn nguồn |
 | --- | --- |
-| Bốn skill Firebase | `firebase/agent-skills`, `skills/<tên-skill>` |
+| Năm skill Firebase | `firebase/agent-skills`, `skills/<tên-skill>` |
 | Hai skill Expo | `expo/skills`, `plugins/expo/skills/expo-native-ui` và `plugins/expo/skills/expo-design-system` |
 | Desktop | `vercel-labs/agent-desktop`, `skills/agent-desktop` |
 
@@ -48,7 +48,7 @@ Lệnh minh họa cài mới; **không chạy đè bản đang có**. Không cà
 
 - `agent-desktop` MCP: cấu hình cá nhân global, có biến môi trường trỏ tới phiên KDE/Wayland của laptop này. Đã bắt tay MCP, thấy 67 công cụ và gọi status thành công.
 - Firebase MCP: cấu hình tại `.codex/config.toml` của repository, chạy bằng Firebase CLI 15.34.1 đã đăng nhập. Đã thấy đúng tám công cụ, đọc project và Storage Rules thành công.
-- Tám công cụ Firebase chỉ đọc/kiểm tra: project, môi trường, app, SDK config, đọc rules, kiểm tra rules, truy vấn collection và lấy URL object đã có. Không có deploy, xóa, tạo project hay đổi Auth.
+- Tám công cụ Firebase chỉ đọc/kiểm tra: project, môi trường, app, SDK config, đọc rules, kiểm tra rules, truy vấn collection và lấy URL object đã có. Không có deploy, xóa, tạo project hay đổi Auth. Các thao tác cloud đã được cho phép thực hiện bằng CLI/Console; không cần mở thêm MCP write tools để ứng dụng hoạt động đầy đủ.
 - MCP cấu hình mới cần nạp lại Codex/chat để được tích hợp vào danh sách công cụ. Bài thử dùng kết nối MCP stdio trực tiếp, không chỉ kiểm tra file cấu hình.
 
 Không cần cài thêm Firebase plugin song song vì dễ trùng server. Không đổi chính sách phê duyệt toàn app hoặc quyền IAM để cài công cụ.
@@ -72,14 +72,12 @@ Trước khi chụp báo cáo: mở đúng màn hình, kiểm tra không có tok
 
 ## Quy trình checkpoint và ảnh báo cáo
 
-Thực hiện bảng checkpoint trong tài liệu 05: kiểm thử → mở màn hình thật → chụp đủ bước/kiểm tra ảnh → ghi chú ngắn/cập nhật chỉ mục → commit/push → xác minh commit remote. Cuối bài mới ráp Word, giữ hai ảnh gốc; render rồi xem hết các trang. Chụp ngay khi làm từng bước quan trọng, gồm lệnh cài/chạy, cấu hình Console, cây source, code chính, thao tác UI, CSDL và kiểm thử. Không đợi cuối mới dựng lại toàn bộ bằng chứng. Code chụp từ editor có tên file/số dòng, kèm file/hàm/commit và ảnh chạy liên quan. Công cụ chụp: browser cho web, Agent Desktop cho desktop/Console, ADB cho Android theo thiết bị đã xác định.
+Thực hiện bảng checkpoint trong tài liệu 05: kiểm thử → mở màn hình thật → chụp đủ bước/kiểm tra ảnh → ghi chú ngắn/cập nhật chỉ mục → commit/push → xác minh commit remote. Cuối bài mới ráp Word, giữ hai ảnh gốc; render rồi xem hết các trang. Chụp ngay khi làm từng bước quan trọng, gồm lệnh cài/chạy, cấu hình Console, cây source, code chính, thao tác UI, CSDL và kiểm thử. Không đợi cuối mới dựng lại toàn bộ bằng chứng. Code chụp từ editor có tên file/số dòng, kèm file/hàm/commit và ảnh chạy liên quan. Công cụ chụp: browser chụp riêng tab; VS Code có sẵn bên trái để chụp code theo yêu cầu mới; terminal cho lệnh/kết quả; ADB cho Android theo thiết bị đã xác định. Trên KDE Wayland, dùng Spectacle chụp cửa sổ đang hoạt động sau khi xác minh đúng VS Code. Cửa sổ Konsole X11 chụp riêng bằng ImageMagick; không lấy màn phải hay chat AI vào ảnh báo cáo.
 
 [Chỉ mục minh chứng](submition/README.md) ghi ảnh đã có và ảnh còn thiếu. Hai ảnh Word cũ là bằng chứng khởi tạo/chạy starter, không chứng minh CRUD. Ảnh upload mẫu chỉ chứng minh IAM; ảnh đề là tư liệu tham chiếu. Không tạo ảnh terminal giả hoặc ảnh mockup rồi gọi là kết quả chạy.
 
-## Kiểm tra cuối phần thiết lập
+## Kết quả hiện tại
 
-- Agent Desktop CLI, screenshot và MCP status: thành công.
-- Firebase MCP project/rules: thành công.
-- Ảnh Storage upload/tải lại: thành công với tài khoản quản trị; xem tài liệu 07 về giới hạn SDK.
-- Lint/typecheck đã chạy lại: vẫn hai lỗi code mẫu ở tài liệu 04, chưa sửa source app.
-- Word giữ nguyên bản của bạn với hai ảnh gốc; cuối bài mới ráp theo hướng dẫn mới. Chưa triển khai tính năng, thay rules, tạo claim admin hay quay video.
+Firebase MCP đọc đúng project; Agent Desktop nhận accessibility, nhưng VS Code Wayland chưa hiện trong cây của công cụ. CLI `code --reuse-window --goto` mở source thật; KWin đưa đúng cửa sổ Code sang trái, Spectacle chụp riêng cửa sổ rồi crop vùng editor. Ảnh sai cửa sổ chỉ giữ tạm, không vào báo cáo.
+
+Cloud Auth/API/Storage SDK đã kiểm tra theo tài liệu 04/07. Lint/typecheck và kiểm thử quyền đã qua ở C1. Word vẫn giữ hai ảnh gốc, ráp cuối C6; CRUD/mobile/video chưa được đánh dấu hoàn thành.

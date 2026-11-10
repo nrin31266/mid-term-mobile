@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Bốn trường email, matkhau, hoten, hinhanh chỉ đi qua API Admin SDK.
+    match /midterm_users/{document=**} {
+      allow read, write: if false;
+    }
+
+    // Giữ quyền cũ của app khác; loại collection của bài khỏi wildcard cũ.
+    // Rủi ro còn lại: dữ liệu cũ của project vẫn đang mở công khai.
+    match /{collection}/{document=**} {
+      allow read, write: if collection != 'midterm_users';
+    }
+  }
+}

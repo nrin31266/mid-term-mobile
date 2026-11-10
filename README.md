@@ -1,33 +1,57 @@
 # mid-term-mobile
 
-Đồ án giữa kỳ Lập trình đa nền tảng: **MemberDesk — quản lý thành viên** bằng Expo/React Native và Firebase.
+MemberDesk — đồ án quản lý thành viên bằng Expo SDK 58 và Firebase. Đang làm C1–C6; hiện có đăng nhập admin và nền tảng cloud, chưa hoàn thành CRUD/mobile/gói nộp.
 
-Hiện tại: lên ý tưởng, thiết lập công cụ và tài liệu; chưa triển khai nghiệp vụ. Thiết kế đang chờ duyệt.
+Web: https://memberdesk-801885728284.web.app · [Tài liệu](docs/README.md) · [Đối chiếu đề](docs/02-doi-chieu-de-bai.md) · [Minh chứng](docs/submition/README.md)
 
-- [Bộ tài liệu tiếng Việt](docs/README.md)
-- [Ý tưởng và phạm vi](docs/01-y-tuong-va-pham-vi.md)
-- [Đối chiếu tiêu chí chấm](docs/02-doi-chieu-de-bai.md)
-- [Kiến trúc và dữ liệu](docs/03-kien-truc-va-du-lieu.md)
-- [Thiết lập và kết quả kiểm tra](docs/04-thiet-lap.md)
-- [Checkpoint GitHub, ảnh Word và bài nộp](docs/05-ke-hoach-va-bai-nop.md)
-- [Chỉ mục minh chứng hiện có/cần chụp](docs/submition/README.md)
-- [AI, skill và MCP](docs/06-ai-workflow.md)
-- [Upload ảnh Storage đã kiểm tra](docs/07-image-upload.md)
+## Chạy với cloud
 
-## Chạy dự án mẫu
+Cần Node 24, pnpm 11. App dùng config web public; không cần ADC hay key server khi kết nối API cloud.
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm exec expo start
+cp .env.example .env.local
 pnpm exec expo start --web
-pnpm exec expo lint
-pnpm exec tsc --noEmit
+# Hoặc mở Expo Go SDK 58 trên thiết bị để chạy mobile
+pnpm exec expo start
 ```
 
-Dự án dùng Expo SDK 58 và pnpm. Xem các lỗi nền đã phát hiện trong tài liệu thiết lập; hiện chưa đạt lint/typecheck sạch.
+Dùng tài khoản admin được cấp riêng. Không có mật khẩu mặc định trong Git. Máy đang triển khai có file ignored `docs/private/cloud-admin.json`; không chia sẻ/chụp file đó. Tài khoản thành viên được quản lý không phải tài khoản đăng nhập Firebase Auth.
 
-Code/định danh tiếng Anh; comment ngắn ở chỗ quan trọng bằng tiếng Việt. Tài liệu tiếng Việt, riêng AGENTS.md tiếng Anh. Dữ liệu chỉ có email, matkhau, hoten, hinhanh theo đề.
+## Thử bằng Emulator
 
-Repository: https://github.com/nrin31266/mid-term-mobile
+Cần Java và Firebase CLI. Các lệnh chạy ở những terminal riêng:
 
-Bảy skill dành riêng cho dự án nằm trong `.agents/skills/`, gồm hai skill thiết kế Expo. Mỗi checkpoint lớn chụp đủ bước, ghi chú ngắn rồi commit/push source, docs và ảnh lên GitHub. Cuối bài mới ráp Word, giữ hai ảnh đã có.
+```bash
+pnpm emulators
+pnpm seed:emulator
+pnpm api:emulator
+pnpm web:emulator
+```
+
+Credential demo sinh ngẫu nhiên ở `docs/private/emulator-admin.json`. Web Emulator dùng loopback; Android emulator cần host laptop `10.0.2.2` cho API và Firebase Emulator qua biến môi trường. Không trộn biến host Emulator vào cloud.
+
+## Kiểm tra và triển khai
+
+```bash
+pnpm exec expo lint
+pnpm exec tsc --noEmit
+pnpm test
+# Tắt Emulator đang chạy trước khi dùng emulators:exec
+pnpm test:firebase
+pnpm build:web:cloud
+```
+
+Chỉ người có quyền project mới triển khai; xem ranh giới tài nguyên trong [kiến trúc](docs/03-kien-truc-va-du-lieu.md). Không đổi billing/bucket hay dùng site/Function của app cũ.
+
+```bash
+firebase deploy --project crested-mercury-452707-e8 --only firestore:rules,storage --non-interactive
+firebase deploy --project crested-mercury-452707-e8 --only functions:memberdesk --non-interactive
+firebase deploy --project crested-mercury-452707-e8 --only hosting:memberdesk --non-interactive
+```
+
+ADC chỉ dùng trên máy quản trị. Function dùng danh tính runtime, không chứa credential local. Project đang Blaze, có thể phát sinh phí theo sử dụng.
+
+Code/commit tiếng Anh, comment quan trọng ngắn bằng tiếng Việt; UI/docs tiếng Việt, riêng `AGENTS.md` tiếng Anh. Tám skill local ở `.agents/skills/`. Mỗi checkpoint lớn kiểm tra, chụp đủ bước, commit/push và xác minh GitHub. Word giữ hai ảnh cũ và ráp cuối C6.
+
+Source: https://github.com/nrin31266/mid-term-mobile

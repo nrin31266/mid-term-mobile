@@ -15,7 +15,7 @@ Word giữ nguyên file của bạn và hai ảnh gốc. Không sao chép lại 
 
 ## Danh sách cần chụp trong quá trình làm
 
-Cần cả **bước làm, code và kết quả chạy**, không chỉ ảnh giao diện cuối. Hai ảnh bạn đã chụp là mẫu cho phần khởi tạo. Danh sách dưới đây bổ sung các bước tiếp theo; chưa có ảnh nào được coi là đã chụp.
+Cần cả **bước làm, code và kết quả chạy**, không chỉ ảnh giao diện cuối. Hai ảnh bạn đã chụp là mẫu cho phần khởi tạo. Danh sách dưới đây theo dõi từng mốc. C1 đã có ảnh thật; các mốc C2–C6 vẫn chưa chụp.
 
 Tên ảnh theo dạng `c2-01-schema-code.png`: checkpoint, số thứ tự, nội dung. Bản khoanh vùng thêm `-marked.png`. Số dưới đây dùng để chuẩn bị; khi có thêm bước quan trọng thì thêm ảnh, không ghi đè hoặc bỏ qua vì đã đủ số lượng. Chỉ đổi tên dự kiến khi chưa có ảnh và cập nhật chỉ mục cùng lúc.
 
@@ -25,26 +25,53 @@ Không đặt số lượng ảnh làm mục tiêu. Một ảnh có thể thể 
 
 | Ảnh dự kiến | Loại | Nội dung cần thấy | Tiêu chí | Trạng thái |
 | --- | --- | --- | --- | --- |
-| `c1-01-env-versions.png` | Bước làm | Terminal: phiên bản Node, pnpm, Expo, Firebase CLI | R01, S02 | Chưa chụp |
-| `c1-02-starter-errors.png` | Kiểm tra | Hai lỗi lint/typecheck ban đầu và lệnh thật | S01–S02 | Chưa chụp |
-| `c1-03-starter-fix-code.png` | Code | Đoạn sửa lỗi starter, khoanh đúng phần thay đổi | S01 | Chưa chụp |
-| `c1-04-starter-checks.png` | Kết quả | Chạy lại lint/typecheck sau sửa; lỗi còn thì ghi đúng | S01–S02 | Chưa chụp |
-| `c1-05-project-structure.png` | Bước làm | Cây thư mục app, component, service, API; giải thích vai trò ngắn | R01, S01 | Chưa chụp |
-| `c1-06-install-packages.png` | Bước làm | Lệnh Expo cài SDK/thư viện và kết quả thực tế | S02 | Chưa chụp |
-| `c1-07-firebase-project-apps.png` | Bước làm | Chọn đúng project và kiểm tra app có sẵn trước khi cấu hình | R02, S01 | Chưa chụp |
-| `c1-08-firebase-web-config.png` | Bước làm | Cấu hình web app dành cho bài; không dùng app Android cũ | R02, S01 | Chưa chụp |
-| `c1-09-firebase-init-code.png` | Code | Khởi tạo Firebase từ config, không chứa credential server | R02, S01 | Chưa chụp |
-| `c1-10-auth-provider.png` | Bước làm | Thiết lập phương thức đăng nhập admin trong Console | R05, S01 | Chưa chụp |
-| `c1-11-admin-claim-code.png` | Code | Công cụ cấp claim admin đúng tài khoản demo; không chụp mật khẩu/token | R05, S01 | Chưa chụp |
-| `c1-12-api-config.png` | Bước làm | Cấu hình mẫu API và địa chỉ kết nối, không mở file credential thật | S01–S02 | Chưa chụp |
-| `c1-13-admin-guard-code.png` | Code | Server xác minh token và claim admin; chặn request thiếu quyền | R05 | Chưa chụp |
-| `c1-14-rules-before.png` | Bước làm | Kiểm tra rules hiện có, vùng dữ liệu dùng chung và rule Storage hết hạn | R02, S01 | Chưa chụp |
-| `c1-15-rules-code.png` | Code | Rules giới hạn collection/prefix/quyền/loại ảnh/dung lượng của bài | R02, R05, R11 | Chưa chụp |
-| `c1-16-emulators-running.png` | Bước làm | Lệnh khởi chạy Emulator và cổng dịch vụ đã lên | S02 | Chưa chụp |
-| `c1-17-auth-rules-tests.png` | Kiểm tra | Kết quả cho có/không token, không admin, sai prefix và quá dung lượng | R05, R09 | Chưa chụp |
-| `c1-18-admin-login.png` | Kết quả | Giao diện và kết quả đăng nhập đúng bằng tài khoản demo | R05 | Chưa chụp |
-| `c1-19-login-error.png` | Kết quả | Đăng nhập sai hiện lỗi dễ hiểu, không lộ credential | R05 | Chưa chụp |
-| `c1-20-access-denied.png` | Kết quả | Truy cập khi chưa đăng nhập/không admin bị chặn; logout không vào lại được | R05 | Chưa chụp |
+| `c1-01-env-versions.png` | Bước làm | Terminal: phiên bản Node, pnpm, Expo CLI; Firebase CLI ghi riêng trong tài liệu 04 | R01, S02 | Đã chụp; có bản khoanh vùng |
+| `c1-02-starter-errors.png` | Kiểm tra | Hai lỗi lint/typecheck ban đầu và lệnh thật | S01–S02 | Không có ảnh lúc lỗi ban đầu; ghi lỗi lịch sử ở tài liệu 04, không dựng lại |
+| `c1-03-starter-fix-code.png` | Code | Đoạn sửa lỗi starter, khoanh đúng phần thay đổi | S01 | Đã chụp VS Code; hook hydration, bộ tab starter đã bỏ vì không dùng |
+| `c1-04-starter-checks.png` | Kết quả | Chạy lại lint/typecheck sau sửa; lỗi còn thì ghi đúng | S01–S02 | Đã chụp; lint/typecheck và 2 test API qua |
+| `c1-05-project-structure.png` | Bước làm | Cây thư mục app, component, service, API; giải thích vai trò ngắn | R01, S01 | Đã chụp Explorer/source thật trong VS Code |
+| `c1-06-install-packages.png` | Bước làm | Lệnh Expo cài SDK/thư viện và kết quả thực tế | S02 | Không có ảnh lúc cài; dùng ảnh kiểm tra dependency hiện tại ở c1-22 |
+| `c1-07-firebase-project-apps.png` | Bước làm | Chọn đúng project và kiểm tra app có sẵn trước khi cấu hình | R02, S01 | Kiểm tra project gộp ảnh Console c1-10 và config c1-08; không chụp dữ liệu app cũ |
+| `c1-08-firebase-web-config.png` | Bước làm | Cấu hình web app dành cho bài; không dùng app Android cũ | R02, S01 | Đã chụp config web app riêng trong VS Code |
+| `c1-09-firebase-init-code.png` | Code | Khởi tạo Firebase từ config, không chứa credential server | R02, S01 | Đã chụp VS Code |
+| `c1-10-auth-provider.png` | Bước làm | Thiết lập phương thức đăng nhập admin trong Console | R05, S01 | Đã chụp, file thực tế .jpg; có bản khoanh vùng |
+| `c1-11-admin-claim-code.png` | Code | Công cụ cấp claim admin đúng tài khoản demo; không chụp mật khẩu/token | R05, S01 | Đã chụp công cụ cấp claim, không mở credential |
+| `c1-12-api-config.png` | Bước làm | Cấu hình mẫu API và địa chỉ kết nối, không mở file credential thật | S01–S02 | Đã chụp Function HTTPS và giới hạn instance |
+| `c1-13-admin-guard-code.png` | Code | Server xác minh token và claim admin; chặn request thiếu quyền | R05 | Đã chụp lại bằng VS Code, có bản khoanh vùng |
+| `c1-14-rules-before.png` | Bước làm | Kiểm tra rules hiện có, vùng dữ liệu dùng chung và rule Storage hết hạn | R02, S01 | Rule cũ hết hạn hiện trong c1-15; bản sao trước deploy giữ riêng, không đưa Git |
+| `c1-15-rules-code.png` | Code | Rules giới hạn collection/prefix/quyền/loại ảnh/dung lượng của bài | R02, R05, R11 | Đã chụp hai file c1-15-firestore-rules-code và c1-15-storage-rules-code |
+| `c1-16-emulators-running.png` | Bước làm | Lệnh khởi chạy Emulator và cổng dịch vụ đã lên | S02 | Đã chụp lệnh/cổng/ready, có bản khoanh vùng |
+| `c1-17-auth-rules-tests.png` | Kiểm tra | Kết quả cho có/không token, không admin, sai prefix và quá dung lượng | R05, R09 | Đã chụp: 9/9, exit 0; PERMISSION_DENIED là nhánh cố ý thử bị chặn |
+| `c1-18-admin-login.png` | Kết quả | Giao diện và kết quả đăng nhập đúng bằng tài khoản demo | R05 | Đã chụp cloud, file thực tế .jpg; tải lại giữ phiên |
+| `c1-19-login-error.png` | Kết quả | Đăng nhập sai hiện lỗi dễ hiểu, không lộ credential | R05 | Đã chụp cloud, file thực tế .jpg; có bản khoanh vùng |
+| `c1-20-access-denied.png` | Kết quả | Truy cập khi chưa đăng nhập/không admin bị chặn; logout không vào lại được | R05 | Đã chụp cloud sau logout, file thực tế .jpg; mở / bị đưa về /sign-in |
+
+### Ghi chú ảnh C1 đã có
+
+Ảnh chụp ngày 10/11/2026 trên laptop KDE, chỉ cửa sổ VS Code/Konsole bên trái hoặc riêng tab IAB 1280 × 720. Đã crop, kiểm tra credential/nội dung riêng; chưa đưa vào Word. Các ảnh code dưới đây cùng checkpoint commit `feat: establish secure cloud admin access` (tra SHA bằng `git log --all --grep` với tiêu đề này), sẽ dùng cùng ảnh chạy tương ứng. Ảnh chưa chụp lúc cài/lỗi cũ không được dựng lại.
+
+| File ảnh | Nguồn/code và điều đã quan sát | Ảnh/kết quả liên quan |
+| --- | --- | --- |
+| [03 — Hook](screenshots/c1-03-starter-fix-code.png) | `src/hooks/use-color-scheme.web.ts`, `useColorScheme`: snapshot server/client | 04 kiểm tra; 18 web chạy |
+| [04 — Checks](screenshots/c1-04-starter-checks.png) | Lệnh lint → tsc → pnpm test thật; 2/2, không bỏ qua lỗi trước | R01/S01–S02 |
+| [05 — Source](screenshots/c1-05-project-structure.png) | `src/app`, `services`, `providers`, `server` tách rõ | R01/S01 |
+| [08 — Web config](screenshots/c1-08-firebase-web-config.png) | `src/services/firebase-config.ts`, cấu hình public và chế độ cloud/emulator | 10 Auth; 18 phiên thật |
+| [09 — Init](screenshots/c1-09-firebase-init-code.png) | `getFirebase` trong `src/services/firebase.ts`: khởi tạo/persistence/Emulator | 18–20 |
+| [10 — Auth](screenshots/c1-10-auth-provider-marked.jpg) | Console đã Save, Email/Password Enabled; đúng project | 18–19 |
+| [11 — Claim](screenshots/c1-11-admin-claim-code.png) | `scripts/grant-admin.mjs`: giữ claim cũ, chặn tài khoản bị khóa | 17 test JWT/disabled; biên nhận cloud |
+| [12 — API cloud](screenshots/c1-12-api-config.png) | `server/cloud.mjs`, `memberdeskApi`, CORS origin và instance | 18; biên nhận cloud |
+| [13 — Guard](screenshots/c1-13-admin-guard-code-marked.png) | `server/access.mjs`, `requireAdmin`: verify/revoked/admin | 04/17 và cloud 401/200 |
+| [15 — Firestore](screenshots/c1-15-firestore-rules-code.png) | Deny collection bài; loại khỏi wildcard cũ; dữ liệu cũ vẫn có quyền như trước | 17; cloud query bị chặn |
+| [15 — Storage](screenshots/c1-15-storage-rules-code.png) | Admin/prefix/UUID/JPEG/500 KiB/không ghi đè; wildcard hết hạn giữ nguyên | 17; SDK cloud upload/download |
+| [16 — Emulator](screenshots/c1-16-emulators-running-marked.png) | `pnpm emulators`, ready và cổng; cảnh báo Java có thật | Tiền đề kiểm thử, không thay cloud |
+| [17 — Rules](screenshots/c1-17-auth-rules-tests.png) | Lần chạy `pnpm test:firebase`, 9/9 và code 0; Emulator tự dừng | R05/R09 |
+| [18 — Admin](screenshots/c1-18-admin-login.jpg) | Đăng nhập admin trên Hosting, API `/session` xác nhận quyền; tải lại vẫn còn | R05 |
+| [19 — Sai mật khẩu](screenshots/c1-19-login-error-marked.jpg) | Nhập mật khẩu sai, lỗi tiếng Việt; không lộ mật khẩu/token | R05 |
+| [21 — Hosting](screenshots/c1-21-hosting-site-marked.jpg), [domain](screenshots/c1-21-hosting-domains.jpg) | Console: site riêng và hai domain mặc định; crop bỏ email tài khoản | Web cloud ảnh 18–20 |
+| [22 — Dependency](screenshots/c1-22-installed-packages.png) | Kiểm tra `package.json` sau cài, không phải ảnh lệnh cài ban đầu | Manifest/lockfile và export web |
+| [20 — Guard UI](screenshots/c1-20-access-denied.jpg) | Đăng xuất rồi truy cập `/`, router đưa về `/sign-in` | R05 |
+
+[Biên nhận cloud](evidence/cloud-access-check.json): admin Auth/API 200, thiếu token 401, Firestore deny, Storage SDK upload/download khớp, overwrite/guest bị chặn. Fixture mới đã dọn; chưa phải hồ sơ/ảnh mobile hoàn thành.
 
 ### C2 — Thêm, xem và lưu dữ liệu trên web
 

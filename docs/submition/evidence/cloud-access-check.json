@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-11-10T10:29:57.571Z",
+  "projectId": "crested-mercury-452707-e8",
+  "api": "https://memberdesk-801885728284.web.app/api",
+  "adminLogin": true,
+  "adminApi": 200,
+  "missingTokenApi": 401,
+  "directFirestoreDenied": true,
+  "sdkUploadBytes": 2108,
+  "sdkDownloadMatches": true,
+  "overwriteDenied": true,
+  "guestUploadDenied": true,
+  "fixture": "JPEG giả, file kiểm tra được dọn sau khi kiểm tra tham chiếu; chưa phải ảnh hồ sơ trong app."
+}

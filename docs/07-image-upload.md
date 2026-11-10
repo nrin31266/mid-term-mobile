@@ -10,7 +10,7 @@
 
 Bằng chứng local: [ảnh JPEG đã tải lại](submition/evidence/storage-upload-check.jpg) và [biên nhận kiểm tra](submition/evidence/storage-upload-check.json). Đây là ảnh mẫu và metadata thật, không phải ảnh chụp một chức năng app đã hoàn thành. Không upload hai ảnh báo cáo cá nhân có sẵn để thử.
 
-## Vì sao phía app chưa được xác nhận upload
+## Rule cũ và kết quả SDK mới
 
 Storage Rules đang chạy có điều kiện:
 
@@ -20,13 +20,17 @@ allow read, write: if request.time < timestamp.date(2026, 8, 3);
 
 Ngày kiểm tra là 10/11/2026 nên điều kiện này đã hết hạn. Đọc bằng Firebase MCP xác nhận chỉ có rule wildcard đó. Credential quản trị qua Google Cloud IAM có thể upload, nhưng không chứng minh phiên Firebase Auth của app có quyền upload qua SDK.
 
-**Chưa deploy/thay rules.** Không sửa bằng cách kéo dài thời hạn mở public. Trước triển khai, đề xuất rule riêng cho `midterm-mobile/avatars/`, yêu cầu đăng nhập và claim admin; giới hạn loại ảnh JPEG và dung lượng. Cần kiểm thử đọc/ghi khi có/không có token, token không admin, sai đường dẫn, MIME sai và ảnh quá lớn. Đồng thời kiểm tra các app cũ trước khi cập nhật rules chung.
+Đã sao lưu rules cũ vào vùng ignored, kiểm thử rồi deploy rule riêng: admin có thể tạo/đọc JPEG tối đa 500 KiB, tên UUID-v4 dưới `midterm-mobile/avatars/`. Chặn ghi đè bằng `resource == null`, update/delete/list phía client. Wildcard cũ không được gia hạn. Các ảnh cũ không bị dọn.
+
+Kiểm tra cloud bằng Firebase JS SDK đã qua: admin upload/tải lại JPEG 2.108 byte khớp; ghi đè và khách upload đều bị từ chối. File thử có UUID mới được dọn sau khi xác nhận không hồ sơ nào tham chiếu. [Biên nhận cloud](submition/evidence/cloud-access-check.json) và `scripts/check-cloud.mjs` ghi cách kiểm tra; không có token/URL tải/credential trong biên nhận.
+
+Đây là bước kiểm tra SDK độc lập. Luồng chọn ảnh, tiến độ, lưu hồ sơ và mở lại trên Android vẫn thuộc C2/C4, chưa hoàn thành ở C1. Emulator đã kiểm tra cả sai prefix/MIME/dung lượng và tài khoản không admin. Rules kiểm tra MIME/size; API còn phải xác minh nội dung JPEG thật trước lưu hồ sơ.
 
 ## Phương án đã điều chỉnh
 
 Dùng Storage lưu file, Firestore lưu **URL ảnh trong `hinhanh`**. Vẫn đúng bốn trường `email`, `matkhau`, `hoten`, `hinhanh`; không thêm `storagePath`, timestamp hoặc loại ảnh vào document người dùng. Object path có thể lấy lại từ Storage ref/URL thuộc bucket đã cho phép.
 
-Không dùng base64 trong Firestore làm phương án chính nữa. Giữ API Node đề xuất cho băm mật khẩu và CRUD an toàn; thiết kế tổng thể còn chờ duyệt.
+Không dùng base64 trong Firestore làm phương án chính nữa. API Node chạy trên Function riêng để băm mật khẩu và CRUD an toàn; phạm vi đã được duyệt, đang triển khai.
 
 ## Luồng upload dự kiến của ứng dụng
 

@@ -1,6 +1,6 @@
 # Tài liệu đồ án MemberDesk
 
-Cập nhật ngày 10/11/2026. Đây là đề xuất và kế hoạch, chưa phải báo cáo kết quả triển khai.
+Cập nhật ngày 10/11/2026. Phạm vi đã được chốt bằng yêu cầu “bắt đầu làm (full)”; đang triển khai từ C1. Các mục chưa kiểm thử vẫn ghi rõ chưa hoàn thành.
 
 | Tài liệu | Nội dung |
 | --- | --- |

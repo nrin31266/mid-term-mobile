@@ -1,10 +1,10 @@
-# Ý tưởng và phạm vi để duyệt
+# Ý tưởng và phạm vi đã chốt
 
 ## Trạng thái và mục tiêu
 
-Đề xuất ngày 10/11/2026, **chưa được duyệt triển khai**. Xây **MemberDesk — quản lý thành viên câu lạc bộ**, phân hệ admin dùng chung source Expo/React Native trên web và Android. Mục tiêu: phủ từng tiêu chí trong [ảnh đề gốc](submition/references/assignment-requirements.png), có chức năng nâng cao hữu ích và giao diện hoàn chỉnh; không cam kết điểm khi chưa được giảng viên chấm.
+**Đã chốt triển khai ngày 10/11/2026** khi bạn yêu cầu “bắt đầu làm (full)”. Xây **MemberDesk — quản lý thành viên câu lạc bộ**, phân hệ admin dùng chung source Expo/React Native trên web và Android. Mục tiêu: phủ từng tiêu chí trong [ảnh đề gốc](submition/references/assignment-requirements.png), có chức năng nâng cao hữu ích và giao diện hoàn chỉnh; không cam kết điểm khi chưa được giảng viên chấm.
 
-Firebase: Nguyen Van Rin (`crested-mercury-452707-e8`), bucket Storage hiện có, Console hiển thị Blaze. Ưu tiên hạn chế chi phí, không tự đổi billing/cấp thêm dịch vụ. GitHub: https://github.com/nrin31266/mid-term-mobile.
+Firebase: Nguyen Van Rin (`crested-mercury-452707-e8`), bucket Storage hiện có, Console hiển thị Blaze. Theo yêu cầu mới, triển khai web/API cloud trong phase này; giữ billing và bucket cũ, dùng Function/site riêng. GitHub: https://github.com/nrin31266/mid-term-mobile.
 
 ## Lựa chọn sản phẩm
 
@@ -30,7 +30,7 @@ Bối cảnh câu lạc bộ giúp trình bày và thiết kế; không tự th�
 
 “Hiển thị mật khẩu” được đề xuất nghiệm thu bằng trường mật khẩu có nút hiện/ẩn khi nhập và trạng thái đã đặt khi xem hồ sơ. `matkhau` lưu hash có salt, không lưu/đọc lại mật khẩu thô. Phải giải thích rõ trong báo cáo; nếu giảng viên bắt buộc xem lại mật khẩu cũ thì cần thống nhất cách nghiệm thu an toàn.
 
-## Chức năng nâng cao thuộc phạm vi sau khi duyệt
+## Chức năng nâng cao đã chốt
 
 Dấu “…” được cụ thể hóa thành bốn nhóm. Khi duyệt tài liệu này, đây là phần cần hoàn thành, không chỉ là gợi ý có thể bỏ.
 
@@ -56,9 +56,9 @@ Nén/xem trước/progress/thử lại có trên web và Android. Cắt ảnh b�
 
 ## Kiến trúc và giới hạn trước khi chốt
 
-Firebase JS SDK cho Auth/Storage; Firestore lưu hồ sơ. API Node local xác minh token/claim admin và băm scrypt có salt. Client không đọc collection chứa hash. Xem [kiến trúc](03-kien-truc-va-du-lieu.md).
+Firebase JS SDK cho Auth/Storage; Firestore lưu hồ sơ. API Node chạy trên Function riêng, xác minh token/claim admin; phần CRUD sẽ băm scrypt có salt. Client không đọc collection chứa hash. Xem [kiến trúc](03-kien-truc-va-du-lieu.md).
 
-API chạy trên laptop khi demo; Android kết nối LAN/host emulator. Chưa hoạt động độc lập 24/7 khi tắt máy API. Không triển khai Functions hay mở API công khai trong đề xuất. Dùng hồ sơ giả, không hứa Blaze luôn miễn phí.
+Web/API đã triển khai trên Hosting và Function riêng bằng HTTPS theo yêu cầu cloud. Emulator và API loopback vẫn dành cho kiểm thử. Dùng hồ sơ giả, không hứa Blaze luôn miễn phí; cấu hình hạn chế instance không phải trần tiền.
 
 File `google-services.json` đã nhận đúng project nhưng dành cho hai package Android khác (`ecommercemultivendor`, `shoppingapp`). JS SDK dùng cấu hình web app phù hợp; không gắn file này hay đổi package theo app cũ. File này không phải credential máy chủ.
 
@@ -67,10 +67,10 @@ File `google-services.json` đã nhận đúng project nhưng dành cho hai pack
 | Mục | Hiện tại và việc cần làm |
 | --- | --- |
 | Rà đề/nâng cao | Đã đối chiếu tài liệu 02; chức năng vẫn là kế hoạch |
-| Skill | Bảy skill nằm trong `.agents/skills/` của dự án |
-| Storage | IAM quản trị upload/tải lại đã qua; SDK chưa thông vì rules hết hạn |
+| Skill | Tám skill nằm trong `.agents/skills/` của dự án |
+| Storage | IAM và SDK admin upload/tải lại đã qua; rules riêng đã kiểm thử/deploy, không gia hạn wildcard cũ |
 | Cloud trước triển khai | Kiểm tra rules/app cũ; thiết lập admin, credential server, cấu hình web app và rules riêng đã kiểm thử; không tự bật billing |
-| Source | Hai lỗi lint/typecheck starter; xử lý ở checkpoint đầu triển khai |
+| Source | Đã sửa hydration hook, bỏ tab starter không dùng; lint/typecheck đã qua ở C1 |
 | Word/minh chứng | Giữ hai ảnh cũ; chụp đủ bước, ghi chú ở từng checkpoint; ráp Word cuối bài |
 | GitHub | Có remote; commit/push và xác minh mỗi checkpoint lớn theo tài liệu 05 |
 
@@ -78,4 +78,4 @@ File `google-services.json` đã nhận đúng project nhưng dành cho hai pack
 
 Chat, AI, thông báo đẩy, nhiều cấp quyền, đăng nhập từng thành viên, nhật ký, thùng rác, offline và realtime. Những phần này tăng rủi ro hoặc cần dữ liệu vượt bốn trường. Ưu tiên đủ đề, nâng cao demo được và hoàn thiện.
 
-Sau khi bạn chốt bản này mới bắt đầu code và thay đổi cloud trong phạm vi được chấp thuận. Checkpoint và ảnh cần chụp ở [kế hoạch thực hiện](05-ke-hoach-va-bai-nop.md).
+Đang triển khai theo bản đã chốt; thay đổi cloud chỉ trong phạm vi của bài. Checkpoint và ảnh cần chụp ở [kế hoạch thực hiện](05-ke-hoach-va-bai-nop.md).
