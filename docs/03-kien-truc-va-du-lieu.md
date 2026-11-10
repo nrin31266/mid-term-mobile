@@ -10,6 +10,7 @@ Theo yêu cầu triển khai cloud ngày 10/11/2026, web và API dùng HTTPS, ho
 - API Node 22: Function gen 2 `memberdeskApi`, codebase `memberdesk`, vùng `us-central1`. Hosting chuyển `/api/**` tới Function. Không sửa Function `app` và site mặc định của project cũ.
 - Firebase Auth Email/Password đăng nhập admin, claim `admin: true`. API xác minh token và tài khoản bị khóa/thu hồi. Đã kiểm tra phiên HTTPS; CRUD/băm mật khẩu thuộc C2–C3, chưa hoàn thành ở C1.
 - Firestore Standard `(default)`, collection riêng `midterm_users`. Client bị chặn hoàn toàn; Admin SDK chỉ truy cập sau kiểm tra quyền ở API.
+- Khóa dọn ảnh tạm dùng document rỗng `memberdesk_internal/image_cleanup`, chỉ server đọc/ghi. Không phải hồ sơ và không nằm trong JSON nộp bài; xem tài liệu 07.
 - Storage giữ bucket cũ; prefix `midterm-mobile/avatars/`. Admin SDK của Function dùng danh tính runtime, không đóng gói key. ADC trên laptop phục vụ cấu hình/kiểm thử, không gửi lên app.
 
 Function đặt `minInstances: 0`, `maxInstances: 1`, RAM 256 MiB, concurrency 1, timeout 30 giây. Có thể khởi động chậm và phát sinh phí theo sử dụng/lưu artifact; đây không phải cam kết miễn phí hay giới hạn tiền cứng. Không bật thêm các sản phẩm Firebase không thuộc bài.

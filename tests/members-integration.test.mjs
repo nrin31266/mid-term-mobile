@@ -7,6 +7,7 @@ import { createApi } from '../server/api.mjs';
 import { backendBucket, backendDatabase } from '../server/firebase.mjs';
 import { createMemberStore } from '../server/members.mjs';
 import { memberFields, memberId } from '../server/member-validation.mjs';
+import { cleanupAvatars, imageCleanupLockPath } from '../server/image-cleanup.mjs';
 
 const { default: sharp } = await import(createRequire(new URL('../server/package.json', import.meta.url)).resolve('sharp'));
 
@@ -97,5 +98,41 @@ test('member API persists exact fields, rejects duplicates atomically and valida
     const responses = await Promise.all([post({ ...input, email: 'last1@example.com' }), post({ ...input, email: 'last2@example.com' })]);
     assert.deepEqual(responses.map((response) => response.status).sort(), [201, 409]);
     assert.equal((await collection.get()).size, 200);
+  });
+  await context.test('cleanup keeps shared images, protects recent uploads and blocks writes until it releases the lock', async () => {
+    await clear();
+    const urls = [];
+    for (let i = 0; i < 2; i++) {
+      const path = `midterm-mobile/avatars/${randomUUID()}.jpg`; paths.push(path); const token = randomUUID();
+      await bucket.file(path).save(await sharp({ create: { width: 32, height: 32, channels: 3, background: 'white' } }).jpeg().toBuffer(), {
+        metadata: { contentType: 'image/jpeg', metadata: { firebaseStorageDownloadTokens: token } },
+      });
+      urls.push(`http://127.0.0.1:9199/v0/b/${bucket.name}/o/${encodeURIComponent(path)}?alt=media&token=${token}`);
+    }
+    const shared = await store.create({ ...input, hinhanh: urls[0] });
+    const second = await store.create({ ...input, email: 'shared@example.com', hinhanh: urls[0] });
+    await store.remove(second.id);
+    const recent = await cleanupAvatars(database, bucket, 'emulator', { apply: true });
+    assert.equal(recent.deleted, 0);
+    assert.equal((await bucket.file(paths.at(-1)).exists())[0], true);
+    let release; const gate = new Promise((resolve) => { release = resolve; });
+    let started; const acquired = new Promise((resolve) => { started = resolve; });
+    const cleaning = cleanupAvatars(database, { name: bucket.name, getFiles: async (options) => {
+      started(); await gate; return bucket.getFiles(options);
+    } }, 'emulator', { apply: true, minimumAgeMs: 0 });
+    await acquired;
+    try {
+      await assert.rejects(store.create({ ...input, email: 'blocked@example.com' }), { status: 503 });
+      await assert.rejects(store.update(shared.id, { ...input, matkhau: '' }), { status: 503 });
+      await assert.rejects(store.remove(shared.id), { status: 503 });
+      await assert.rejects(cleanupAvatars(database, bucket, 'emulator', { apply: true }));
+    } finally { release(); }
+    const result = await cleaning;
+    assert.ok(result.deleted > 0);
+    assert.equal((await bucket.file(paths.at(-2)).exists())[0], true);
+    assert.equal((await bucket.file(paths.at(-1)).exists())[0], false);
+    assert.equal((await database.doc(imageCleanupLockPath).get()).exists, false);
+    assert.equal((await store.get(shared.id)).hinhanh, urls[0]);
+    await assert.rejects(store.update(shared.id, { ...input, matkhau: '', hinhanh: urls[1] }), { status: 400 });
   });
 });

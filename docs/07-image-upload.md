@@ -32,7 +32,7 @@ Dùng Storage lưu file, Firestore lưu **URL ảnh trong `hinhanh`**. Vẫn đ�
 
 Không dùng base64 trong Firestore làm phương án chính nữa. API Node chạy trên Function riêng để băm mật khẩu và CRUD an toàn; phạm vi đã được duyệt, đang triển khai.
 
-## Luồng upload dự kiến của ứng dụng
+## Luồng upload của ứng dụng
 
 1. Admin đăng nhập Firebase Auth.
 2. Chọn ảnh/chụp camera bằng `expo-image-picker`; xử lý hủy và từ chối quyền.
@@ -42,11 +42,22 @@ Không dùng base64 trong Firestore làm phương án chính nữa. API Node ch�
 6. Sau upload thành công, lấy URL bằng `getDownloadURL`. Gửi URL cùng dữ liệu form tới API; API kiểm tra URL đúng bucket/prefix, object tồn tại và đúng loại/dung lượng trước khi ghi Firestore.
 7. Hiển thị bằng `expo-image` từ URL đã lưu. Tải lại app và mở trên web để chứng minh ảnh không còn phụ thuộc file local.
 
-Các tên API SDK ở trên là hướng dẫn từ tài liệu chính thức, chưa phải code đã triển khai. Quyền admin/SDK và việc chuyển dữ liệu ảnh trên mobile vẫn cần kiểm thử.
+Luồng này đã chạy trên Chrome và Android. Mã hiện tại dùng `uploadBytesResumable`; Blob native lấy qua XHR, đối chiếu số byte rồi mới upload.
 
 ## Lỗi và thay ảnh
 
-Giữ URL cũ cho đến khi file mới upload và Firestore ghi thành công. Ghi hồ sơ thất bại thì xóa file mới do thao tác đó tạo, trong phạm vi được phép, để tránh file rác. Sau thay ảnh thành công chỉ dọn ảnh cũ khi xác nhận không còn hồ sơ tham chiếu. Không xóa file của app khác và không xóa ảnh mẫu đã lưu làm bằng chứng trong bước kiểm tra này.
+Giữ URL cũ trong hồ sơ cho đến khi file mới upload và Firestore ghi thành công. Khi request lỗi hoặc hết thời gian, không xóa ảnh ngay: server có thể đã lưu dù client chưa nhận kết quả. File bỏ dở và ảnh cũ được dọn bằng lệnh riêng sau kiểm tra tham chiếu, không xóa theo vòng đời form.
+
+```bash
+MEMBERDESK_ENV=cloud node scripts/cleanup-avatars.mjs
+MEMBERDESK_ENV=cloud node scripts/cleanup-avatars.mjs --apply
+```
+
+Lệnh đầu chỉ xem số file đủ điều kiện. Lệnh thứ hai xóa JPEG đúng prefix, không còn hồ sơ nào dùng và đã tạo hơn 24 giờ. Không động file của app khác. `--include-recent` chỉ dùng khi đã dừng các luồng chọn/upload ảnh; không bật mặc định. Với Emulator phải đặt đủ ba host như lệnh API trong README.
+
+Khi dọn thật, công cụ tạo document rỗng `memberdesk_internal/image_cleanup`. Create/update/delete và import đọc khóa trong transaction, tạm trả 503 nếu khóa tồn tại; API kiểm tra file ảnh sau khi đọc khóa để không ghi lại ảnh đã dọn. Công cụ đọc toàn bộ tham chiếu rồi xóa có điều kiện generation, cuối cùng bỏ khóa. Rules chặn client truy cập namespace này. Document thành viên vẫn đúng bốn trường; khóa không nằm trong `midterm_users` và không được export.
+
+Nếu công cụ bị tắt đột ngột, khóa có thể còn và các thao tác ghi bị chặn. Chỉ người quản trị mới xóa document khóa sau khi xác nhận không còn tiến trình dọn. Không đặt thời gian tự mở khóa trong khi lệnh cũ có thể vẫn đang chạy.
 
 URL tải có token hoạt động như một liên kết có quyền truy cập; không đưa ảnh thật/link riêng tư vào Git hoặc log. Với bài demo dùng dữ liệu giả. Rules kiểm tra MIME/size chưa thay thế việc xác minh nội dung ảnh ở phía tin cậy.
 
@@ -62,10 +73,14 @@ Trước nộp phải thử khôi phục trên môi trường thử, không ghi 
 - [Storage Security Rules](https://firebase.google.com/docs/storage/security)
 - [Expo ImagePicker SDK 58](https://docs.expo.dev/versions/v58.0.0/sdk/imagepicker/)
 - [Expo ImageManipulator SDK 58](https://docs.expo.dev/versions/v58.0.0/sdk/imagemanipulator/)
-# Kiểm tra luồng app ngày 10/11/2026
+## Kiểm tra luồng app ngày 10/11/2026
 
 Chrome đã chọn ảnh, xử lý JPEG 512 × 512, upload Storage và lưu hồ sơ Lê Bảo Trân. Tải lại trang vẫn còn dữ liệu. Android Pixel 8 API 36 chạy Expo Go SDK 58 đã chọn/cắt ảnh, upload và mở hồ sơ từ cloud.
 
 Lần thử Android đầu gặp lỗi Blob từ `Uint8Array`. Đổi sang `fetch(file://)` lại đọc về 14 byte “File not found” ở URI cache của Expo Go; server đã từ chối ảnh đó. Đã chuyển sang XHR lấy Blob native, đối chiếu số byte trước upload và thử thành công trên cùng máy ảo. File lỗi không còn tham chiếu đã được dọn, không sửa hồ sơ đã lưu.
 
-Ảnh chân dung mẫu lấy từ Pexels, nguồn ở `submition/demo-assets/README.md`. Dữ liệu minh họa dùng tên Việt có dấu; bộ 36 hồ sơ để thử phân trang sẽ có cả hồ sơ không ảnh. Việc sửa/xóa ảnh, dọn file bỏ dở và thử mất mạng vẫn thuộc C3–C4, chưa nghiệm thu ở mốc này.
+Ảnh chân dung mẫu lấy từ Pexels, nguồn ở `submition/demo-assets/README.md`. Dữ liệu minh họa dùng tên Việt có dấu, có Nguyễn Văn Rin; bộ 36 hồ sơ để thử phân trang sẽ có cả hồ sơ không ảnh.
+
+Android đã thử tắt mạng khi upload: hết 60 giây hiện lỗi, tên/email/ảnh xem trước vẫn giữ. Bật mạng rồi bấm lưu lại đã mở được hồ sơ cloud. Từ chối quyền camera hiện hướng dẫn và giữ hồ sơ cũ. Đã cho quyền lại, chụp/cắt/lưu từ camera ảo, đối chiếu ảnh trên Chrome rồi trả hồ sơ về ảnh chân dung. Hủy camera giữ ảnh cũ; force-stop/mở app vẫn có phiên và ảnh.
+
+Kiểm thử Emulator 16/16 có giữ ảnh dùng chung, bảo vệ ảnh mới, chặn ghi khi dọn, dọn file không còn tham chiếu và không ghi URL đã bị dọn. Cloud đã dọn 6 file không tham chiếu khi dừng upload, giữ 3 ảnh đang dùng; kiểm tra sau dọn tải được mọi ảnh và không còn khóa. Biên nhận và ảnh thật ở chỉ mục minh chứng. Ảnh terminal/cấu hình còn thiếu; chưa kiểm thử iOS.

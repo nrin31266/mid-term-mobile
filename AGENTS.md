@@ -130,7 +130,9 @@ small read request; configuration alone is not evidence of a connected server.
   rules were tested and deployed. Real client SDK upload/download and denied overwrite/guest
   checks passed; this diagnostic does not prove the future app image workflow.
 - Firestore rules exclude `midterm_users` from the legacy wildcard. Other collections retain
-  their pre-existing public access; do not claim the whole shared project is secured.
+  their pre-existing public access, except the new private `memberdesk_internal` namespace.
+  Its temporary empty image-cleanup lock coordinates server writes; it is not a member document
+  and is excluded from exports. Do not claim the whole shared project is secured.
 - This personal project has other apps and data. Inspect live rules, wildcard grants, resources,
   and consumers before changes. Use a dedicated collection and object prefix. Never replace
   project-wide rules blindly. Do not delete old objects until references and authorization are checked.

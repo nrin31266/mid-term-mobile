@@ -6,10 +6,15 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // Khóa dọn ảnh tạm thời là document rỗng, chỉ công cụ server được dùng.
+    match /memberdesk_internal/{document=**} {
+      allow read, write: if false;
+    }
+
     // Giữ quyền cũ của app khác; loại collection của bài khỏi wildcard cũ.
     // Rủi ro còn lại: dữ liệu cũ của project vẫn đang mở công khai.
     match /{collection}/{document=**} {
-      allow read, write: if collection != 'midterm_users';
+      allow read, write: if !(collection in ['midterm_users', 'memberdesk_internal']);
     }
   }
 }

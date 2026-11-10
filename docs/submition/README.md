@@ -83,9 +83,9 @@ Code gốc ở commit `feat: establish secure cloud admin access`; ảnh 08/09/2
 | --- | --- | --- | --- | --- |
 | `c2-01-schema-code.png` | Code | Kiểm tra đúng bốn khóa, email, họ tên, mật khẩu và URL ảnh | R03, R11 | Đã chụp VS Code: validateMember, đúng bốn khóa và giới hạn chuỗi |
 | `c2-02-password-hash-code.png` | Code | Scrypt có salt ngẫu nhiên; không lưu mật khẩu thô | R03, R11 | Crop từ cùng ảnh VS Code: hashPassword/profile; tên file và đoạn đối chiếu trong ghi chú C2 |
-| `c2-03-create-api-code.png` | Code | API tạo hồ sơ, kiểm tra email trùng đồng thời ở server | R03 | Chưa chụp |
-| `c2-04-profile-response-code.png` | Code | API danh sách/chi tiết bỏ hash khỏi dữ liệu trả về | R04 | Chưa chụp |
-| `c2-05-member-form-code.png` | Code | Form và xử lý submit, hiện/ẩn mật khẩu, lỗi và chống bấm hai lần | R03–R04 | Chưa chụp |
+| `c2-03-member-store-code.png` | Code | API thêm, đọc và chặn email trùng | R03–R04 | Đã chụp VS Code: list/get/create, khóa dọn và transaction |
+| `c2-04-profile-response-code.png` | Code | API danh sách/chi tiết bỏ hash khỏi dữ liệu trả về | R04 | Gộp vào ảnh 03 và hàm profile ở ảnh 02; tránh ảnh trùng |
+| `c2-05-member-form-code.png` | Code | Chọn ảnh, submit, kiểm tra và chống bấm hai lần | R03–R04 | Đã chụp VS Code: choose/save của MemberForm |
 | `c2-06-web-create-before.jpg` | Thao tác | Nhập đủ email/mật khẩu/họ tên/ảnh, xem trước khi lưu | R03–R04 | Đã chụp lại Chrome sau góp ý: Lê Bảo Trân, ảnh áo dài, 45 KB, mật khẩu che |
 | `c2-07-web-upload.png` | Thao tác | Ảnh đang upload và trạng thái lưu; không báo thành công sớm | R03 | Chưa chụp |
 | `c2-08-web-list.jpg` | Kết quả | Danh sách vừa thêm có tên/email/ảnh | R04 | Đã chụp Chrome sau làm mới; ba hồ sơ giả từ web và Android |
@@ -100,7 +100,7 @@ Code gốc ở commit `feat: establish secure cloud admin access`; ảnh 08/09/2
 
 Chrome đã thêm hồ sơ có ảnh chân dung và từ chối email trùng. Firestore lưu đúng bốn trường; API chỉ trả trạng thái có mật khẩu. Android đã chọn/cắt ảnh rồi lưu lên cùng cloud sau khi sửa lỗi Blob. Xem lỗi và cách sửa thật ở tài liệu 07.
 
-Ảnh 01 và 02 lấy từ VS Code, `server/member-validation.mjs`: `validateMember`, `hashPassword`, `profile`. Đối chiếu với test schema/salt và ảnh Console 11, form 06, hồ sơ 10. Source ở commit `feat: add persistent member creation and profiles`. Các ảnh code API/form và ảnh terminal còn thiếu; chưa coi bộ minh chứng C2 là hoàn tất. Một ảnh bắt nhầm cửa sổ khi đổi focus đã loại khỏi bộ nộp; tạm ngừng chuyển focus trong lúc người dùng đang làm việc.
+Ảnh 01 và 02 lấy từ VS Code, `server/member-validation.mjs`: `validateMember`, `hashPassword`, `profile`. Đối chiếu với test schema/salt và ảnh Console 11, form 06, hồ sơ 10. Source ở commit `feat: add persistent member creation and profiles`. Đã bổ sung ảnh code API/form ở mốc C4; ảnh terminal và tiến độ web còn thiếu, chưa coi bộ minh chứng C2 là hoàn tất. Một ảnh bắt nhầm cửa sổ khi đổi focus đã loại khỏi bộ nộp; tạm ngừng chuyển focus trong lúc người dùng đang làm việc.
 
 `pnpm test`: 6/6; `pnpm test:firebase`: 13/13, exit 0. Có kiểm tra tạo trùng đồng thời, giới hạn 200, JPEG giả/quá kích thước, Auth và rules. Android export, lint và TypeScript đã qua. Log đầy đủ giữ riêng, không đưa Git. Word và hai ảnh khởi tạo chưa sửa.
 
@@ -110,9 +110,9 @@ Tên và email là dữ liệu minh họa; nguồn ảnh ở `demo-assets/README
 
 | Ảnh dự kiến | Loại | Nội dung cần thấy | Tiêu chí | Trạng thái |
 | --- | --- | --- | --- | --- |
-| `c3-01-update-api-code.png` | Code | Cập nhật hồ sơ; mật khẩu trống thì giữ hash, nhập mới thì băm lại | R07 | Chưa chụp |
-| `c3-02-email-transaction-code.png` | Code | Đổi email qua transaction, không mất hồ sơ hoặc ghi đè email cũ | R07 | Chưa chụp |
-| `c3-03-delete-api-code.png` | Code | Kiểm tra quyền rồi xóa đúng document; xử lý ảnh được tham chiếu | R06 | Chưa chụp |
+| `c3-01-update-delete-code.png` | Code | Cập nhật, giữ/đặt mật khẩu, transaction đổi email và xóa | R06–R07 | Đã chụp VS Code: update/remove và khóa dọn ảnh |
+| `c3-02-email-transaction-code.png` | Code | Transaction đổi email | R07 | Gộp vào ảnh 01, thấy đủ kiểm tra đích và set/delete nguyên tử |
+| `c3-03-delete-api-code.png` | Code | Xóa đúng document và bảo vệ ảnh tham chiếu | R06 | Gộp remove vào ảnh 01; ảnh dùng chung được giữ, dọn riêng ở C4 |
 | `c3-04-delete-confirm-code.png` | Code | Hộp xác nhận đúng người và nhánh hủy không gửi lệnh xóa | R06 | Chưa chụp |
 | `c3-05-edit-before.jpg` | Thao tác | Form đổi tên/email/ảnh trước khi lưu | R07 | Đã chụp Chrome: Nguyễn Văn Rin, rin@example.com, ảnh mới, mật khẩu trống |
 | `c3-06-edit-after.jpg` | Kết quả | Sau lưu/tải lại, UI và CSDL có thay đổi tương ứng | R07, S03 | Đã chụp Chrome sau tải lại; kiểm tra riêng hash không đổi |
@@ -126,7 +126,7 @@ Tên và email là dữ liệu minh họa; nguồn ảnh ở `demo-assets/README
 
 Đã deploy PATCH/DELETE và giao diện sửa/xóa lên Function/site MemberDesk. Đổi email dùng transaction; mật khẩu trống giữ hash mới nhất, có nhập mới thì băm lại. Chrome đã sửa tên/email/ảnh thành Nguyễn Văn Rin, tải lại còn đúng dữ liệu; email trùng bị chặn. Hủy xóa và hủy rời form không làm mất hồ sơ/nội dung.
 
-`pnpm test`: 6/6; Firebase Emulator: 15/15; lint, TypeScript và export web đều qua. `MEMBERDESK_ENV=cloud node scripts/check-crud-cloud.mjs` kiểm tra API cloud thật: tạo, đổi email, giữ/đặt lại mật khẩu, chặn trùng, xóa, GET sau xóa 404. Hồ sơ thử của script đã dọn. Biên nhận không chứa hash/token: [CRUD API](evidence/cloud-crud-api-check.json), [đối chiếu hồ sơ đã sửa](evidence/cloud-crud-check.json). Ảnh thao tác xóa thành công/Console sau xóa và ảnh code/terminal vẫn còn thiếu; chưa đánh dấu đủ minh chứng C3.
+`pnpm test`: 6/6; Firebase Emulator: 15/15; lint, TypeScript và export web đều qua. `MEMBERDESK_ENV=cloud node scripts/check-crud-cloud.mjs` kiểm tra API cloud thật: tạo, đổi email, giữ/đặt lại mật khẩu, chặn trùng, xóa, GET sau xóa 404. Hồ sơ thử của script đã dọn. Biên nhận không chứa hash/token: [CRUD API](evidence/cloud-crud-api-check.json), [đối chiếu hồ sơ đã sửa](evidence/cloud-crud-check.json). Đã bổ sung ảnh code update/remove ở C4. Ảnh thao tác xóa thành công/Console sau xóa, code hộp xác nhận và ảnh terminal còn thiếu; chưa đánh dấu đủ minh chứng C3.
 
 Ảnh Chrome 05–08, 11 dùng source ở commit `feat: complete member editing and deletion`. Ảnh 05/11 đối chiếu `MemberForm`; ảnh 06/07 đối chiếu `createMemberStore.update`; ảnh 08 đối chiếu `MemberScreen`/`ConfirmDialog`. Đã thay ảnh C2 06/08/10/13 sau góp ý giao diện và dữ liệu. Bản cũ không giữ trong bộ nộp; bản chụp thô ở vùng riêng. Hai ảnh gốc trong Word giữ nguyên.
 
@@ -135,20 +135,30 @@ Tên và email là dữ liệu minh họa; nguồn ảnh ở `demo-assets/README
 | Ảnh dự kiến | Loại | Nội dung cần thấy | Tiêu chí | Trạng thái |
 | --- | --- | --- | --- | --- |
 | `c4-01-mobile-config-code.png` | Code | Cấu hình app/quyền ảnh và API host dùng trên Android; chỉ chụp cấu hình mẫu | R09–R10, S01 | Chưa chụp |
-| `c4-02-image-permission-code.png` | Code | Xin quyền, từ chối quyền và hủy thao tác | R09 | Chưa chụp |
-| `c4-03-image-picker-code.png` | Code | Mở camera/thư viện, nhận ảnh từ thiết bị | R09 | Chưa chụp |
-| `c4-04-image-resize-code.png` | Code | Xử lý JPEG vuông, kích thước/dung lượng; giữ ảnh xem trước | R08–R09 | Chưa chụp |
-| `c4-05-image-upload-code.png` | Code | Object UUID, upload/tiến độ và lấy URL trước khi lưu hồ sơ | R08–R09 | Chưa chụp |
-| `c4-06-image-save-cleanup-code.png` | Code | Giữ ảnh cũ khi lỗi, chỉ dọn file mới hoặc ảnh không còn tham chiếu | R09 | Chưa chụp |
+| `c4-02-image-picker-resize-code.png` | Code | Xin quyền, chọn/cắt/nén ảnh và hủy | R08–R09 | Đã chụp VS Code: pickAvatar, giới hạn ảnh và JPEG |
+| `c4-03-image-picker-code.png` | Code | Mở camera/thư viện, nhận ảnh từ thiết bị | R09 | Gộp vào ảnh 02 |
+| `c4-04-image-resize-code.png` | Code | Xử lý JPEG vuông và giới hạn dung lượng | R08–R09 | Gộp vào ảnh 02 |
+| `c4-05-image-upload-code.png` | Code | Object UUID, Blob, tiến độ, timeout và lấy URL | R08–R09 | Đã chụp VS Code: uploadAvatar, đối chiếu Blob.size |
+| `c4-06-image-cleanup-code.png` | Code | Dọn riêng ảnh không còn tham chiếu, bảo vệ file mới | R09 | Đã chụp VS Code: cleanupAvatars; khóa ghi và generation |
 | `c4-07-run-android.png` | Bước làm | ADB xác định thiết bị, lệnh mở Expo và kết quả trên emulator | R01, S02 | Chưa chụp |
-| `c4-08-permission-state.png` | Thao tác | Hộp quyền và xử lý khi từ chối/hủy; form không mất | R09 | Chưa chụp |
-| `c4-09-mobile-library.png` | Thao tác | Chọn ảnh trong thư viện thật | R09 | Đã chụp ADB: Android Photo Picker, chỉ quyền truy cập ảnh được chọn |
-| `c4-10-mobile-camera.png` | Thao tác | Mở camera, chụp và chấp nhận ảnh trong luồng thật | R09 | Chưa chụp |
-| `c4-11-mobile-preview.png` | Thao tác | Ảnh sau xử lý, xem trước và dung lượng trước/sau | R08–R09 | Đã chụp ADB: ảnh 512 × 512, 13 KiB; ảnh MA ở lần chẩn đoán, sẽ thay bằng ảnh mẫu |
-| `c4-12-mobile-upload.png` | Thao tác | Lưu ảnh, quan sát tiến độ và kết quả | R08–R09 | Chưa chụp |
-| `c4-13-mobile-retry.png` | Kiểm tra | Mất mạng rồi thử lại; dữ liệu form/ảnh cũ còn nguyên | R08–R09 | Chưa chụp |
-| `c4-14-mobile-profile.png` | Kết quả | Mở lại app/hồ sơ, thông tin và ảnh vẫn hiện | R10 | Đã chụp ADB: lưu cloud rồi mở hồ sơ; chưa thay cho kiểm tra mở lại app ở C4 |
-| `c4-15-web-same-profile.png` | Kết quả | Làm mới web thấy đúng hồ sơ và ảnh vừa lưu trên Android | R02, R09–R10 | Chưa chụp |
+| `c4-08-permission-state-marked.png`, `c4-08-camera-denied.png` | Thao tác | Từ chối camera và giữ form | R09 | Đã chụp ADB; chỉ ảnh hộp quyền có mũi tên đỏ |
+| `c4-09-mobile-library.png`, `c4-10-mobile-crop.png` | Thao tác | Thư viện và cắt vuông | R09 | Đã chụp lại ADB bằng hai ảnh chân dung; bỏ ảnh MA cũ |
+| `c4-10-mobile-camera.png` | Thao tác | Mở camera và chụp | R09 | Đã chụp ADB; camera ảo của emulator, không phải webcam laptop |
+| `c4-11-mobile-preview.png` | Thao tác | Xem trước sau chọn/cắt/nén | R08–R09 | Đã chụp lại: Nguyễn Minh Anh, ảnh chân dung, 46 KB |
+| `c4-12-mobile-upload.png` | Thao tác | Tiến độ upload, khóa bấm lưu | R08–R09 | Đã chụp trạng thái 0% lúc thử mất mạng; kết quả thử lại ở ảnh 14 |
+| `c4-13-mobile-retry.png` | Kiểm tra | Mất mạng giữ dữ liệu và cho thử lại | R08–R09 | Đã chụp lỗi sau timeout 60 giây; bật mạng và lưu lại thành công |
+| `c4-14-mobile-profile.png` | Kết quả | Mở lại app/hồ sơ, thông tin và ảnh vẫn hiện | R10 | Đã chụp lại sau force-stop/mở Expo Go; giữ phiên và ảnh chân dung |
+| `c4-15-web-same-profile.jpg` | Kết quả | Web thấy ảnh vừa lưu trên Android | R02, R09–R10 | Đã chụp Chrome sau tải lại |
+
+### Ghi chú C4 ngày 10/11/2026
+
+Thiết bị `emulator-5554`, Pixel8_API36, Expo Go SDK 58; Metro cổng 8082 qua ADB reverse. Đã chọn/cắt ảnh chân dung, xem trước, thử upload mất mạng, bật mạng rồi lưu lại; force-stop/mở app vẫn giữ phiên và ảnh. Đã từ chối camera, cho quyền lại, chụp/cắt/lưu ảnh camera ảo và làm mới Chrome thấy cùng ảnh. Sau kiểm tra đã đổi hồ sơ về ảnh chân dung; hủy camera không đổi ảnh cũ.
+
+Ảnh bổ sung: `c4-16-camera-preview.png`, `c4-17-camera-profile.png`, `c4-18-web-camera-profile.jpg` ghi đúng bước thử camera; `c4-19-cleanup-rules-code.png` là rules chặn khóa nội bộ. Ảnh camera có họa tiết của camera ảo Android, không gọi là ảnh người/cảnh Việt Nam. Bộ ảnh MA cũ đã bỏ khỏi bản nộp. Mọi ảnh code lấy trực tiếp từ VS Code bên trái sau khi người dùng tạm ngưng gõ; đã crop và soát không có chat/credential.
+
+Code ảnh 02/05 là `src/services/avatars.ts`, `pickAvatar`/`uploadAvatar`; ảnh 06 là `server/image-cleanup.mjs`, `cleanupAvatars`; ảnh 19 là `firestore.rules`. `MemberForm.choose/save` ở ảnh C2-05; update/remove và chặn ghi khi dọn ở C3-01. Đối chiếu runtime ảnh 08–18, source theo commit `feat: verify mobile images and protect avatar cleanup`.
+
+Emulator 16/16; lint/TypeScript và 6 test cơ bản qua. Rules/Function đã deploy riêng; kiểm tra SDK cloud vẫn chặn đọc collection/hash, khóa dọn, ghi đè và khách upload. Lệnh dọn cloud sau khi dừng upload đã xóa 6 file không tham chiếu, giữ 3 ảnh đang dùng và bỏ khóa; [biên nhận](evidence/cloud-avatar-cleanup.json). [Đối chiếu ảnh](evidence/mobile-image-cloud-check.json) kiểm tra mọi ảnh còn tham chiếu và JPEG Android 512 × 512 tải HTTPS được. Mặc định lệnh dọn vẫn giữ ảnh mới 24 giờ. Còn ảnh chạy Android/terminal, cấu hình mobile và một số kiểm tra form cần bổ sung; chưa đánh dấu đủ bộ minh chứng C4. Chưa thử iOS.
 
 ### C5 — Chức năng nâng cao và khôi phục
 

@@ -35,6 +35,9 @@ for (const identity of ['guest', 'member', 'admin']) {
     await assertFails(document.delete());
     await assertFails(database.doc('midterm_users/member/private/child').get());
     await assertFails(database.doc('midterm_users/missing/private/child').set(member));
+    await assertFails(database.doc('memberdesk_internal/image_cleanup').set({}));
+    await assertFails(database.doc('memberdesk_internal/image_cleanup').get());
+    await assertFails(database.doc('memberdesk_internal/image_cleanup').delete());
   });
 }
 

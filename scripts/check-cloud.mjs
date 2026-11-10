@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import { deleteApp, initializeApp } from 'firebase/app';
 import { getAuth, getIdTokenResult, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, getFirestore } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { backendBucket, backendDatabase } from '../server/firebase.mjs';
 
@@ -28,6 +28,7 @@ try {
   assert.equal((await response.json()).uid, result.user.uid);
   assert.equal((await fetch(`${api}/session`)).status, 401);
   await assert.rejects(getDocs(collection(getFirestore(app), 'midterm_users')), { code: 'permission-denied' });
+  await assert.rejects(getDoc(doc(getFirestore(app), 'memberdesk_internal/image_cleanup')), { code: 'permission-denied' });
   const bytes = await readFile('docs/submition/evidence/storage-upload-check.jpg');
   const storage = getStorage(app);
   const image = ref(storage, objectPath);
@@ -41,7 +42,7 @@ try {
   await assert.rejects(uploadBytes(ref(storage, `midterm-mobile/avatars/${randomUUID()}.jpg`), bytes,
     { contentType: 'image/jpeg' }), { code: 'storage/unauthorized' });
   receipt = { checkedAt: new Date().toISOString(), projectId, api,
-    adminLogin: true, adminApi: 200, missingTokenApi: 401, directFirestoreDenied: true,
+    adminLogin: true, adminApi: 200, missingTokenApi: 401, directFirestoreDenied: true, cleanupLockDenied: true,
     sdkUploadBytes: bytes.length, sdkDownloadMatches: true, overwriteDenied: true, guestUploadDenied: true,
     fixture: 'JPEG giả, file kiểm tra được dọn sau khi kiểm tra tham chiếu; chưa phải ảnh hồ sơ trong app.' };
 } finally {
