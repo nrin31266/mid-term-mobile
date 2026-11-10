@@ -19,8 +19,11 @@ function SessionRoutes() {
   </View>;
   return <Stack screenOptions={{ contentStyle: { backgroundColor: theme.background }, headerTintColor: theme.text,
     headerStyle: { backgroundColor: theme.backgroundElement }, headerShadowVisible: false }}>
-    <Stack.Protected guard={!admin}><Stack.Screen name="sign-in" options={{ title: 'MemberDesk · Đăng nhập' }} /></Stack.Protected>
-    <Stack.Protected guard={admin}><Stack.Screen name="index" options={{ title: 'MemberDesk' }} /></Stack.Protected>
+    <Stack.Protected guard={!admin}><Stack.Screen name="sign-in" options={{ title: 'Đăng nhập', headerShown: false }} /></Stack.Protected>
+    <Stack.Protected guard={admin}>
+      <Stack.Screen name="index" options={{ title: 'MemberDesk' }} />
+      <Stack.Screen name="members" options={{ headerShown: false }} />
+    </Stack.Protected>
   </Stack>;
 }
 

@@ -15,7 +15,7 @@ Word giữ nguyên file của bạn và hai ảnh gốc. Không sao chép lại 
 
 ## Danh sách cần chụp trong quá trình làm
 
-Cần cả **bước làm, code và kết quả chạy**, không chỉ ảnh giao diện cuối. Hai ảnh bạn đã chụp là mẫu cho phần khởi tạo. Danh sách dưới đây theo dõi từng mốc. C1 đã có ảnh thật; các mốc C2–C6 vẫn chưa chụp.
+Cần cả **bước làm, code và kết quả chạy**, không chỉ ảnh giao diện cuối. Hai ảnh bạn đã chụp là mẫu cho phần khởi tạo. Danh sách dưới đây theo dõi từng mốc. C1 đã có ảnh thật. C2 và thư viện Android đã có một phần minh chứng; phần thiếu vẫn ghi rõ dưới đây.
 
 Tên ảnh theo dạng `c2-01-schema-code.png`: checkpoint, số thứ tự, nội dung. Bản khoanh vùng thêm `-marked.png`. Số dưới đây dùng để chuẩn bị; khi có thêm bước quan trọng thì thêm ảnh, không ghi đè hoặc bỏ qua vì đã đủ số lượng. Chỉ đổi tên dự kiến khi chưa có ảnh và cập nhật chỉ mục cùng lúc.
 
@@ -81,20 +81,30 @@ Code gốc ở commit `feat: establish secure cloud admin access`; ảnh 08/09/2
 
 | Ảnh dự kiến | Loại | Nội dung cần thấy | Tiêu chí | Trạng thái |
 | --- | --- | --- | --- | --- |
-| `c2-01-schema-code.png` | Code | Kiểm tra đúng bốn khóa, email, họ tên, mật khẩu và URL ảnh | R03, R11 | Chưa chụp |
-| `c2-02-password-hash-code.png` | Code | Scrypt có salt ngẫu nhiên; không lưu mật khẩu thô | R03, R11 | Chưa chụp |
+| `c2-01-schema-code.png` | Code | Kiểm tra đúng bốn khóa, email, họ tên, mật khẩu và URL ảnh | R03, R11 | Đã chụp VS Code: validateMember, đúng bốn khóa và giới hạn chuỗi |
+| `c2-02-password-hash-code.png` | Code | Scrypt có salt ngẫu nhiên; không lưu mật khẩu thô | R03, R11 | Crop từ cùng ảnh VS Code: hashPassword/profile; tên file và đoạn đối chiếu trong ghi chú C2 |
 | `c2-03-create-api-code.png` | Code | API tạo hồ sơ, kiểm tra email trùng đồng thời ở server | R03 | Chưa chụp |
 | `c2-04-profile-response-code.png` | Code | API danh sách/chi tiết bỏ hash khỏi dữ liệu trả về | R04 | Chưa chụp |
 | `c2-05-member-form-code.png` | Code | Form và xử lý submit, hiện/ẩn mật khẩu, lỗi và chống bấm hai lần | R03–R04 | Chưa chụp |
-| `c2-06-web-create-before.png` | Thao tác | Nhập đủ email/mật khẩu/họ tên/ảnh, xem trước khi lưu | R03–R04 | Chưa chụp |
+| `c2-06-web-create-before.jpg` | Thao tác | Nhập đủ email/mật khẩu/họ tên/ảnh, xem trước khi lưu | R03–R04 | Đã chụp Chrome: Lê Bảo Trân, ảnh 512 px / 44 KiB, mật khẩu được che |
 | `c2-07-web-upload.png` | Thao tác | Ảnh đang upload và trạng thái lưu; không báo thành công sớm | R03 | Chưa chụp |
-| `c2-08-web-list.png` | Kết quả | Danh sách vừa thêm có tên/email/ảnh | R04 | Chưa chụp |
-| `c2-09-web-detail.png` | Kết quả | Chi tiết hồ sơ đã lưu, ảnh và trạng thái đã đặt mật khẩu | R04 | Chưa chụp |
-| `c2-10-web-reload.png` | Kết quả | Tải lại trình duyệt, hồ sơ vẫn còn | R02–R04 | Chưa chụp |
-| `c2-11-firestore-four-fields.png` | CSDL | Console hiển thị document đúng email, matkhau, hoten, hinhanh | R02, R11, S03 | Chưa chụp |
-| `c2-12-storage-avatar.png` | CSDL | File ảnh demo đúng bucket/prefix, không lộ token tải | R02, S03 | Chưa chụp |
-| `c2-13-duplicate-email.png` | Kiểm tra | Thêm email đã có bị từ chối, không tạo thêm document | R03 | Chưa chụp |
-| `c2-14-invalid-schema.png` | Kiểm tra | Request thiếu/thừa trường bị server từ chối; dùng request demo không bí mật | R11 | Chưa chụp |
+| `c2-08-web-list.jpg` | Kết quả | Danh sách vừa thêm có tên/email/ảnh | R04 | Đã chụp Chrome sau làm mới; ba hồ sơ giả từ web và Android |
+| `c2-09-web-detail.png` | Kết quả | Chi tiết hồ sơ đã lưu, ảnh và trạng thái đã đặt mật khẩu | R04 | Gộp vào ảnh 10 sau tải lại để tránh trùng |
+| `c2-10-web-detail-reloaded.jpg` | Kết quả | Tải lại trình duyệt, hồ sơ vẫn còn | R02–R04 | Đã chụp Chrome: tải lại vẫn còn tên/email/ảnh |
+| `c2-11-firestore-four-fields-marked.jpg` | CSDL | Console hiển thị document đúng email, matkhau, hoten, hinhanh | R02, R11, S03 | Đã chụp Chrome Console; bốn trường, URL và hash bị rút gọn sẵn trong Console |
+| `c2-12-storage-avatar.jpg` | CSDL | File ảnh demo đúng bucket/prefix, không lộ token tải | R02, S03 | Đã chụp Chrome Console: đúng prefix, ba object JPEG; không mở download token |
+| `c2-13-duplicate-email.jpg` | Kiểm tra | Thêm email đã có bị từ chối, không tạo thêm document | R03 | Đã chụp Chrome: server từ chối email trùng, form còn nguyên |
+| `c2-14-invalid-schema.png` | Kiểm tra | Request thiếu/thừa trường bị server từ chối; dùng request demo không bí mật | R11 | Test schema/API đã qua; chưa có ảnh terminal |
+
+### Ghi chú C2 ngày 10/11/2026
+
+Chrome đã thêm hồ sơ có ảnh chân dung và từ chối email trùng. Firestore lưu đúng bốn trường; API chỉ trả trạng thái có mật khẩu. Android đã chọn/cắt ảnh rồi lưu lên cùng cloud sau khi sửa lỗi Blob. Xem lỗi và cách sửa thật ở tài liệu 07.
+
+Ảnh 01 và 02 lấy từ VS Code, `server/member-validation.mjs`: `validateMember`, `hashPassword`, `profile`. Đối chiếu với test schema/salt và ảnh Console 11, form 06, hồ sơ 10. Source ở commit `feat: add persistent member creation and profiles`. Các ảnh code API/form và ảnh terminal còn thiếu; chưa coi bộ minh chứng C2 là hoàn tất. Một ảnh bắt nhầm cửa sổ khi đổi focus đã loại khỏi bộ nộp; tạm ngừng chuyển focus trong lúc người dùng đang làm việc.
+
+`pnpm test`: 6/6; `pnpm test:firebase`: 13/13, exit 0. Có kiểm tra tạo trùng đồng thời, giới hạn 200, JPEG giả/quá kích thước, Auth và rules. Android export, lint và TypeScript đã qua. Log đầy đủ giữ riêng, không đưa Git. Word và hai ảnh khởi tạo chưa sửa.
+
+Tên và email là dữ liệu minh họa; nguồn ảnh ở `demo-assets/README.md`. Theo yêu cầu mới sẽ seed khoảng 36 hồ sơ ở C5 để thử tìm/lọc/sắp xếp/phân trang, có cả ảnh người, cảnh Việt Nam và hồ sơ thiếu ảnh.
 
 ### C3 — Sửa, xóa và kiểm tra dữ liệu
 
@@ -123,12 +133,12 @@ Code gốc ở commit `feat: establish secure cloud admin access`; ảnh 08/09/2
 | `c4-06-image-save-cleanup-code.png` | Code | Giữ ảnh cũ khi lỗi, chỉ dọn file mới hoặc ảnh không còn tham chiếu | R09 | Chưa chụp |
 | `c4-07-run-android.png` | Bước làm | ADB xác định thiết bị, lệnh mở Expo và kết quả trên emulator | R01, S02 | Chưa chụp |
 | `c4-08-permission-state.png` | Thao tác | Hộp quyền và xử lý khi từ chối/hủy; form không mất | R09 | Chưa chụp |
-| `c4-09-mobile-library.png` | Thao tác | Chọn ảnh trong thư viện thật | R09 | Chưa chụp |
+| `c4-09-mobile-library.png` | Thao tác | Chọn ảnh trong thư viện thật | R09 | Đã chụp ADB: Android Photo Picker, chỉ quyền truy cập ảnh được chọn |
 | `c4-10-mobile-camera.png` | Thao tác | Mở camera, chụp và chấp nhận ảnh trong luồng thật | R09 | Chưa chụp |
-| `c4-11-mobile-preview.png` | Thao tác | Ảnh sau xử lý, xem trước và dung lượng trước/sau | R08–R09 | Chưa chụp |
+| `c4-11-mobile-preview.png` | Thao tác | Ảnh sau xử lý, xem trước và dung lượng trước/sau | R08–R09 | Đã chụp ADB: ảnh 512 × 512, 13 KiB; ảnh MA ở lần chẩn đoán, sẽ thay bằng ảnh mẫu |
 | `c4-12-mobile-upload.png` | Thao tác | Lưu ảnh, quan sát tiến độ và kết quả | R08–R09 | Chưa chụp |
 | `c4-13-mobile-retry.png` | Kiểm tra | Mất mạng rồi thử lại; dữ liệu form/ảnh cũ còn nguyên | R08–R09 | Chưa chụp |
-| `c4-14-mobile-profile.png` | Kết quả | Mở lại app/hồ sơ, thông tin và ảnh vẫn hiện | R10 | Chưa chụp |
+| `c4-14-mobile-profile.png` | Kết quả | Mở lại app/hồ sơ, thông tin và ảnh vẫn hiện | R10 | Đã chụp ADB: lưu cloud rồi mở hồ sơ; chưa thay cho kiểm tra mở lại app ở C4 |
 | `c4-15-web-same-profile.png` | Kết quả | Làm mới web thấy đúng hồ sơ và ảnh vừa lưu trên Android | R02, R09–R10 | Chưa chụp |
 
 ### C5 — Chức năng nâng cao và khôi phục

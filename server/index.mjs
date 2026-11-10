@@ -1,8 +1,10 @@
 import { createApi } from './api.mjs';
-import { backendAuth } from './firebase.mjs';
+import { backendAuth, backendBucket, backendDatabase } from './firebase.mjs';
+import { createMemberStore } from './members.mjs';
 
 const origins = (process.env.API_ALLOWED_ORIGINS ?? 'http://localhost:8081,http://127.0.0.1:8081').split(',');
-const server = createApi(backendAuth(), origins);
+const server = createApi(backendAuth(), origins,
+  createMemberStore(backendDatabase(), backendBucket(), process.env.MEMBERDESK_ENV));
 server.requestTimeout = 15_000;
 server.headersTimeout = 10_000;
 server.maxHeadersCount = 32;

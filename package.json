@@ -7,6 +7,7 @@
     "@react-native-async-storage/async-storage": "2.2.0",
     "expo": "~58.0.23",
     "expo-constants": "~58.0.15",
+    "expo-crypto": "~58.0.7",
     "expo-device": "~58.0.5",
     "expo-document-picker": "~58.0.4",
     "expo-file-system": "~58.0.13",
@@ -54,8 +55,8 @@
     "api:emulator": "MEMBERDESK_ENV=emulator FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099 FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 FIREBASE_STORAGE_EMULATOR_HOST=127.0.0.1:9199 node server/index.mjs",
     "api:cloud": "MEMBERDESK_ENV=cloud node server/index.mjs",
     "seed:emulator": "MEMBERDESK_ENV=emulator FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099 FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 FIREBASE_STORAGE_EMULATOR_HOST=127.0.0.1:9199 node scripts/seed-admin.mjs",
-    "test": "node --test tests/access.test.mjs tests/config.test.mjs",
-    "test:firebase": "firebase emulators:exec --project demo-memberdesk --only auth,firestore,storage \"MEMBERDESK_ENV=emulator node --test --test-concurrency=1 tests/rules.test.mjs tests/auth-integration.test.mjs\"",
+    "test": "node --test tests/access.test.mjs tests/config.test.mjs tests/member-validation.test.mjs",
+    "test:firebase": "firebase emulators:exec --project demo-memberdesk --only auth,firestore,storage \"MEMBERDESK_ENV=emulator node --test --test-concurrency=1 tests/rules.test.mjs tests/auth-integration.test.mjs tests/members-integration.test.mjs\"",
     "seed:cloud": "MEMBERDESK_ENV=cloud node scripts/seed-admin.mjs",
     "build:web:cloud": "EXPO_PUBLIC_FIREBASE_MODE=cloud EXPO_PUBLIC_API_URL=https://memberdesk-801885728284.web.app/api expo export --platform web",
     "web:emulator": "EXPO_PUBLIC_FIREBASE_MODE=emulator EXPO_PUBLIC_API_URL=http://127.0.0.1:3001 expo start --web"

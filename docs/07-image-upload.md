@@ -62,3 +62,10 @@ Trước nộp phải thử khôi phục trên môi trường thử, không ghi 
 - [Storage Security Rules](https://firebase.google.com/docs/storage/security)
 - [Expo ImagePicker SDK 58](https://docs.expo.dev/versions/v58.0.0/sdk/imagepicker/)
 - [Expo ImageManipulator SDK 58](https://docs.expo.dev/versions/v58.0.0/sdk/imagemanipulator/)
+# Kiểm tra luồng app ngày 10/11/2026
+
+Chrome đã chọn ảnh, xử lý JPEG 512 × 512, upload Storage và lưu hồ sơ Lê Bảo Trân. Tải lại trang vẫn còn dữ liệu. Android Pixel 8 API 36 chạy Expo Go SDK 58 đã chọn/cắt ảnh, upload và mở hồ sơ từ cloud.
+
+Lần thử Android đầu gặp lỗi Blob từ `Uint8Array`. Đổi sang `fetch(file://)` lại đọc về 14 byte “File not found” ở URI cache của Expo Go; server đã từ chối ảnh đó. Đã chuyển sang XHR lấy Blob native, đối chiếu số byte trước upload và thử thành công trên cùng máy ảo. File lỗi không còn tham chiếu đã được dọn, không sửa hồ sơ đã lưu.
+
+Ảnh chân dung mẫu lấy từ Pexels, nguồn ở `submition/demo-assets/README.md`. Dữ liệu minh họa dùng tên Việt có dấu; bộ 36 hồ sơ để thử phân trang sẽ có cả hồ sơ không ảnh. Việc sửa/xóa ảnh, dọn file bỏ dở và thử mất mạng vẫn thuộc C3–C4, chưa nghiệm thu ở mốc này.

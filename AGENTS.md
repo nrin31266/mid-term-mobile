@@ -39,7 +39,7 @@ its read-by-risk and evidence-based workflow informed this file, not this app's 
   database JSON export, report evidence, GitHub source, and demo video. Advanced features
   accepted in `docs/01-y-tuong-va-pham-vi.md` are deliverables too; complete the core flow first.
 - Never store plaintext passwords, expose password hashes through profile APIs, or log credentials.
-  The proposed server-side salted hashing design is not implemented yet.
+  Server-side scrypt hashing is implemented; profile responses omit the hash.
 - Do not claim managed members have Firebase Auth accounts or can log in unless that flow is implemented.
 - Preserve the two existing images and content in `docs/submition/submition.docx`. Add actual
   screenshots and Vietnamese captions as work is performed; never fabricate successful results.
@@ -120,8 +120,8 @@ small read request; configuration alone is not evidence of a connected server.
 
 ## Firebase and image uploads
 
-- Project: `crested-mercury-452707-e8` (Nguyen Van Rin). Existing plan: Blaze. Do not change billing,
-  change billing or create a new bucket. The user authorized cloud deployment and Cloud SDK ADC
+- Project: `crested-mercury-452707-e8` (Nguyen Van Rin). Existing plan: Blaze. Do not change billing
+  or create a new bucket. The user authorized cloud deployment and Cloud SDK ADC
   on 2026-11-10: use dedicated Function `memberdeskApi` (codebase `memberdesk`) and Hosting
   site `memberdesk-801885728284`; preserve the unrelated Function `app` and default site.
 - User confirmed using existing Storage. Bucket: `crested-mercury-452707-e8.firebasestorage.app`.

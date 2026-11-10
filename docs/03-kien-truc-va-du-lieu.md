@@ -42,7 +42,7 @@ Chọn Storage thay base64. Đã kiểm tra upload/tải lại JPEG 2.108 byte b
 - JPEG tối đa 512 × 512, mục tiêu 200 KiB, từ chối trên 500 KiB sau xử lý. Client, rules và phía tin cậy phải kiểm tra tương ứng.
 - Object UUID mới ở `midterm-mobile/avatars/`; không ghi đè theo email. Upload thành công rồi mới lưu URL, giữ ảnh cũ nếu thao tác lỗi.
 - Không lưu ảnh base64 hay URI `file://` vào Firestore. Document người dùng chỉ chứa bốn trường, không có trường đường dẫn Storage phụ.
-- Demo 10–30 hồ sơ; API giới hạn tối đa 200 hồ sơ. Tìm không dấu/lọc/sắp xếp trên tập đã tải, phân trang giao diện 10 hồ sơ. Khi vượt 200 phải báo giới hạn, không âm thầm bỏ kết quả. Tải lại khi vào màn hình/nút làm mới; sau ghi lấy dữ liệu server, chưa hứa realtime.
+- Demo dự kiến 36 hồ sơ theo yêu cầu thử phân trang, có và không có ảnh; API giới hạn tối đa 200 hồ sơ. Tìm không dấu/lọc/sắp xếp trên tập đã tải, phân trang giao diện 10 hồ sơ. Khi vượt 200 phải báo giới hạn, không âm thầm bỏ kết quả. Tải lại khi vào màn hình/nút làm mới; sau ghi lấy dữ liệu server, chưa hứa realtime.
 - Chỉ bỏ index `matkhau`/`hinhanh` nếu có nhu cầu và sau khi kiểm tra cấu hình đang dùng; không tự thay index toàn project.
 
 ## Quyền và credential

@@ -1,5 +1,6 @@
+import { Eye, EyeOff, LockKeyhole, LogIn, Mail, UsersRound } from 'lucide-react-native';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 
 import { ActionButton, FormField } from '@/components/form-controls';
 import { ControlHeight, Radius, Spacing, TypeSize } from '@/constants/theme';
@@ -9,7 +10,6 @@ import { useAuth } from '@/providers/auth-provider';
 export default function SignInScreen() {
   const theme = useTheme();
   const { logIn, error: sessionError } = useAuth();
-  const wide = useWindowDimensions().width >= 900;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [visible, setVisible] = useState(false);
@@ -18,7 +18,7 @@ export default function SignInScreen() {
 
   async function submit() {
     if (busy) return;
-    if (!email.trim() || !password) { setError('Nhập email và mật khẩu để tiếp tục.'); return; }
+    if (!email.trim() || !password) { setError('Nhập email và mật khẩu.'); return; }
     setError(''); setBusy(true);
     try { await logIn(email, password); }
     catch (failure) { setError((failure as Error).message); }
@@ -26,52 +26,31 @@ export default function SignInScreen() {
   }
 
   return <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-    <ScrollView contentInsetAdjustmentBehavior="automatic" keyboardShouldPersistTaps="handled" contentContainerStyle={styles.scroll}>
-      <View style={[styles.content, { flexDirection: wide ? 'row' : 'column', gap: wide ? Spacing.six : Spacing.four }]}>
-        <View style={[styles.intro, { flex: wide ? 1 : undefined }]}>
-          <View style={[styles.monogram, { backgroundColor: theme.accent }]}>
-            <Text style={{ color: theme.onAccent, fontSize: TypeSize.section, fontWeight: '700' }}>MD</Text>
-          </View>
-          <Text style={{ color: theme.accent, fontWeight: '700', fontSize: TypeSize.label, letterSpacing: 2 }}>MEMBERDESK</Text>
-          <Text accessibilityRole="header" style={{ color: theme.text, fontWeight: '700', fontSize: wide ? TypeSize.hero : TypeSize.section }}>
-            Gắn kết từ{wide ? '\n' : ' '}mỗi thành viên.
-          </Text>
-          <Text style={{ color: theme.textSecondary, fontSize: TypeSize.body, lineHeight: 26, maxWidth: 380 }}>
-            Hồ sơ gọn gàng, ảnh luôn bên cạnh. Quản lý câu lạc bộ từ máy tính hoặc điện thoại.
-          </Text>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" keyboardShouldPersistTaps="handled"
+      contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: Spacing.four, paddingBottom: Spacing.five }}>
+      <View style={{ width: '100%', maxWidth: 400, alignSelf: 'center', gap: Spacing.five }}>
+        <View style={{ alignItems: 'center', gap: Spacing.three }}>
+          <View style={{ width: 56, height: 56, borderRadius: Radius.control, backgroundColor: theme.accent,
+            alignItems: 'center', justifyContent: 'center' }}><UsersRound size={28} color={theme.onAccent} accessible={false} /></View>
+          <Text accessibilityRole="header" style={{ color: theme.text, fontWeight: '700', fontSize: TypeSize.section }}>MemberDesk</Text>
+          <Text style={{ color: theme.textSecondary, fontSize: TypeSize.body }}>Quản lý thành viên</Text>
         </View>
-        <View style={[styles.form, { backgroundColor: theme.backgroundElement, width: wide ? 420 : '100%' }]}>
-          <View style={{ gap: Spacing.two }}>
-            <Text accessibilityRole="header" style={{ color: theme.text, fontSize: TypeSize.section, fontWeight: '700' }}>Chào bạn trở lại</Text>
-            <Text style={{ color: theme.textSecondary, fontSize: TypeSize.body, lineHeight: 24 }}>Đăng nhập bằng tài khoản quản trị.</Text>
-          </View>
-          <FormField label="Email" value={email} onChangeText={setEmail} placeholder="ten@caulacbo.vn" keyboardType="email-address"
-            autoCapitalize="none" autoCorrect={false} autoComplete="email" editable={!busy} maxLength={254} />
-          <View>
-            <FormField label="Mật khẩu" value={password} onChangeText={setPassword} secureTextEntry={!visible}
-              autoCapitalize="none" autoCorrect={false} autoComplete="current-password" editable={!busy} maxLength={128}
-              onSubmitEditing={() => void submit()} returnKeyType="go" />
-            <Pressable accessibilityRole="button" accessibilityLabel={visible ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
-              onPress={() => setVisible(!visible)} style={styles.reveal}>
-              <Text style={{ color: theme.accent, fontSize: TypeSize.label, fontWeight: '600' }}>{visible ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}</Text>
-            </Pressable>
-          </View>
+        <View style={{ backgroundColor: theme.backgroundElement, padding: Spacing.four, borderRadius: Radius.surface,
+          borderWidth: 1, borderColor: theme.border, gap: Spacing.four }}>
+          <Text accessibilityRole="header" style={{ color: theme.text, fontSize: TypeSize.section, fontWeight: '600' }}>Đăng nhập</Text>
+          <FormField label="Email" icon={Mail} value={email} onChangeText={setEmail} placeholder="Email quản trị"
+            keyboardType="email-address" autoCapitalize="none" autoCorrect={false} autoComplete="email" editable={!busy} maxLength={254} />
+          <FormField label="Mật khẩu" icon={LockKeyhole} value={password} onChangeText={setPassword} secureTextEntry={!visible}
+            autoCapitalize="none" autoCorrect={false} autoComplete="current-password" editable={!busy} maxLength={128}
+            onSubmitEditing={() => void submit()} returnKeyType="go"
+            trailing={<Pressable accessibilityRole="button" accessibilityLabel={visible ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+              onPress={() => setVisible(!visible)} style={{ minWidth: 44, minHeight: ControlHeight, justifyContent: 'center', alignItems: 'flex-end' }}>
+              {visible ? <EyeOff size={20} color={theme.textSecondary} /> : <Eye size={20} color={theme.textSecondary} />}
+            </Pressable>} />
           {(error || sessionError) ? <Text selectable accessibilityRole="alert" style={{ color: theme.danger, lineHeight: 22 }}>{error || sessionError}</Text> : null}
-          <ActionButton title={busy ? 'Đang đăng nhập…' : 'Đăng nhập'} busy={busy} onPress={() => void submit()} />
-          <Text style={{ color: theme.textSecondary, fontSize: TypeSize.label, lineHeight: 22 }}>
-            Cần tài khoản? Liên hệ người phụ trách câu lạc bộ để được cấp quyền.
-          </Text>
+          <ActionButton title={busy ? 'Đang đăng nhập…' : 'Đăng nhập'} icon={LogIn} busy={busy} onPress={() => void submit()} />
         </View>
       </View>
     </ScrollView>
   </KeyboardAvoidingView>;
 }
-
-const styles = StyleSheet.create({
-  scroll: { flexGrow: 1, justifyContent: 'center', padding: Spacing.four, paddingBottom: Spacing.five },
-  content: { width: '100%', maxWidth: 1100, alignSelf: 'center', alignItems: 'center' },
-  intro: { width: '100%', gap: Spacing.three },
-  monogram: { width: 64, height: 64, borderRadius: Radius.control, justifyContent: 'center', alignItems: 'center' },
-  form: { padding: Spacing.five, borderRadius: Radius.surface, gap: Spacing.four },
-  reveal: { minHeight: ControlHeight, alignSelf: 'flex-end', justifyContent: 'center', paddingHorizontal: Spacing.two },
-});
