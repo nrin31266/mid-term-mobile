@@ -27,6 +27,7 @@ Các commit có thể tách nhỏ khi cần; vẫn phải push ở tất cả m�
 - Web: chụp đủ vùng chứng minh form/danh sách/chi tiết/lỗi; không để dữ liệu app khác trong khung.
 - Android: xác định thiết bị bằng ADB, chụp camera/thư viện trong luồng thật và kết quả sau lưu/mở lại. Không coi ảnh starter là hồ sơ hoàn thành.
 - Firebase: hiện rõ project/collection/document bốn trường và ảnh Storage demo; không chụp service account/token/OTP, không dùng dữ liệu thật.
+- Đánh dấu: dùng khoanh đỏ, khung hoặc mũi tên đơn giản như hai ảnh có sẵn; thêm nhãn ngắn nếu cần. Không che chữ/nút hay sửa kết quả. Giữ bản chụp gốc ở vùng riêng để đối chiếu; ảnh đưa vào báo cáo chỉ thêm dấu chỉ dẫn.
 - Word: để cuối bài mới ráp; giữ hai ảnh đã có, thêm ảnh theo trình tự và chú thích từ ghi chú từng mốc. Render rồi xem hết các trang, chữ/ảnh phải đọc được.
 - GitHub: mỗi mốc commit/push source, docs và ảnh đã lọc; C6 thêm Word hoàn chỉnh. Xác minh remote. Ảnh toàn màn hình thô/private giữ ở `/tmp` hoặc `docs/private/`, không đưa Git.
 

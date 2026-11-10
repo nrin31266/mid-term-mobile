@@ -163,6 +163,9 @@ evidence index, then commit and push source/docs/screenshots. Assemble the final
 at C6; preserve its existing two images until then. Write naturally and briefly: action, result,
 and any real error/fix, without generic AI prose. Verify the remote commit after pushing;
 report failures without claiming GitHub is updated. Keep blocked checkpoints incomplete.
+Use simple red circles, boxes, arrows, or short Vietnamese labels to highlight relevant details,
+like the user’s two original screenshots. Keep the untouched capture privately for comparison.
+Do not cover evidence or alter UI content/results; annotations only guide the reader.
 Never substitute mockups, log renders, or IAM-only diagnostics for successful app screenshots.
 Render and inspect every Word page after edits; preserve its existing two images.
 Report the outcome, checks actually run, blockers, and remaining risk in concise Vietnamese.

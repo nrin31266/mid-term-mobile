@@ -41,6 +41,8 @@ Tên ảnh theo dạng `c2-01-web-create.png`: mốc, số thứ tự, nội dun
 
 ## Cách ghi nhận mỗi ảnh
 
+Có thể khoanh đỏ, đóng khung hoặc thêm mũi tên để chỉ lệnh, nút bấm hay kết quả, giống hai ảnh ban đầu. Đánh dấu ít, dễ nhìn, không che bằng chứng. Giữ ảnh gốc riêng; không sửa nội dung UI hoặc kết quả. Bản có đánh dấu thêm hậu tố `-marked.png`, ví dụ `c2-01-web-create-marked.png`.
+
 Sau khi chụp: thêm link file thật, thời điểm/thiết bị hoặc trình duyệt, thao tác/lệnh, kết quả quan sát, mã yêu cầu và vị trí trong Word. Không dùng vị trí trang dự kiến; chỉ ghi trang sau render cuối. Nếu ảnh có bí mật/thông tin ngoài bài, chụp lại vùng phù hợp trước khi đưa vào Git.
 
 Cuối bài ráp ảnh/ghi chú thành Word. Báo cáo phải có ảnh và giải thích ngắn, không chỉ dẫn người chấm sang thư mục ảnh. Chưa có JSON/video hoàn chỉnh; chỉ cập nhật thành đã có khi file thật và link mở được. File khóa Word và bản render QA không đưa Git.
