@@ -1,6 +1,6 @@
 # mid-term-mobile
 
-MemberDesk — đồ án quản lý thành viên bằng Expo SDK 58 và Firebase. Đang làm C1–C6; hiện có đăng nhập admin và nền tảng cloud, chưa hoàn thành CRUD/mobile/gói nộp.
+MemberDesk — đồ án quản lý thành viên bằng Expo SDK 58 và Firebase. Đã có CRUD cloud, đăng nhập admin, camera/thư viện Android, tìm kiếm/lọc/phân trang, JSON và thẻ thành viên. Đang hoàn thiện kiểm tra cuối, Word và video.
 
 Web: https://memberdesk-801885728284.web.app · [Tài liệu](docs/README.md) · [Đối chiếu đề](docs/02-doi-chieu-de-bai.md) · [Minh chứng](docs/submition/README.md)
 

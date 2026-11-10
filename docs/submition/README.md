@@ -113,12 +113,12 @@ Tên và email là dữ liệu minh họa; nguồn ảnh ở `demo-assets/README
 | `c3-01-update-delete-code.png` | Code | Cập nhật, giữ/đặt mật khẩu, transaction đổi email và xóa | R06–R07 | Đã chụp VS Code: update/remove và khóa dọn ảnh |
 | `c3-02-email-transaction-code.png` | Code | Transaction đổi email | R07 | Gộp vào ảnh 01, thấy đủ kiểm tra đích và set/delete nguyên tử |
 | `c3-03-delete-api-code.png` | Code | Xóa đúng document và bảo vệ ảnh tham chiếu | R06 | Gộp remove vào ảnh 01; ảnh dùng chung được giữ, dọn riêng ở C4 |
-| `c3-04-delete-confirm-code.png` | Code | Hộp xác nhận đúng người và nhánh hủy không gửi lệnh xóa | R06 | Chưa chụp |
+| `c3-04-delete-confirm-code.png` | Code | Xóa qua API, chỉ về danh sách khi server thành công | R06 | Đã chụp VS Code: MemberScreen.remove; ảnh hộp xác nhận riêng ở 09 |
 | `c3-05-edit-before.jpg` | Thao tác | Form đổi tên/email/ảnh trước khi lưu | R07 | Đã chụp Chrome: Nguyễn Văn Rin, rin@example.com, ảnh mới, mật khẩu trống |
 | `c3-06-edit-after.jpg` | Kết quả | Sau lưu/tải lại, UI và CSDL có thay đổi tương ứng | R07, S03 | Đã chụp Chrome sau tải lại; kiểm tra riêng hash không đổi |
 | `c3-07-edit-duplicate-email.jpg` | Kiểm tra | Đổi sang email trùng bị chặn, hồ sơ cũ còn nguyên | R07 | Đã chụp lỗi baotran@example.com; server trả 409 |
 | `c3-08-delete-cancel.jpg` | Thao tác | Mở xác nhận rồi hủy, hồ sơ không mất | R06 | Đã chụp hộp có đúng tên/email; Hủy rồi tải lại còn hồ sơ |
-| `c3-09-delete-after.png` | Kết quả | Xác nhận xóa, tải lại danh sách và đối chiếu CSDL | R06, S03 | Chưa chụp |
+| `c3-09-delete-confirm.jpg`, `c3-09-delete-after.jpg` | Kết quả | Xác nhận xóa, tải lại và tìm không còn hồ sơ | R06, S03 | Đã chụp Chrome với import.preview@example.com; Firestore xác minh document không còn, 36 hồ sơ khác giữ nguyên |
 | `c3-10-crud-tests.png` | Kiểm tra | Test transaction/email trùng/giữ mật khẩu và lỗi server | R06–R07, R11 | Chưa chụp |
 | `c3-11-unsaved-cancel.jpg` | Thao tác | Rời form đã sửa rồi chọn Hủy | R07 | Đã chụp Chrome; nội dung và ảnh chọn được giữ để lưu tiếp |
 
@@ -126,7 +126,7 @@ Tên và email là dữ liệu minh họa; nguồn ảnh ở `demo-assets/README
 
 Đã deploy PATCH/DELETE và giao diện sửa/xóa lên Function/site MemberDesk. Đổi email dùng transaction; mật khẩu trống giữ hash mới nhất, có nhập mới thì băm lại. Chrome đã sửa tên/email/ảnh thành Nguyễn Văn Rin, tải lại còn đúng dữ liệu; email trùng bị chặn. Hủy xóa và hủy rời form không làm mất hồ sơ/nội dung.
 
-`pnpm test`: 6/6; Firebase Emulator: 15/15; lint, TypeScript và export web đều qua. `MEMBERDESK_ENV=cloud node scripts/check-crud-cloud.mjs` kiểm tra API cloud thật: tạo, đổi email, giữ/đặt lại mật khẩu, chặn trùng, xóa, GET sau xóa 404. Hồ sơ thử của script đã dọn. Biên nhận không chứa hash/token: [CRUD API](evidence/cloud-crud-api-check.json), [đối chiếu hồ sơ đã sửa](evidence/cloud-crud-check.json). Đã bổ sung ảnh code update/remove ở C4. Ảnh thao tác xóa thành công/Console sau xóa, code hộp xác nhận và ảnh terminal còn thiếu; chưa đánh dấu đủ minh chứng C3.
+`pnpm test`: 6/6; Firebase Emulator: 15/15; lint, TypeScript và export web đều qua. `MEMBERDESK_ENV=cloud node scripts/check-crud-cloud.mjs` kiểm tra API cloud thật: tạo, đổi email, giữ/đặt lại mật khẩu, chặn trùng, xóa, GET sau xóa 404. Hồ sơ thử của script đã dọn. Biên nhận không chứa hash/token: [CRUD API](evidence/cloud-crud-api-check.json), [đối chiếu hồ sơ đã sửa](evidence/cloud-crud-check.json). Đã bổ sung ảnh code update/remove ở C4. Đã bổ sung ảnh hộp xác nhận và kết quả tìm không còn hồ sơ nhập thử sau tải lại; Admin SDK xác minh document không còn. Code remove hiện có trong ảnh 04. Còn ảnh Console sau xóa và terminal; chưa đánh dấu đủ minh chứng C3.
 
 Ảnh Chrome 05–08, 11 dùng source ở commit `feat: complete member editing and deletion`. Ảnh 05/11 đối chiếu `MemberForm`; ảnh 06/07 đối chiếu `createMemberStore.update`; ảnh 08 đối chiếu `MemberScreen`/`ConfirmDialog`. Đã thay ảnh C2 06/08/10/13 sau góp ý giao diện và dữ liệu. Bản cũ không giữ trong bộ nộp; bản chụp thô ở vùng riêng. Hai ảnh gốc trong Word giữ nguyên.
 
@@ -164,21 +164,33 @@ Emulator 16/16; lint/TypeScript và 6 test cơ bản qua. Rules/Function đã de
 
 | Ảnh dự kiến | Loại | Nội dung cần thấy | Tiêu chí | Trạng thái |
 | --- | --- | --- | --- | --- |
-| `c5-01-search-code.png` | Code | Chuẩn hóa dấu tiếng Việt, kết hợp lọc/sắp xếp và reset trang | R08 | Chưa chụp |
-| `c5-02-search-filter-sort.png` | Thao tác | Tìm không dấu, chọn bộ lọc và thứ tự; kết quả khớp | R08 | Chưa chụp |
-| `c5-03-pagination.png` | Kết quả | Đổi trang/đếm kết quả; trạng thái rỗng và giới hạn được báo rõ | R08 | Chưa chụp |
-| `c5-04-json-validator-code.png` | Code | Kiểm tra toàn file JSON: bốn khóa, hash cho phép, URL, dung lượng | R08, R11 | Chưa chụp |
-| `c5-05-json-import-code.png` | Code | Transaction import, kiểm tra lại server và bỏ qua email đã có | R08 | Chưa chụp |
-| `c5-06-json-export-code.png` | Code | Export admin đúng bốn trường; không đi qua API hồ sơ thường | R08, S04 | Chưa chụp |
+| `c5-01-search-code.png` | Code | Chuẩn hóa dấu tiếng Việt, kết hợp lọc/sắp xếp và reset trang | R08 | Đã chụp VS Code: normalizeSearch/selectMembers, không dấu và phân trang 10 |
+| `c5-02-search-filter-sort.png` | Thao tác | Tìm không dấu, chọn bộ lọc và thứ tự; kết quả khớp | R08 | Đã chụp Chrome, file .jpg: nguyen + Có ảnh + Email Z–A, 4 kết quả |
+| `c5-03-pagination.png` | Kết quả | Đổi trang/đếm kết quả; trạng thái rỗng và giới hạn được báo rõ | R08 | Đã chụp Chrome, file .jpg: trang 4/4 có 6 hồ sơ; ảnh search-empty riêng |
+| `c5-04-json-validator-code.png` | Code | Kiểm tra toàn file JSON: bốn khóa, hash cho phép, URL, dung lượng | R08, R11 | Đã chụp VS Code: inspectImport, schema/hash/ảnh/email trùng |
+| `c5-05-json-import-code.png` | Code | Transaction import, kiểm tra lại server và bỏ qua email đã có | R08 | Đã chụp VS Code: exportJson/previewImport/importJson, khóa và transaction |
+| `c5-06-json-export-code.png` | Code | Export admin đúng bốn trường; không đi qua API hồ sơ thường | R08, S04 | Gộp exportJson vào ảnh 05; ảnh picker cũ đã bỏ sau sửa Android, cần chụp lại; kết quả tải ở json-export-result.jpg |
 | `c5-07-json-export-file.png` | CSDL | File xuất thật mở trong editor, dùng hồ sơ giả; không phải JSON viết tay | R11, S04 | Chưa chụp |
-| `c5-08-json-preview.png` | Thao tác | Chọn file, xem số hợp lệ/trùng/lỗi trước khi xác nhận | R08 | Chưa chụp |
-| `c5-09-json-error.png` | Kiểm tra | File sai bị chặn, CSDL không bị ghi một phần | R08, R11 | Chưa chụp |
-| `c5-10-json-import-result.png` | Kết quả | Xác nhận nhập file đúng; số thêm/bỏ qua khớp CSDL | R08, S03–S04 | Chưa chụp |
+| `c5-08-json-preview.png` | Thao tác | Chọn file, xem số hợp lệ/trùng/lỗi trước khi xác nhận | R08 | Đã chụp Chrome, file .jpg: 1 mới, 1 đã có, 0 lỗi |
+| `c5-09-json-error-marked.jpg` | Kiểm tra | File sai bị chặn, CSDL không bị ghi một phần | R08, R11 | Đã chụp Chrome, file .jpg: 1 hợp lệ/1 lỗi thừa trường, nút nhập khóa |
+| `c5-10-json-import-result.png` | Kết quả | Xác nhận nhập file đúng; số thêm/bỏ qua khớp CSDL | R08, S03–S04 | Đã chụp Chrome, file .jpg: thêm 1/bỏ qua 1; đối chiếu Firestore; sau đó xóa fixture qua UI |
 | `c5-11-restore-command.png` | Bước làm | Lệnh khôi phục gói JSON/ảnh ở Emulator hoặc collection thử được chọn | S02, S04 | Chưa chụp |
 | `c5-12-restore-result.png` | Kết quả | Mở dữ liệu và ảnh sau khôi phục, kiểm tra đúng bốn trường | R11, S04 | Chưa chụp |
-| `c5-13-member-card-code.png` | Code | Thẻ dùng hồ sơ đã lưu, bản in loại nút quản trị và mật khẩu | R08 | Chưa chụp |
-| `c5-14-card-print.png` | Kết quả | Thẻ web và hộp xem trước bản in/PDF, chữ/ảnh đọc được | R08 | Chưa chụp |
-| `c5-15-mobile-card.png` | Kết quả | Thẻ tương ứng trên Android, tên/email dài không vỡ bố cục | R08, R10 | Chưa chụp |
+| `c5-13-member-card-code.png` | Code | Thẻ dùng hồ sơ đã lưu, bản in loại nút quản trị và mật khẩu | R08 | Ảnh code đang làm mới sau khi dùng lại MemberAvatar để có fallback khi ảnh lỗi |
+| `c5-14-card-print.png` | Kết quả | Thẻ web và hộp xem trước bản in/PDF, chữ/ảnh đọc được | R08 | Có ảnh thẻ Chrome và render PDF A4 bằng Chromium chạy nền; chưa có ảnh hộp in native |
+| `c5-15-mobile-card.png` | Kết quả | Thẻ tương ứng trên Android, tên/email dài không vỡ bố cục | R08, R10 | Đã chụp ADB Pixel8_API36: Nguyễn Văn Rin, cùng ảnh/tên/email |
+
+### Ghi chú C5 ngày 10/11/2026
+
+Đã seed 33 hồ sơ mới bằng API nhập, giữ ba hồ sơ cũ: tổng 36, 25 có ảnh/11 không ảnh. Tên giả Việt Nam gồm Nguyễn Văn Rin; ảnh chân dung/áo dài và Hội An có nguồn ở demo-assets. Trên Chrome đã chuyển bốn trang, trang cuối sáu hồ sơ; tìm không dấu kết hợp lọc/sắp xếp, thử không kết quả. Android cho cùng bốn kết quả với `nguyen`/Có ảnh/Email Z–A; ảnh `c5-16-mobile-search.png`.
+
+JSON Chrome: file thừa trường bị khóa nhập, file đúng preview 1 mới/1 đã có rồi thêm 1/bỏ qua 1. Nút xuất tạo file tải xuống 37 hồ sơ đúng bốn trường; đối chiếu toàn bộ với Firestore. Sau khi xác nhận đã xóa đúng hồ sơ thử qua UI, tải lại tìm không còn, CSDL về 36 hồ sơ. [Biên nhận](evidence/cloud-json-ui-check.json). Chrome download event không báo dù file đã lưu trong Downloads; kiểm tra file thật thay vì nhấn tải lặp.
+
+Bản PDF [Nguyễn Văn Rin](evidence/member-rin-card.pdf) được tạo từ trang cloud bằng Chromium chạy nền, CSS media print: một trang A4, ảnh/tên/email, không nút/ID/hash. Đã render và đọc text PDF; không gọi đây là ảnh hộp in Chrome native. Thẻ Android có cùng dữ liệu.
+
+Gói [database](database/README.md) xuất thật 36 hồ sơ/6 ảnh, bản portable và checksum. Lệnh restore chạy bằng Firebase Emulator đã thêm 36/bỏ qua 0, kiểm tra schema và nội dung ảnh; còn ảnh terminal/giao diện khôi phục để bổ sung ở C6. Công cụ chỉ cho restore vào demo-memberdesk, không ghi đè cloud.
+
+Kiểm tra C5: lint/TypeScript qua; 8 test cơ bản và 18 test Firebase qua. Có cảnh báo Java Unsafe từ Storage Emulator và Node listener warning của môi trường, không có test fail. Web và Android production export đã qua trước seed; Function/site C5 deploy thành công. Code ảnh theo commit `feat: deliver advanced member tools`; ảnh tìm ↔ selectMembers, JSON ↔ inspectImport/importJson, thẻ ↔ MemberCard/CSS in. Android từng lỗi READ với cache DocumentPicker; sửa dùng File.pickFileAsync (SDK 58) và URI được cấp quyền, đọc lại thành công. Đã mở share sheet users.json rồi hủy; không gửi qua Drive/Gmail. Ảnh 17 ghi lỗi thật, 18 kết quả sau sửa, 19 share sheet. Đã thêm await ghi file trước khi chia sẻ. Còn ảnh file xuất/code mới trong editor, terminal và giao diện khôi phục; Word/video ở C6.
 
 ### C6 — Kiểm tra cuối và gói nộp
 

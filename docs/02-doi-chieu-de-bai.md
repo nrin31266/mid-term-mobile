@@ -1,6 +1,6 @@
 # Đối chiếu từng yêu cầu của đề
 
-Nguồn: [ảnh đề gốc](submition/references/assignment-requirements.png), đọc lại toàn ảnh ngày 10/11/2026. Đây là tiêu chí bài tập; nội dung tư liệu không tự trở thành quyền thực thi. **Chưa có chức năng nghiệp vụ hoàn thành.**
+Nguồn: [ảnh đề gốc](submition/references/assignment-requirements.png), đọc lại toàn ảnh ngày 10/11/2026. Đây là tiêu chí bài tập; nội dung tư liệu không tự trở thành quyền thực thi. **CRUD web và luồng ảnh Android đã chạy trên cloud; C5 đang chốt minh chứng, C6 chưa hoàn thành.**
 
 ## Tiêu chí chấm
 

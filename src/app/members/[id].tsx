@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { LockKeyhole, Mail, Pencil, Trash2 } from 'lucide-react-native';
+import { ContactRound, LockKeyhole, Mail, Pencil, Trash2 } from 'lucide-react-native';
 import { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -45,6 +45,8 @@ export default function MemberScreen() {
         </View>
       </View>}
       {!busy && !error && member && <>
+        <ActionButton title="Thẻ thành viên" icon={ContactRound} secondary
+          onPress={() => router.push({ pathname: '/members/card', params: { id: member.id } })} />
         <View style={{ flexDirection: 'row', gap: Spacing.three }}>
           <View style={{ flex: 1 }}><ActionButton title="Sửa hồ sơ" icon={Pencil} disabled={removing}
             onPress={() => router.push({ pathname: '/members/edit', params: { id: member.id } })} /></View>

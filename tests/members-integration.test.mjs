@@ -8,6 +8,10 @@ import { backendBucket, backendDatabase } from '../server/firebase.mjs';
 import { createMemberStore } from '../server/members.mjs';
 import { memberFields, memberId } from '../server/member-validation.mjs';
 import { cleanupAvatars, imageCleanupLockPath } from '../server/image-cleanup.mjs';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { exportBackup, restoreBackup } from '../scripts/member-backup.mjs';
 
 const { default: sharp } = await import(createRequire(new URL('../server/package.json', import.meta.url)).resolve('sharp'));
 
@@ -24,7 +28,7 @@ test('member API persists exact fields, rejects duplicates atomically and valida
   const server = createApi({ verifyIdToken: async () => ({ uid: 'test-admin', admin: true }) }, undefined, store);
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   const base = `http://127.0.0.1:${server.address().port}`;
-  const post = (body) => fetch(`${base}/members`, { method: 'POST', headers: {
+  const post = (body, path = '/members') => fetch(`${base}${path}`, { method: 'POST', headers: {
     Authorization: 'Bearer test-admin', 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
   const change = (id, body, method = 'PATCH') => fetch(`${base}/members/${id}`, { method, headers: {
     Authorization: 'Bearer test-admin', 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
@@ -125,6 +129,7 @@ test('member API persists exact fields, rejects duplicates atomically and valida
       await assert.rejects(store.create({ ...input, email: 'blocked@example.com' }), { status: 503 });
       await assert.rejects(store.update(shared.id, { ...input, matkhau: '' }), { status: 503 });
       await assert.rejects(store.remove(shared.id), { status: 503 });
+      await assert.rejects(store.importJson([]), { status: 503 });
       await assert.rejects(cleanupAvatars(database, bucket, 'emulator', { apply: true }));
     } finally { release(); }
     const result = await cleaning;
@@ -134,5 +139,90 @@ test('member API persists exact fields, rejects duplicates atomically and valida
     assert.equal((await database.doc(imageCleanupLockPath).get()).exists, false);
     assert.equal((await store.get(shared.id)).hinhanh, urls[0]);
     await assert.rejects(store.update(shared.id, { ...input, matkhau: '', hinhanh: urls[1] }), { status: 400 });
+  });
+  await context.test('JSON preview hides hashes, rejects the whole invalid file and imports new rows without overwriting existing members', async () => {
+    await clear(); const original = await store.create(input);
+    const response = await fetch(`${base}/members/export`, { headers: { Authorization: 'Bearer test-admin' } });
+    assert.equal(response.status, 200); const exported = await response.json();
+    assert.deepEqual(Object.keys(exported[0]).sort(), memberFields);
+    const second = { ...exported[0], email: 'json2@example.com', hoten: 'Đỗ Quỳnh Chi' };
+    const invalid = { ...second, email: 'invalid@example.com', role: 'admin' };
+    const previewResponse = await post([second, invalid], '/members/import/preview');
+    assert.equal(previewResponse.status, 200); const preview = await previewResponse.json();
+    assert.equal(preview.validCount, 1); assert.equal(preview.invalidCount, 1); assert.equal(preview.canImport, false);
+    assert.equal(JSON.stringify(preview).includes(exported[0].matkhau), false);
+    assert.equal((await post([second, invalid], '/members/import')).status, 400);
+    assert.equal((await collection.get()).size, 1);
+    for (const bad of [{ ...second, matkhau: 'plaintext-password' }, { ...second, matkhau: exported[0].matkhau.replace('16384', '1048576') },
+      { ...second, hinhanh: 'https://example.com/image.jpg' }]) {
+      await assert.rejects(store.importJson([bad]), { status: 400 });
+      assert.equal((await collection.get()).size, 1);
+    }
+    const duplicate = await store.previewImport([second, { ...second, email: ' JSON2@EXAMPLE.COM ' }]);
+    assert.equal(duplicate.invalidCount, 1);
+    await assert.rejects(store.importJson([second, second]), { status: 400 });
+    const result = await post([{ ...exported[0], hoten: 'Không ghi đè tên cũ' }, second], '/members/import');
+    assert.equal(result.status, 200); assert.deepEqual(await result.json(), { added: 1, skipped: 1 });
+    assert.equal((await store.get(original.id)).hoten, input.hoten);
+    const third = { ...second, email: 'json3@example.com' };
+    const simultaneous = await Promise.all([store.importJson([third]), store.importJson([third])]);
+    assert.equal(simultaneous.reduce((sum, item) => sum + item.added, 0), 1);
+    assert.equal((await collection.get()).size, 3);
+    await assert.rejects(store.importJson(Array(201).fill(second)), { status: 400 });
+    const path = `midterm-mobile/avatars/${randomUUID()}.jpg`; paths.push(path); const token = randomUUID();
+    await bucket.file(path).save(await sharp({ create: { width: 32, height: 32, channels: 3, background: 'white' } }).jpeg().toBuffer(), {
+      metadata: { contentType: 'image/jpeg', metadata: { firebaseStorageDownloadTokens: token } },
+    });
+    const withImage = { ...second, email: 'image-after-preview@example.com',
+      hinhanh: `http://127.0.0.1:9199/v0/b/${bucket.name}/o/${encodeURIComponent(path)}?alt=media&token=${token}` };
+    assert.equal((await store.previewImport([withImage])).canImport, true);
+    await bucket.file(path).delete();
+    await assert.rejects(store.importJson([withImage]), { status: 400 });
+    assert.equal((await collection.get()).size, 3);
+    await clear(); const batch = database.batch();
+    for (let i = 0; i < 199; i++) {
+      const member = { ...second, email: `capacity-${i}@example.com` }; batch.create(collection.doc(memberId(member.email)), member);
+    }
+    await batch.commit();
+    await assert.rejects(store.importJson([second, third]), { status: 409 });
+    assert.equal((await collection.get()).size, 199);
+  });
+  await context.test('portable backup restores shared image bytes and hashes, rejects tampering and cannot target cloud', async () => {
+    await clear();
+    const path = `midterm-mobile/avatars/${randomUUID()}.jpg`; paths.push(path); const token = randomUUID();
+    const bytes = await sharp({ create: { width: 32, height: 32, channels: 3, background: 'teal' } }).jpeg().toBuffer();
+    await bucket.file(path).save(bytes, { metadata: { contentType: 'image/jpeg', metadata: { firebaseStorageDownloadTokens: token } } });
+    const url = `http://127.0.0.1:9199/v0/b/${bucket.name}/o/${encodeURIComponent(path)}?alt=media&token=${token}`;
+    await store.create({ ...input, hinhanh: url });
+    await store.create({ ...input, email: 'two@example.com', hinhanh: url });
+    const before = await store.exportJson();
+    const parent = await mkdtemp(join(tmpdir(), 'memberdesk-backup-')); const directory = join(parent, 'backup');
+    try {
+      assert.deepEqual(await exportBackup(database, bucket, 'emulator', directory), { members: 2, images: 1 });
+      await assert.rejects(restoreBackup({ projectId: 'real-cloud-project' }, bucket, directory));
+      const portable = JSON.parse(await readFile(join(directory, 'users-portable.json'), 'utf8'));
+      const invalid = portable.map((member) => ({ ...member, hinhanh: '../../outside.jpg' }));
+      await writeFile(join(directory, 'users-portable.json'), JSON.stringify(invalid));
+      await assert.rejects(restoreBackup(database, bucket, directory));
+      assert.deepEqual(await store.exportJson(), before);
+      await writeFile(join(directory, 'users-portable.json'), JSON.stringify(portable));
+      await clear(); await bucket.file(path).delete();
+      const restored = await restoreBackup(database, bucket, directory);
+      assert.equal(restored.added, 2); assert.equal(restored.images, 1);
+      const after = await store.exportJson();
+      for (const member of after) {
+        assert.equal(member.matkhau, before.find((value) => value.email === member.email).matkhau);
+        const objectPath = decodeURIComponent(new URL(member.hinhanh).pathname.split('/o/')[1]);
+        if (!paths.includes(objectPath)) paths.push(objectPath);
+        assert.deepEqual((await bucket.file(objectPath).download())[0], bytes);
+      }
+      assert.equal(after[0].hinhanh, after[1].hinhanh);
+      const fileCount = (await bucket.getFiles({ prefix: 'midterm-mobile/avatars/' }))[0].length;
+      assert.equal((await restoreBackup(database, bucket, directory)).added, 0);
+      assert.equal((await bucket.getFiles({ prefix: 'midterm-mobile/avatars/' }))[0].length, fileCount);
+      await writeFile(join(directory, portable[0].hinhanh), Buffer.from('tampered'));
+      await assert.rejects(restoreBackup(database, bucket, directory));
+      assert.deepEqual(await store.exportJson(), after);
+    } finally { await rm(parent, { recursive: true, force: true }); }
   });
 });

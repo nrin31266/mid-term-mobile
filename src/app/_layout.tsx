@@ -23,6 +23,7 @@ function SessionRoutes() {
     <Stack.Protected guard={admin}>
       <Stack.Screen name="index" options={{ title: 'MemberDesk' }} />
       <Stack.Screen name="members" options={{ headerShown: false }} />
+      <Stack.Screen name="data" options={{ title: 'Dữ liệu JSON' }} />
     </Stack.Protected>
   </Stack>;
 }

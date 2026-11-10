@@ -53,6 +53,15 @@ export function createHandler(auth, origins = ['http://localhost:8081', 'http://
         if (request.method === 'GET') { send(200, await members.list()); return; }
         if (request.method === 'POST') { send(201, await members.create(await readJson(request))); return; }
       }
+      if (members && request.method === 'GET' && request.url === '/members/export') {
+        send(200, await members.exportJson()); return;
+      }
+      if (members && request.method === 'POST' && request.url === '/members/import/preview') {
+        send(200, await members.previewImport(await readJson(request))); return;
+      }
+      if (members && request.method === 'POST' && request.url === '/members/import') {
+        send(200, await members.importJson(await readJson(request))); return;
+      }
       const memberRoute = /^\/members\/([a-f0-9]{64})$/.exec(request.url);
       if (members && memberRoute && request.method === 'GET') {
         send(200, await members.get(memberRoute[1])); return;

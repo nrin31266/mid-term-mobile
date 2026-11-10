@@ -13,5 +13,6 @@ export default function MembersLayout() {
     <Stack.Screen name="new" options={{ title: 'Thêm thành viên' }} />
     <Stack.Screen name="[id]" options={{ title: 'Hồ sơ thành viên' }} />
     <Stack.Screen name="edit" options={{ title: 'Sửa thành viên' }} />
+    <Stack.Screen name="card" options={{ title: 'Thẻ thành viên' }} />
   </Stack>;
 }

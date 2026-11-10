@@ -1,16 +1,22 @@
 import { router } from 'expo-router';
-import { ChevronRight, LogOut, Plus, RefreshCw, UsersRound } from 'lucide-react-native';
-import { useState } from 'react';
+import { ChevronLeft, ChevronRight, Database, LogOut, Plus, RefreshCw, Search, UsersRound } from 'lucide-react-native';
+import { useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, Text, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { ActionButton } from '@/components/form-controls';
+import { ActionButton, FormField } from '@/components/form-controls';
+import { ChoiceMenu } from '@/components/choice-menu';
 import { MemberAvatar } from '@/components/member-avatar';
 import { ControlHeight, Radius, Spacing, TypeSize } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useRemoteData } from '@/hooks/use-remote-data';
 import { useAuth } from '@/providers/auth-provider';
 import { listMembers } from '@/services/members';
+import { selectMembers, type MemberSort, type PhotoFilter } from '@/utils/member-search';
+
+const photoOptions = [{ value: 'all', label: 'Tất cả ảnh' }, { value: 'with', label: 'Có ảnh' }, { value: 'without', label: 'Chưa có ảnh' }] as const;
+const sortOptions = [{ value: 'name-asc', label: 'Tên A–Z' }, { value: 'name-desc', label: 'Tên Z–A' },
+  { value: 'email-asc', label: 'Email A–Z' }, { value: 'email-desc', label: 'Email Z–A' }] as const;
 
 export default function HomeScreen() {
   const theme = useTheme(); const { logOut } = useAuth(); const insets = useSafeAreaInsets();
@@ -18,13 +24,19 @@ export default function HomeScreen() {
   const { data, error: loadError, busy, reload } = useRemoteData(listMembers);
   const members = data?.members ?? [];
   const [actionError, setError] = useState('');
+  const [query, setQuery] = useState(''); const [photo, setPhoto] = useState<PhotoFilter>('all');
+  const [sort, setSort] = useState<MemberSort>('name-asc'); const [page, setPage] = useState(1);
+  const result = selectMembers(members, query, photo, sort, page);
+  const list = useRef<FlatList>(null);
   const error = actionError || loadError;
 
   async function leave() {
     try { await logOut(); } catch { setError('Chưa đăng xuất được. Hãy thử lại.'); }
   }
 
-  return <FlatList data={error || busy ? [] : members} keyExtractor={(member) => member.id}
+  function changePage(next: number) { setPage(next); list.current?.scrollToOffset({ offset: 0, animated: false }); }
+
+  return <FlatList ref={list} data={error || busy ? [] : result.members} keyExtractor={(member) => member.id}
     contentInsetAdjustmentBehavior="automatic" keyboardShouldPersistTaps="handled" refreshing={busy}
     onRefresh={() => void reload()}
     contentContainerStyle={{ padding: Spacing.four, paddingBottom: Math.max(insets.bottom, Spacing.four),
@@ -33,12 +45,26 @@ export default function HomeScreen() {
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: Spacing.three }}>
         <View style={{ gap: Spacing.two, flex: 1 }}>
           <Text accessibilityRole="header" style={{ color: theme.text, fontSize: wide ? TypeSize.hero : TypeSize.section, fontWeight: '700' }}>Thành viên</Text>
-          {!busy && !error && <Text style={{ color: theme.textSecondary, fontSize: TypeSize.label }}>{members.length} hồ sơ</Text>}
+          {!busy && !error && <Text style={{ color: theme.textSecondary, fontSize: TypeSize.label }}>
+            {query || photo !== 'all' ? `${result.total} kết quả · ` : ''}{members.length}/{data?.limit ?? 200} hồ sơ
+          </Text>}
         </View>
+        <Pressable accessibilityRole="button" accessibilityLabel="Dữ liệu JSON" onPress={() => router.push('/data')}
+          style={{ minWidth: ControlHeight, minHeight: ControlHeight, alignItems: 'center', justifyContent: 'center' }}>
+          <Database size={22} color={theme.textSecondary} />
+        </Pressable>
         <Pressable accessibilityRole="button" accessibilityLabel="Đăng xuất" onPress={() => void leave()}
           style={{ minWidth: ControlHeight, minHeight: ControlHeight, alignItems: 'center', justifyContent: 'center' }}>
           <LogOut size={22} color={theme.textSecondary} />
         </Pressable>
+      </View>
+      <FormField label="Tìm thành viên" icon={Search} value={query} placeholder="Tên hoặc email" autoCapitalize="none" autoCorrect={false}
+        onChangeText={(value) => { setQuery(value); setPage(1); }} />
+      <View style={{ flexDirection: 'row', gap: Spacing.two }}>
+        <View style={{ flex: 1 }}><ChoiceMenu label="Lọc ảnh" value={photo} options={photoOptions}
+          onChange={(value) => { setPhoto(value as PhotoFilter); setPage(1); }} /></View>
+        <View style={{ flex: 1 }}><ChoiceMenu label="Sắp xếp" value={sort} options={sortOptions}
+          onChange={(value) => { setSort(value as MemberSort); setPage(1); }} /></View>
       </View>
       <View style={{ flexDirection: 'row', gap: Spacing.two }}>
         <View style={{ flex: 1 }}><ActionButton title="Thêm thành viên" icon={Plus} onPress={() => router.push('/members/new')} /></View>
@@ -47,7 +73,7 @@ export default function HomeScreen() {
           <RefreshCw size={20} color={theme.accent} />
         </Pressable>
       </View>
-      {wide && !busy && !error && members.length > 0 && <View style={{ flexDirection: 'row', paddingHorizontal: Spacing.three, paddingTop: Spacing.three }}>
+      {wide && !busy && !error && result.total > 0 && <View style={{ flexDirection: 'row', paddingHorizontal: Spacing.three, paddingTop: Spacing.three }}>
         <Text style={{ flex: 1, color: theme.textSecondary, fontSize: TypeSize.label }}>Họ và tên</Text>
         <Text style={{ flex: 1, color: theme.textSecondary, fontSize: TypeSize.label }}>Email</Text>
         <Text style={{ width: 110, textAlign: 'right', color: theme.textSecondary, fontSize: TypeSize.label }}>Hồ sơ</Text>
@@ -58,8 +84,21 @@ export default function HomeScreen() {
         <ActionButton title="Thử lại" secondary onPress={() => { setError(''); void reload(); }} /></View>
       : <View style={{ alignItems: 'center', gap: Spacing.three, padding: Spacing.five }}>
         <UsersRound size={40} color={theme.textSecondary} accessible={false} />
-        <Text style={{ color: theme.text, fontSize: TypeSize.body, fontWeight: '600' }}>Chưa có thành viên</Text>
+        <Text style={{ color: theme.text, fontSize: TypeSize.body, fontWeight: '600' }}>{members.length ? 'Không tìm thấy thành viên' : 'Chưa có thành viên'}</Text>
       </View>}
+    ListFooterComponent={!busy && !error && result.total > 0 ? <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.four, paddingVertical: Spacing.three }}>
+      <Pressable accessibilityRole="button" accessibilityLabel="Trang trước" disabled={result.page === 1}
+        accessibilityState={{ disabled: result.page === 1 }} onPress={() => changePage(result.page - 1)}
+        style={{ minWidth: ControlHeight, minHeight: ControlHeight, alignItems: 'center', justifyContent: 'center', opacity: result.page === 1 ? 0.3 : 1 }}>
+        <ChevronLeft size={24} color={theme.accent} />
+      </Pressable>
+      <Text accessibilityLiveRegion="polite" style={{ color: theme.text, fontSize: TypeSize.label }}>Trang {result.page} / {result.pageCount}</Text>
+      <Pressable accessibilityRole="button" accessibilityLabel="Trang sau" disabled={result.page === result.pageCount}
+        accessibilityState={{ disabled: result.page === result.pageCount }} onPress={() => changePage(result.page + 1)}
+        style={{ minWidth: ControlHeight, minHeight: ControlHeight, alignItems: 'center', justifyContent: 'center', opacity: result.page === result.pageCount ? 0.3 : 1 }}>
+        <ChevronRight size={24} color={theme.accent} />
+      </Pressable>
+    </View> : undefined}
     renderItem={({ item }) => <Pressable accessibilityRole="button" accessibilityLabel={`Xem hồ sơ ${item.hoten}, ${item.email}`}
       onPress={() => router.push({ pathname: '/members/[id]', params: { id: item.id } })}
       style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', padding: Spacing.three, gap: Spacing.three,

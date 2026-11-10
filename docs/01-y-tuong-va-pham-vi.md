@@ -66,7 +66,7 @@ File `google-services.json` đã nhận đúng project nhưng dành cho hai pack
 
 | Mục | Hiện tại và việc cần làm |
 | --- | --- |
-| Rà đề/nâng cao | Đã đối chiếu tài liệu 02; chức năng vẫn là kế hoạch |
+| Rà đề/nâng cao | Đã triển khai CRUD, ảnh Android và bốn nhóm nâng cao; theo dõi nghiệm thu ở tài liệu 05 |
 | Skill | Tám skill nằm trong `.agents/skills/` của dự án |
 | Storage | IAM và SDK admin upload/tải lại đã qua; rules riêng đã kiểm thử/deploy, không gia hạn wildcard cũ |
 | Cloud trước triển khai | Kiểm tra rules/app cũ; thiết lập admin, credential server, cấu hình web app và rules riêng đã kiểm thử; không tự bật billing |

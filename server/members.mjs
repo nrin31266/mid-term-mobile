@@ -2,6 +2,7 @@ import { ApiError } from './access.mjs';
 import { hashPassword, maxMembers, memberId, profile, validateMember } from './member-validation.mjs';
 import { validateImage } from './member-images.mjs';
 import { imageCleanupLockPath } from './image-cleanup.mjs';
+import { importPreview, inspectImport } from './member-json.mjs';
 
 export function createMemberStore(database, bucket, mode) {
   const collection = database.collection('midterm_users');
@@ -11,6 +12,31 @@ export function createMemberStore(database, bucket, mode) {
     }
   }
   return {
+    async exportJson() {
+      const snapshot = await collection.limit(maxMembers + 1).get();
+      if (snapshot.size > maxMembers) throw new ApiError(409, 'Dữ liệu vượt giới hạn 200 hồ sơ.');
+      return snapshot.docs.map((document) => { profile(document); return validateMember(document.data()); });
+    },
+    async previewImport(input) {
+      const inspected = await inspectImport(input, bucket, mode);
+      const snapshot = await collection.limit(maxMembers + 1).get();
+      return importPreview(input, inspected, snapshot);
+    },
+    async importJson(input) {
+      return database.runTransaction(async (transaction) => {
+        await ensureWritable(transaction);
+        const snapshot = await transaction.get(collection.limit(maxMembers + 1));
+        const inspected = await inspectImport(input, bucket, mode);
+        const preview = importPreview(input, inspected, snapshot);
+        if (preview.invalidCount) throw new ApiError(400, 'File còn lỗi. Chưa nhập hồ sơ nào.');
+        if (preview.capacityExceeded) throw new ApiError(409, 'Nhập file này sẽ vượt 200 hồ sơ.');
+        const existing = new Set(snapshot.docs.map((document) => document.data().email));
+        for (const { member } of inspected.members) if (!existing.has(member.email)) {
+          transaction.create(collection.doc(memberId(member.email)), member);
+        }
+        return { added: preview.newCount, skipped: preview.existingCount };
+      });
+    },
     async list() {
       const snapshot = await collection.limit(maxMembers + 1).get();
       if (snapshot.size > maxMembers) throw new ApiError(409, 'Dữ liệu vượt giới hạn 200 hồ sơ. Liên hệ người quản trị.');

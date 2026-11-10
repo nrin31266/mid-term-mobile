@@ -71,3 +71,11 @@ Gói sao lưu kèm bản ảnh demo và hướng dẫn khôi phục ở tài li�
 ## Luồng thẻ thành viên
 
 Thẻ hiển thị từ hồ sơ đã lưu, chỉ ảnh/tên/email. Web có trang in riêng dùng khả năng in/lưu PDF của trình duyệt; không cần dịch vụ PDF cloud. Mobile xem thẻ toàn màn hình. Thẻ không phải chứng nhận xác thực, không có mã/thời hạn/QR giả và không lưu document phụ.
+
+## JSON và bản sao di động — C5
+
+API admin có `GET /members/export`, `POST /members/import/preview` và `POST /members/import`. Preview chỉ trả tên/email/trạng thái; hash chỉ có trong bản xuất. Server nhận tối đa 2 MiB, 200 hồ sơ; kiểm tra đúng bốn trường, định dạng scrypt, email trùng và nội dung ảnh. Xác nhận kiểm tra lại trong transaction có khóa dọn ảnh; file lỗi không ghi, email đã có được bỏ qua.
+
+Tra cứu chạy trên tập tối đa 200 hồ sơ, phân trang giao diện 10 hồ sơ. Tìm không dấu kết hợp lọc ảnh và sắp tên/email; đổi điều kiện reset trang. Thẻ đọc hồ sơ đã lưu; CSS in ẩn các nút/header quản trị.
+
+`scripts/member-backup.mjs` xuất dữ liệu cloud cùng ảnh/checksum; bản portable thay URL bằng đường dẫn `images/`. Khôi phục chỉ nhận project Emulator `demo-memberdesk`, kiểm tra đường dẫn/checksum, tải ảnh mới rồi nhập nguyên tử qua cùng store. Không có lệnh ghi đè cloud. Hướng dẫn trong `submition/database/README.md`.

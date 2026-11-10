@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-11-10T13:08:03.555Z",
+  "projectId": "crested-mercury-452707-e8",
+  "invalidPreview": {
+    "new": 1,
+    "invalid": 1,
+    "importDisabled": true
+  },
+  "validPreview": {
+    "new": 1,
+    "existing": 1,
+    "invalid": 0
+  },
+  "importResult": {
+    "added": 1,
+    "skipped": 1
+  },
+  "downloadedRows": 37,
+  "downloadMatchesCloud": true,
+  "exactFourFields": true,
+  "hashOnly": true,
+  "uiDeletedFixture": true,
+  "fixtureMissingInFirestore": true,
+  "remainingMembers": 36,
+  "androidPickerRead": true,
+  "androidInvalidPreview": {
+    "new": 1,
+    "invalid": 1
+  },
+  "androidNativeShareOpened": true,
+  "androidShareCanceled": true
+}
