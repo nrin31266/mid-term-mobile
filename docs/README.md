@@ -12,7 +12,7 @@ Cập nhật ngày 10/11/2026. App cloud, Word và gói dữ liệu đã đượ
 | [06 — Cách AI làm việc](06-ai-workflow.md) | Skill, MCP, Agent Desktop và bằng chứng chụp màn hình |
 | [07 — Upload ảnh](07-image-upload.md) | Storage đã thử, rule hết hạn và quy trình lưu URL |
 | [Chỉ mục minh chứng](submition/README.md) | Ảnh đề, hai ảnh có sẵn và ảnh phải chụp ở từng checkpoint |
-| [Báo cáo Word](submition/submition.docx) | Báo cáo 36 trang, giữ hai ảnh gốc; Times New Roman 13 pt, không đánh số hình/tiêu đề |
+| [Báo cáo Word](submition/submition.docx) | Báo cáo 36 trang A4 dọc, giữ bìa sinh viên sửa và hai ảnh gốc; Times New Roman 13 pt, không đánh số hình/tiêu đề |
 | [08 — Quay video](08-kich-ban-video.md) | Phím quay trên KDE và checklist đủ chức năng |
 | [Gói CSDL](submition/database/README.md) | 36 hồ sơ và 6 ảnh, hướng dẫn khôi phục đã thử |
 

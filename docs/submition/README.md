@@ -208,7 +208,7 @@ C6 kiểm tra clone public ở commit `6ee9d10` kèm bản sửa `tsconfig.json`
 
 ### Báo cáo cuối và video
 
-[Báo cáo Word](submition.docx): **Nguyễn Văn Rin — 23IT231 — Phát triển ứng dụng di động đa nền tảng (5)**. Times New Roman, body 13 pt; tiêu đề và chú thích hình không đánh số. Giữ nguyên nội dung khởi tạo và hai ảnh gốc, đối chiếu byte ảnh. Đã render và xem đủ 36 trang; bản render QA giữ riêng.
+[Báo cáo Word](submition.docx): **Nguyễn Văn Rin — 23IT231 — Phát triển ứng dụng di động đa nền tảng (5)**. Toàn bộ trang A4 dọc, Times New Roman, body 13 pt; tiêu đề và chú thích hình không đánh số. Giữ trang bìa sinh viên đã sửa, nội dung khởi tạo và hai ảnh gốc, đối chiếu byte ảnh. Nội dung viết theo các bước thực hiện và kết quả, dùng câu ngắn. Đã render và xem đủ 36 trang; bản render QA giữ riêng.
 
 | Trang sau render | Nội dung |
 | --- | --- |

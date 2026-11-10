@@ -55,7 +55,7 @@ firebase deploy --project crested-mercury-452707-e8 --only hosting:memberdesk --
 
 ADC chỉ dùng trên máy quản trị. Function dùng danh tính runtime, không chứa credential local. Project đang Blaze, có thể phát sinh phí theo sử dụng.
 
-Code/commit tiếng Anh, comment quan trọng ngắn bằng tiếng Việt; UI/docs tiếng Việt, riêng `AGENTS.md` tiếng Anh. Tám skill local ở `.agents/skills/`. Mỗi checkpoint lớn kiểm tra, chụp đủ bước, commit/push và xác minh GitHub. Word đã giữ hai ảnh gốc, dùng Times New Roman 13 pt, không đánh số hình hoặc tiêu đề.
+Code/commit tiếng Anh, comment quan trọng ngắn bằng tiếng Việt; UI/docs tiếng Việt, riêng `AGENTS.md` tiếng Anh. Tám skill local ở `.agents/skills/`. Mỗi checkpoint lớn kiểm tra, chụp đủ bước, commit/push và xác minh GitHub. Word dùng A4 dọc, giữ bìa sinh viên sửa và hai ảnh gốc, dùng Times New Roman 13 pt, không đánh số hình hoặc tiêu đề.
 
 Source: https://github.com/nrin31266/mid-term-mobile
 

@@ -1,7 +1,7 @@
 {
-  "checkedAt": "2026-11-10T14:06:46.984615+00:00",
+  "checkedAt": "2026-11-10T14:25:42.245308+00:00",
   "report": "docs/submition/submition.docx",
-  "sha256": "c45605965d5e73f3f4358a9448fd7466bcc9030ca6aa68496aadb3a26c53795a",
+  "sha256": "9a7e236e6c3f7703094b3d5390d4f374d01433d6ad1484173f08df04dd0bc51a",
   "pages": 36,
   "allPagesVisuallyReviewed": true,
   "originalTextPreserved": true,
@@ -16,5 +16,7 @@
   "firebaseTestsPassedInCleanClone": 18,
   "video": "student records and adds public link",
   "iosRuntimeTested": false,
-  "legacySharedKeyAlert": "still open; old app key not revoked"
+  "legacySharedKeyAlert": "still open; old app key not revoked",
+  "allSectionsA4Portrait": true,
+  "studentEditedCoverPreserved": true
 }

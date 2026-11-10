@@ -30,7 +30,7 @@ Chụp code từ source thật, có tên file/số dòng, khoảng 15–35 dòng
 
 ## Quy tắc chụp ảnh và đưa vào Word
 
-Ảnh lưu tại `docs/submition/screenshots/`, tên tiếng Anh có mã bước. Chụp đủ từng bước, đúng trình tự lúc làm; không dùng mockup thay ảnh app, không dựng terminal giả. Mỗi file ảnh có mã bước và chú thích tiếng Việt; Word không đánh số hình hoặc tiêu đề, dùng Times New Roman 13 pt. Ghi bước/lệnh thao tác, kết quả quan sát và mã tiêu chí trong [chỉ mục minh chứng](submition/README.md). Log kiểm thử là bằng chứng bổ sung, không thay ảnh UI/CSDL mà đề yêu cầu.
+Ảnh lưu tại `docs/submition/screenshots/`, tên tiếng Anh có mã bước. Chụp đủ từng bước, đúng trình tự lúc làm; không dùng mockup thay ảnh app, không dựng terminal giả. Mỗi file ảnh có mã bước và chú thích tiếng Việt; Word dùng A4 dọc, không đánh số hình hoặc tiêu đề, dùng Times New Roman 13 pt. Ghi bước/lệnh thao tác, kết quả quan sát và mã tiêu chí trong [chỉ mục minh chứng](submition/README.md). Log kiểm thử là bằng chứng bổ sung, không thay ảnh UI/CSDL mà đề yêu cầu.
 
 - Web: chụp đủ vùng chứng minh form/danh sách/chi tiết/lỗi; không để dữ liệu app khác trong khung.
 - Android: xác định thiết bị bằng ADB, chụp camera/thư viện trong luồng thật và kết quả sau lưu/mở lại. Không coi ảnh starter là hồ sơ hoàn thành.
