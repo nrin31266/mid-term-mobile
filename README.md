@@ -11,12 +11,15 @@ Cần Node 24, pnpm 11. App dùng config web public; không cần ADC hay key se
 ```bash
 pnpm install --frozen-lockfile
 cp .env.example .env.local
+# Điền hai Firebase API key riêng MemberDesk trước khi chạy cloud.
 pnpm exec expo start --web
 # Hoặc mở Expo Go SDK 58 trên thiết bị để chạy mobile
 pnpm exec expo start
 ```
 
 Dùng tài khoản admin được cấp riêng. Không có mật khẩu mặc định trong Git. Máy đang triển khai có file ignored `docs/private/cloud-admin.json`; không chia sẻ/chụp file đó. Tài khoản thành viên được quản lý không phải tài khoản đăng nhập Firebase Auth.
+
+Firebase client key có mặt trong bản build công khai; biến môi trường chỉ tránh ghi literal key vào source/Git. Web dùng `EXPO_PUBLIC_FIREBASE_WEB_API_KEY` giới hạn domain Hosting và localhost:8081; Expo Go dùng `EXPO_PUBLIC_FIREBASE_API_KEY` giới hạn API Firebase. Lấy key từ quản trị project, không commit `.env.local`. Quyền dữ liệu vẫn do Auth, API và rules kiểm soát. Không dùng key của app cũ.
 
 ## Thử bằng Emulator
 

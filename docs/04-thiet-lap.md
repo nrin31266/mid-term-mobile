@@ -37,7 +37,9 @@ Tám skill trong `.agents/skills/`: `firebase-basics`, `firebase-auth-basics`, `
 
 ## File google-services.json đã gửi
 
-File Downloads thuộc đúng project nhưng hai client là `com.nrin31266.ecommercemultivendor` và `com.nrin31266.shoppingapp`. Không lấy package/appId của ứng dụng cũ. Bài dùng Firebase JS SDK với web app riêng MemberDesk, ID `1:801885728284:web:7791451d89f78a77db79d9`; config public trong `src/services/firebase-config.ts`. Không cần chép `google-services.json` này vào Expo Go.
+File Downloads thuộc đúng project nhưng hai client là `com.nrin31266.ecommercemultivendor` và `com.nrin31266.shoppingapp`. Không lấy package/appId của ứng dụng cũ. Bài dùng Firebase JS SDK với web app riêng MemberDesk, ID `1:801885728284:web:7791451d89f78a77db79d9`; config public trong `src/services/firebase-config.ts`. Không cần chép `google-services.json` này vào Expo Go. Cùng source Expo chạy Android/iOS/Web; đăng ký SDK loại web không có nghĩa chỉ làm website.
+
+Đã tách hai key MemberDesk, đưa giá trị vào `.env.local` ignored và chặn literal key trong source bằng test. Web key giới hạn referrer và bốn API, native key giới hạn bốn API. Node SDK kiểm tra Auth/API/Firestore/Storage đạt bằng key mới; kiểm tra web thiếu/sai referrer bị 403, đúng referrer tới Auth; Chrome đăng nhập thành công trên Hosting. Key cũ dùng chung app khác nên chưa revoke; alert GitHub lịch sử còn mở. Log có sẵn trong hai giờ chỉ có hai sự kiện Auth, không đủ kết luận không bị lạm dụng. Xem biên nhận trong `submition/evidence/`.
 
 Config client không phải quyền truy cập. Quyền nằm ở Auth, API và rules; credential server không được đặt trong `EXPO_PUBLIC_*`.
 

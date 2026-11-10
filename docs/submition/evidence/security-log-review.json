@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-11-10T11:02:09.030230+00:00",
+  "since": "2026-11-10T09:02:06.992097+00:00",
+  "matchingEntries": 2,
+  "hasMore": false,
+  "services": {
+    "identitytoolkit.googleapis.com": 2
+  },
+  "limitation": "Chỉ rà log có sẵn trong 2 giờ. Data Access log có thể chưa bật; không đủ kết luận không bị lạm dụng."
+}

@@ -9,6 +9,9 @@ export function getFirebase() {
   if (firebaseMode !== 'emulator' && firebaseMode !== 'cloud') {
     throw new Error('Chưa cấu hình môi trường. Xem hướng dẫn chạy trong README.');
   }
+  if (firebaseMode === 'cloud' && !firebaseConfig.apiKey) {
+    throw new Error('Thiếu Firebase API key. Điền .env.local theo README.');
+  }
   const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
   let auth;
   try { auth = initializeAuth(app, { persistence: authPersistence }); }

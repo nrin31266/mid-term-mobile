@@ -7,10 +7,12 @@ import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { backendBucket, backendDatabase } from '../server/firebase.mjs';
 
+process.loadEnvFile('.env.local');
 assert.equal(process.env.MEMBERDESK_ENV, 'cloud');
+assert.ok(process.env.EXPO_PUBLIC_FIREBASE_API_KEY, 'Thiếu API key trong .env.local.');
 const projectId = 'crested-mercury-452707-e8';
 const api = 'https://memberdesk-801885728284.web.app/api';
-const config = { apiKey: 'AIzaSyB23_rhg0jbfvkSiBdKI1A-1lFmdGzs53U', projectId,
+const config = { apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY, projectId,
   authDomain: `${projectId}.firebaseapp.com`, storageBucket: `${projectId}.firebasestorage.app` };
 const app = initializeApp(config, 'cloud-check');
 const auth = getAuth(app);

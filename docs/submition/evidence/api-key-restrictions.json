@@ -1,0 +1,25 @@
+{
+  "checks": [
+    {
+      "check": "web_no_referrer",
+      "status": 403,
+      "result": "blocked_origin"
+    },
+    {
+      "check": "web_wrong_referrer",
+      "status": 403,
+      "result": "blocked_origin"
+    },
+    {
+      "check": "web_allowed_referrer",
+      "status": 400,
+      "result": "reached_auth_invalid_password"
+    },
+    {
+      "check": "native_auth",
+      "status": 400,
+      "result": "reached_auth_invalid_password"
+    }
+  ],
+  "note": "Kiểm tra referrer chỉ xác nhận cấu hình key. Auth/API/rules mới kiểm soát quyền dữ liệu."
+}

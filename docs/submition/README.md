@@ -25,7 +25,7 @@ Không đặt số lượng ảnh làm mục tiêu. Một ảnh có thể thể 
 
 | Ảnh dự kiến | Loại | Nội dung cần thấy | Tiêu chí | Trạng thái |
 | --- | --- | --- | --- | --- |
-| `c1-01-env-versions.png` | Bước làm | Terminal: phiên bản Node, pnpm, Expo CLI; Firebase CLI ghi riêng trong tài liệu 04 | R01, S02 | Đã chụp; có bản khoanh vùng |
+| `c1-01-env-versions-marked.png` | Bước làm | Terminal: phiên bản Node, pnpm, Expo CLI; Firebase CLI ghi riêng trong tài liệu 04 | R01, S02 | Đã chụp; có bản khoanh vùng |
 | `c1-02-starter-errors.png` | Kiểm tra | Hai lỗi lint/typecheck ban đầu và lệnh thật | S01–S02 | Không có ảnh lúc lỗi ban đầu; ghi lỗi lịch sử ở tài liệu 04, không dựng lại |
 | `c1-03-starter-fix-code.png` | Code | Đoạn sửa lỗi starter, khoanh đúng phần thay đổi | S01 | Đã chụp VS Code; hook hydration, bộ tab starter đã bỏ vì không dùng |
 | `c1-04-starter-checks.png` | Kết quả | Chạy lại lint/typecheck sau sửa; lỗi còn thì ghi đúng | S01–S02 | Đã chụp; lint/typecheck và 2 test API qua |
@@ -37,10 +37,10 @@ Không đặt số lượng ảnh làm mục tiêu. Một ảnh có thể thể 
 | `c1-10-auth-provider.png` | Bước làm | Thiết lập phương thức đăng nhập admin trong Console | R05, S01 | Đã chụp, file thực tế .jpg; có bản khoanh vùng |
 | `c1-11-admin-claim-code.png` | Code | Công cụ cấp claim admin đúng tài khoản demo; không chụp mật khẩu/token | R05, S01 | Đã chụp công cụ cấp claim, không mở credential |
 | `c1-12-api-config.png` | Bước làm | Cấu hình mẫu API và địa chỉ kết nối, không mở file credential thật | S01–S02 | Đã chụp Function HTTPS và giới hạn instance |
-| `c1-13-admin-guard-code.png` | Code | Server xác minh token và claim admin; chặn request thiếu quyền | R05 | Đã chụp lại bằng VS Code, có bản khoanh vùng |
+| `c1-13-admin-guard-code-marked.png` | Code | Server xác minh token và claim admin; chặn request thiếu quyền | R05 | Đã chụp lại bằng VS Code, có bản khoanh vùng |
 | `c1-14-rules-before.png` | Bước làm | Kiểm tra rules hiện có, vùng dữ liệu dùng chung và rule Storage hết hạn | R02, S01 | Rule cũ hết hạn hiện trong c1-15; bản sao trước deploy giữ riêng, không đưa Git |
 | `c1-15-rules-code.png` | Code | Rules giới hạn collection/prefix/quyền/loại ảnh/dung lượng của bài | R02, R05, R11 | Đã chụp hai file c1-15-firestore-rules-code và c1-15-storage-rules-code |
-| `c1-16-emulators-running.png` | Bước làm | Lệnh khởi chạy Emulator và cổng dịch vụ đã lên | S02 | Đã chụp lệnh/cổng/ready, có bản khoanh vùng |
+| `c1-16-emulators-running-marked.png` | Bước làm | Lệnh khởi chạy Emulator và cổng dịch vụ đã lên | S02 | Đã chụp lệnh/cổng/ready, có bản khoanh vùng |
 | `c1-17-auth-rules-tests.png` | Kiểm tra | Kết quả cho có/không token, không admin, sai prefix và quá dung lượng | R05, R09 | Đã chụp: 9/9, exit 0; PERMISSION_DENIED là nhánh cố ý thử bị chặn |
 | `c1-18-admin-login.png` | Kết quả | Giao diện và kết quả đăng nhập đúng bằng tài khoản demo | R05 | Đã chụp cloud, file thực tế .jpg; tải lại giữ phiên |
 | `c1-19-login-error.png` | Kết quả | Đăng nhập sai hiện lỗi dễ hiểu, không lộ credential | R05 | Đã chụp cloud, file thực tế .jpg; có bản khoanh vùng |
@@ -48,7 +48,9 @@ Không đặt số lượng ảnh làm mục tiêu. Một ảnh có thể thể 
 
 ### Ghi chú ảnh C1 đã có
 
-Ảnh chụp ngày 10/11/2026 trên laptop KDE, chỉ cửa sổ VS Code/Konsole bên trái hoặc riêng tab IAB 1280 × 720. Đã crop, kiểm tra credential/nội dung riêng; chưa đưa vào Word. Các ảnh code dưới đây cùng checkpoint commit `feat: establish secure cloud admin access` (tra SHA bằng `git log --all --grep` với tiêu đề này), sẽ dùng cùng ảnh chạy tương ứng. Ảnh chưa chụp lúc cài/lỗi cũ không được dựng lại.
+Ảnh chụp ngày 10/11/2026 trên laptop KDE, cửa sổ VS Code/Konsole bên trái hoặc tab trình duyệt. Các ảnh 08, 09 đã chụp lại từ VS Code sau khi tách key; ảnh 18 và 23 chụp Chrome 1675 × 882 rồi crop. Các ảnh IAB cũ còn dùng chỉ ghi đúng nguồn, sẽ thay khi chụp lại luồng tương ứng. Bản không đánh dấu bị trùng với bản `-marked` đã bỏ khỏi bộ nộp, giữ riêng trong `docs/private/raw/`. Hai ảnh Word gốc không đổi. Ảnh chưa có lúc cài/lỗi cũ không được dựng lại.
+
+Code gốc ở commit `feat: establish secure cloud admin access`; ảnh 08/09/23 theo commit `fix: isolate MemberDesk client API keys`. Tra SHA bằng `git log --all --grep` theo tiêu đề. Lần sửa key được đối chiếu với ảnh đăng nhập Chrome 18 và biên nhận cloud mới.
 
 | File ảnh | Nguồn/code và điều đã quan sát | Ảnh/kết quả liên quan |
 | --- | --- | --- |
@@ -69,6 +71,8 @@ Không đặt số lượng ảnh làm mục tiêu. Một ảnh có thể thể 
 | [19 — Sai mật khẩu](screenshots/c1-19-login-error-marked.jpg) | Nhập mật khẩu sai, lỗi tiếng Việt; không lộ mật khẩu/token | R05 |
 | [21 — Hosting](screenshots/c1-21-hosting-site-marked.jpg), [domain](screenshots/c1-21-hosting-domains.jpg) | Console: site riêng và hai domain mặc định; crop bỏ email tài khoản | Web cloud ảnh 18–20 |
 | [22 — Dependency](screenshots/c1-22-installed-packages.png) | Kiểm tra `package.json` sau cài, không phải ảnh lệnh cài ban đầu | Manifest/lockfile và export web |
+| [23 — Key riêng](screenshots/c1-23-memberdesk-api-keys.jpg) | Chrome: hai key MemberDesk có API restriction; web thêm referrer, không mở giá trị key | Biên nhận `api-key-restrictions.json`, cloud và ảnh 18 |
+| [24 — Android](screenshots/c1-24-android-admin-session.png) | Pixel8_API36, Expo Go SDK 58, cùng source chạy qua Metro:8082/ADB reverse; đăng nhập admin cloud bằng key native mới | Chỉ xác nhận đăng nhập; chưa phải hồ sơ/camera C4 |
 | [20 — Guard UI](screenshots/c1-20-access-denied.jpg) | Đăng xuất rồi truy cập `/`, router đưa về `/sign-in` | R05 |
 
 [Biên nhận cloud](evidence/cloud-access-check.json): admin Auth/API 200, thiếu token 401, Firestore deny, Storage SDK upload/download khớp, overwrite/guest bị chặn. Fixture mới đã dọn; chưa phải hồ sơ/ảnh mobile hoàn thành.
