@@ -84,4 +84,4 @@ Thực hiện bảng checkpoint trong tài liệu 05: kiểm thử → mở màn
 
 Firebase MCP đọc đúng project; Agent Desktop nhận accessibility, nhưng VS Code Wayland chưa hiện trong cây của công cụ. CLI `code --reuse-window --goto` mở source thật; KWin đưa đúng cửa sổ Code sang trái, Spectacle chụp riêng cửa sổ rồi crop vùng editor. Ảnh sai cửa sổ chỉ giữ tạm, không vào báo cáo.
 
-Cloud Auth/API/Storage SDK đã kiểm tra theo tài liệu 04/07. Lint/typecheck và kiểm thử quyền đã qua ở C1. Word vẫn giữ hai ảnh gốc, ráp cuối C6; CRUD/mobile/video chưa được đánh dấu hoàn thành.
+Cloud Auth/API/Storage SDK đã kiểm tra theo tài liệu 04/07. Lint/typecheck và kiểm thử quyền đã qua ở C1. CRUD/mobile cloud và nhóm nâng cao đã kiểm tra. Word 36 trang giữ hai ảnh gốc, đã render kiểm tra; CSDL 36 hồ sơ/6 ảnh khôi phục được. Video sinh viên tự quay, checklist/phím quay ở tài liệu 08.

@@ -18,7 +18,7 @@ Một checkpoint chỉ hoàn thành khi: chạy kiểm tra, chụp đủ các b�
 | C5 — Nâng cao/hoàn thiện | Tra cứu kết hợp/phân trang, JSON kiểm tra/xem trước/nhập lại, thẻ in/PDF, trạng thái UI và truy cập | Ảnh từng nhóm, file sai không ghi, khôi phục thử, bản in/PDF, kiểm thử nghiệp vụ | `feat: deliver advanced member tools` |
 | C6 — Gói nộp | Chạy từ clone sạch, kiểm tra dữ liệu giả/schema, Word đầy đủ, JSON/ảnh khôi phục, video/GitHub mở được | Báo cáo cuối, CSDL thật, ảnh, README chạy, link video, bảng nghiệm thu R01–R11/S01–S06 | `docs: package verified coursework submission` |
 
-Các commit có thể tách nhỏ khi cần; vẫn phải push ở tất cả mốc lớn. C1 đã push (`7efe840`, `d44de64`). C2 đã push source (`a13c23b`), C3 đã push (`0095dee`); CRUD cloud và kiểm thử qua. C4 đã thử camera/thư viện, từ chối/hủy, mất mạng/thử lại, mở lại app và đối chiếu Chrome; đã thay ảnh MA, có dọn ảnh qua khóa và 16 kiểm thử Emulator. Đã bổ sung code C2/C3/C4 từ VS Code. C2–C4 còn một số ảnh terminal/thao tác/cấu hình trong chỉ mục, chưa đánh dấu đủ minh chứng. C5 đã triển khai tìm/lọc/phân trang, JSON, thẻ và khôi phục gói cloud trong Emulator; còn chốt một số ảnh quy trình. C6 chưa hoàn thành. Những cloud change phải giữ phạm vi của bài, không đổi billing hoặc mở public để cho chạy nhanh.
+Các commit có thể tách nhỏ khi cần; vẫn phải push ở tất cả mốc lớn. C1 đã push (`7efe840`, `d44de64`). C2 đã push source (`a13c23b`), C3 đã push (`0095dee`); CRUD cloud và kiểm thử qua. C4 đã thử camera/thư viện, từ chối/hủy, mất mạng/thử lại, mở lại app và đối chiếu Chrome; đã thay ảnh MA, có dọn ảnh qua khóa và 16 kiểm thử Emulator. Đã bổ sung code C2/C3/C4 từ VS Code. C2–C4 còn một số ảnh terminal/thao tác/cấu hình trong chỉ mục, chưa đánh dấu đủ minh chứng. C5 đã triển khai tìm/lọc/phân trang, JSON, thẻ và khôi phục gói cloud trong Emulator, đã push `6ee9d10`. C6 đóng gói Word, CSDL và kết quả clone sạch trong commit `docs: package verified coursework submission`. Video do sinh viên tự quay theo yêu cầu mới, S06 còn chờ link. Những cloud change phải giữ phạm vi của bài, không đổi billing hoặc mở public để cho chạy nhanh.
 
 ## Chụp đủ quy trình, code và kết quả
 
@@ -30,7 +30,7 @@ Chụp code từ source thật, có tên file/số dòng, khoảng 15–35 dòng
 
 ## Quy tắc chụp ảnh và đưa vào Word
 
-Ảnh lưu tại `docs/submition/screenshots/`, tên tiếng Anh có mã bước. Chụp đủ từng bước, đúng trình tự lúc làm; không dùng mockup thay ảnh app, không dựng terminal giả. Mỗi ảnh có số, chú thích tiếng Việt, bước/lệnh thao tác, kết quả quan sát và mã tiêu chí trong [chỉ mục minh chứng](submition/README.md). Log kiểm thử là bằng chứng bổ sung, không thay ảnh UI/CSDL mà đề yêu cầu.
+Ảnh lưu tại `docs/submition/screenshots/`, tên tiếng Anh có mã bước. Chụp đủ từng bước, đúng trình tự lúc làm; không dùng mockup thay ảnh app, không dựng terminal giả. Mỗi file ảnh có mã bước và chú thích tiếng Việt; Word không đánh số hình hoặc tiêu đề, dùng Times New Roman 13 pt. Ghi bước/lệnh thao tác, kết quả quan sát và mã tiêu chí trong [chỉ mục minh chứng](submition/README.md). Log kiểm thử là bằng chứng bổ sung, không thay ảnh UI/CSDL mà đề yêu cầu.
 
 - Web: chụp đủ vùng chứng minh form/danh sách/chi tiết/lỗi; không để dữ liệu app khác trong khung.
 - Android: xác định thiết bị bằng ADB, chụp camera/thư viện trong luồng thật và kết quả sau lưu/mở lại. Không coi ảnh starter là hồ sơ hoàn thành.
@@ -75,4 +75,4 @@ Gói cuối có `users.json` xuất thật, `images/` chứa ảnh demo và `REA
 
 Video khoảng 5–7 phút: login → thêm web/tải lại → sửa/đặt mật khẩu → tìm/lọc/phân trang → camera/thư viện Android/lưu/web làm mới → hủy và xác nhận xóa → JSON xem trước/nhập → thẻ/bản in → CSDL bốn trường/source/hướng dẫn chạy. Dùng dữ liệu giả, tránh token. Quay xong thử link ở cửa sổ chưa đăng nhập.
 
-Đã xuất gói 36 hồ sơ cùng 6 file ảnh thật, khôi phục Emulator qua; chưa có video và Word cuối. Theo dõi file/ảnh có thật trong [chỉ mục minh chứng](submition/README.md).
+Đã xuất gói 36 hồ sơ cùng 6 file ảnh thật, khôi phục Emulator và mở Chrome từ clone sạch. Word 36 trang đã ráp và kiểm tra từng trang, giữ hai ảnh gốc. Sinh viên tự quay video theo [checklist ngắn](08-kich-ban-video.md); link video chưa có. Theo dõi file/ảnh có thật trong [chỉ mục minh chứng](submition/README.md).

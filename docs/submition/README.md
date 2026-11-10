@@ -1,6 +1,6 @@
 # Chỉ mục báo cáo và minh chứng
 
-Cập nhật ngày 10/11/2026. Ảnh đề là tư liệu yêu cầu; ảnh chức năng chỉ được ghi đã có khi chụp ứng dụng chạy thật. Mỗi checkpoint chụp đủ bước, ghi chú ngắn, cập nhật chỉ mục rồi commit/push cùng source. Cuối bài mới ráp Word.
+Cập nhật ngày 10/11/2026. Ảnh đề là tư liệu yêu cầu; ảnh chức năng chỉ được ghi đã có khi chụp ứng dụng chạy thật. Mỗi checkpoint chụp đủ bước, ghi chú ngắn, cập nhật chỉ mục rồi commit/push cùng source. Word cuối đã ráp và kiểm tra 36 trang; video sinh viên tự quay.
 
 ## Tư liệu hiện có
 
@@ -15,7 +15,7 @@ Word giữ nguyên file của bạn và hai ảnh gốc. Không sao chép lại 
 
 ## Danh sách cần chụp trong quá trình làm
 
-Cần cả **bước làm, code và kết quả chạy**, không chỉ ảnh giao diện cuối. Hai ảnh bạn đã chụp là mẫu cho phần khởi tạo. Danh sách dưới đây theo dõi từng mốc. C1 đã có ảnh thật. C2 và thư viện Android đã có một phần minh chứng; phần thiếu vẫn ghi rõ dưới đây.
+Cần cả **bước làm, code và kết quả chạy**, không chỉ ảnh giao diện cuối. Hai ảnh bạn đã chụp là mẫu cho phần khởi tạo. Danh sách dưới đây theo dõi từng mốc. C1–C6 có ảnh code, thao tác web/Android và khôi phục; các ảnh lịch sử còn thiếu vẫn ghi rõ dưới đây.
 
 Tên ảnh theo dạng `c2-01-schema-code.png`: checkpoint, số thứ tự, nội dung. Bản khoanh vùng thêm `-marked.png`. Số dưới đây dùng để chuẩn bị; khi có thêm bước quan trọng thì thêm ảnh, không ghi đè hoặc bỏ qua vì đã đủ số lượng. Chỉ đổi tên dự kiến khi chưa có ảnh và cập nhật chỉ mục cùng lúc.
 
@@ -43,7 +43,7 @@ Không đặt số lượng ảnh làm mục tiêu. Một ảnh có thể thể 
 | `c1-16-emulators-running-marked.png` | Bước làm | Lệnh khởi chạy Emulator và cổng dịch vụ đã lên | S02 | Đã chụp lệnh/cổng/ready, có bản khoanh vùng |
 | `c1-17-auth-rules-tests.png` | Kiểm tra | Kết quả cho có/không token, không admin, sai prefix và quá dung lượng | R05, R09 | Đã chụp: 9/9, exit 0; PERMISSION_DENIED là nhánh cố ý thử bị chặn |
 | `c1-18-admin-login.png` | Kết quả | Giao diện và kết quả đăng nhập đúng bằng tài khoản demo | R05 | Đã chụp cloud, file thực tế .jpg; tải lại giữ phiên |
-| `c1-19-login-error.png` | Kết quả | Đăng nhập sai hiện lỗi dễ hiểu, không lộ credential | R05 | Đã chụp cloud, file thực tế .jpg; có bản khoanh vùng |
+| `c1-19-login-error.jpg` | Kết quả | Đăng nhập sai hiện lỗi dễ hiểu, không lộ credential | R05 | Đã chụp lại Chrome giao diện hiện tại, crop riêng form lỗi |
 | `c1-20-access-denied.png` | Kết quả | Truy cập khi chưa đăng nhập/không admin bị chặn; logout không vào lại được | R05 | Đã chụp cloud sau logout, file thực tế .jpg; mở / bị đưa về /sign-in |
 
 ### Ghi chú ảnh C1 đã có
@@ -68,7 +68,7 @@ Code gốc ở commit `feat: establish secure cloud admin access`; ảnh 08/09/2
 | [16 — Emulator](screenshots/c1-16-emulators-running-marked.png) | `pnpm emulators`, ready và cổng; cảnh báo Java có thật | Tiền đề kiểm thử, không thay cloud |
 | [17 — Rules](screenshots/c1-17-auth-rules-tests.png) | Lần chạy `pnpm test:firebase`, 9/9 và code 0; Emulator tự dừng | R05/R09 |
 | [18 — Admin](screenshots/c1-18-admin-login.jpg) | Đăng nhập admin trên Hosting, API `/session` xác nhận quyền; tải lại vẫn còn | R05 |
-| [19 — Sai mật khẩu](screenshots/c1-19-login-error-marked.jpg) | Nhập mật khẩu sai, lỗi tiếng Việt; không lộ mật khẩu/token | R05 |
+| [19 — Sai mật khẩu](screenshots/c1-19-login-error.jpg) | Nhập mật khẩu sai, lỗi tiếng Việt; không lộ mật khẩu/token | R05 |
 | [21 — Hosting](screenshots/c1-21-hosting-site-marked.jpg), [domain](screenshots/c1-21-hosting-domains.jpg) | Console: site riêng và hai domain mặc định; crop bỏ email tài khoản | Web cloud ảnh 18–20 |
 | [22 — Dependency](screenshots/c1-22-installed-packages.png) | Kiểm tra `package.json` sau cài, không phải ảnh lệnh cài ban đầu | Manifest/lockfile và export web |
 | [23 — Key riêng](screenshots/c1-23-memberdesk-api-keys.jpg) | Chrome: hai key MemberDesk có API restriction; web thêm referrer, không mở giá trị key | Biên nhận `api-key-restrictions.json`, cloud và ảnh 18 |
@@ -169,14 +169,14 @@ Emulator 16/16; lint/TypeScript và 6 test cơ bản qua. Rules/Function đã de
 | `c5-03-pagination.png` | Kết quả | Đổi trang/đếm kết quả; trạng thái rỗng và giới hạn được báo rõ | R08 | Đã chụp Chrome, file .jpg: trang 4/4 có 6 hồ sơ; ảnh search-empty riêng |
 | `c5-04-json-validator-code.png` | Code | Kiểm tra toàn file JSON: bốn khóa, hash cho phép, URL, dung lượng | R08, R11 | Đã chụp VS Code: inspectImport, schema/hash/ảnh/email trùng |
 | `c5-05-json-import-code.png` | Code | Transaction import, kiểm tra lại server và bỏ qua email đã có | R08 | Đã chụp VS Code: exportJson/previewImport/importJson, khóa và transaction |
-| `c5-06-json-export-code.png` | Code | Export admin đúng bốn trường; không đi qua API hồ sơ thường | R08, S04 | Gộp exportJson vào ảnh 05; ảnh picker cũ đã bỏ sau sửa Android, cần chụp lại; kết quả tải ở json-export-result.jpg |
+| `c5-06-json-export-code.png` | Code | Export admin đúng bốn trường; không đi qua API hồ sơ thường | R08, S04 | Đã chụp lại VS Code member-files.ts sau sửa Android/await ghi file; exportJson ở ảnh 05, tải thật ở json-export-result.jpg |
 | `c5-07-json-export-file.png` | CSDL | File xuất thật mở trong editor, dùng hồ sơ giả; không phải JSON viết tay | R11, S04 | Chưa chụp |
 | `c5-08-json-preview.png` | Thao tác | Chọn file, xem số hợp lệ/trùng/lỗi trước khi xác nhận | R08 | Đã chụp Chrome, file .jpg: 1 mới, 1 đã có, 0 lỗi |
 | `c5-09-json-error-marked.jpg` | Kiểm tra | File sai bị chặn, CSDL không bị ghi một phần | R08, R11 | Đã chụp Chrome, file .jpg: 1 hợp lệ/1 lỗi thừa trường, nút nhập khóa |
 | `c5-10-json-import-result.png` | Kết quả | Xác nhận nhập file đúng; số thêm/bỏ qua khớp CSDL | R08, S03–S04 | Đã chụp Chrome, file .jpg: thêm 1/bỏ qua 1; đối chiếu Firestore; sau đó xóa fixture qua UI |
 | `c5-11-restore-command.png` | Bước làm | Lệnh khôi phục gói JSON/ảnh ở Emulator hoặc collection thử được chọn | S02, S04 | Chưa chụp |
-| `c5-12-restore-result.png` | Kết quả | Mở dữ liệu và ảnh sau khôi phục, kiểm tra đúng bốn trường | R11, S04 | Chưa chụp |
-| `c5-13-member-card-code.png` | Code | Thẻ dùng hồ sơ đã lưu, bản in loại nút quản trị và mật khẩu | R08 | Ảnh code đang làm mới sau khi dùng lại MemberAvatar để có fallback khi ảnh lỗi |
+| `c5-12-restore-result.png` | Kết quả | Mở dữ liệu và ảnh sau khôi phục, kiểm tra đúng bốn trường | R11, S04 | Đã có ở C6-04/C6-05, không lưu bản trùng |
+| `c5-13-member-card-code.png` | Code | Thẻ dùng hồ sơ đã lưu, bản in loại nút quản trị và mật khẩu | R08 | Đã chụp lại VS Code sau khi dùng MemberAvatar; khớp thẻ web/Android |
 | `c5-14-card-print.png` | Kết quả | Thẻ web và hộp xem trước bản in/PDF, chữ/ảnh đọc được | R08 | Có ảnh thẻ Chrome và render PDF A4 bằng Chromium chạy nền; chưa có ảnh hộp in native |
 | `c5-15-mobile-card.png` | Kết quả | Thẻ tương ứng trên Android, tên/email dài không vỡ bố cục | R08, R10 | Đã chụp ADB Pixel8_API36: Nguyễn Văn Rin, cùng ảnh/tên/email |
 
@@ -188,21 +188,38 @@ JSON Chrome: file thừa trường bị khóa nhập, file đúng preview 1 mớ
 
 Bản PDF [Nguyễn Văn Rin](evidence/member-rin-card.pdf) được tạo từ trang cloud bằng Chromium chạy nền, CSS media print: một trang A4, ảnh/tên/email, không nút/ID/hash. Đã render và đọc text PDF; không gọi đây là ảnh hộp in Chrome native. Thẻ Android có cùng dữ liệu.
 
-Gói [database](database/README.md) xuất thật 36 hồ sơ/6 ảnh, bản portable và checksum. Lệnh restore chạy bằng Firebase Emulator đã thêm 36/bỏ qua 0, kiểm tra schema và nội dung ảnh; còn ảnh terminal/giao diện khôi phục để bổ sung ở C6. Công cụ chỉ cho restore vào demo-memberdesk, không ghi đè cloud.
+Gói [database](database/README.md) xuất thật 36 hồ sơ/6 ảnh, bản portable và checksum. Lệnh restore chạy bằng Firebase Emulator đã thêm 36/bỏ qua 0, kiểm tra schema và nội dung ảnh; ảnh giao diện khôi phục đã có ở C6. Công cụ chỉ cho restore vào demo-memberdesk, không ghi đè cloud.
 
-Kiểm tra C5: lint/TypeScript qua; 8 test cơ bản và 18 test Firebase qua. Có cảnh báo Java Unsafe từ Storage Emulator và Node listener warning của môi trường, không có test fail. Web và Android production export đã qua trước seed; Function/site C5 deploy thành công. Code ảnh theo commit `feat: deliver advanced member tools`; ảnh tìm ↔ selectMembers, JSON ↔ inspectImport/importJson, thẻ ↔ MemberCard/CSS in. Android từng lỗi READ với cache DocumentPicker; sửa dùng File.pickFileAsync (SDK 58) và URI được cấp quyền, đọc lại thành công. Đã mở share sheet users.json rồi hủy; không gửi qua Drive/Gmail. Ảnh 17 ghi lỗi thật, 18 kết quả sau sửa, 19 share sheet. Đã thêm await ghi file trước khi chia sẻ. Còn ảnh file xuất/code mới trong editor, terminal và giao diện khôi phục; Word/video ở C6.
+Kiểm tra C5: lint/TypeScript qua; 8 test cơ bản và 18 test Firebase qua. Có cảnh báo Java Unsafe từ Storage Emulator và Node listener warning của môi trường, không có test fail. Web và Android production export đã qua trước seed; Function/site C5 deploy thành công. Code ảnh theo commit `feat: deliver advanced member tools`; ảnh tìm ↔ selectMembers, JSON ↔ inspectImport/importJson, thẻ ↔ MemberCard/CSS in. Android từng lỗi READ với cache DocumentPicker; sửa dùng File.pickFileAsync (SDK 58) và URI được cấp quyền, đọc lại thành công. Đã mở share sheet users.json rồi hủy; không gửi qua Drive/Gmail. Ảnh 17 ghi lỗi thật, 18 kết quả sau sửa, 19 share sheet. Đã thêm await ghi file trước khi chia sẻ. Đã chụp lại code file/thẻ và giao diện khôi phục ở C6. Không có ảnh riêng mở JSON trong editor; file thật và biên nhận kiểm tra đi kèm. Word đã ráp; video sinh viên tự quay.
 
 ### C6 — Kiểm tra cuối và gói nộp
 
-| Ảnh dự kiến | Loại | Nội dung cần thấy | Tiêu chí | Trạng thái |
-| --- | --- | --- | --- | --- |
-| `c6-01-clean-clone-install.png` | Bước làm | Clone sạch và cài theo README; không chụp auth Git/credential | S02, S05 | Chưa chụp |
-| `c6-02-start-api-web.png` | Bước làm | Lệnh khởi động API/app và kết nối được; không lộ biến môi trường thật | S01–S02 | Chưa chụp |
-| `c6-03-verification.png` | Kiểm tra | Lint/typecheck/test cuối và kết quả thực tế | S01–S02 | Chưa chụp |
-| `c6-04-submission-files.png` | Kết quả | Thư mục nộp có Word, JSON thật, ảnh và hướng dẫn khôi phục | S01, S04 | Chưa chụp |
-| `c6-05-github-checkpoints.png` | Kết quả | Lịch sử các checkpoint đã push, source/docs/ảnh truy cập được | S05 | Chưa chụp |
-| `c6-06-video.png` | Kết quả | Video demo và quyền truy cập bằng cửa sổ không đăng nhập | S06 | Chưa chụp |
-| `c6-07-final-cloud-schema.png` | CSDL | Kiểm tra cuối dữ liệu cloud và mọi object JSON đúng bốn khóa | R11, S03–S04 | Chưa chụp |
+| File thật | Nội dung đã kiểm tra | Tiêu chí | Trang Word |
+| --- | --- | --- | --- |
+| [Backup](screenshots/c6-01-backup-code.png) | VS Code `scripts/member-backup.mjs`, exportBackup/restoreBackup; đối chiếu khôi phục bên dưới | S01, S04 | 32 |
+| [Kiểu Expo](screenshots/c6-02-clean-type-config.png) | VS Code `tsconfig.json`, thêm expo/types sau lỗi clone sạch | S01, S05 | Giải thích ở 33 |
+| [Kiểm tra clone](screenshots/c6-03-clean-checks.png) | Terminal thật: lint, tsc, 8 test; config theo bản sửa C6 | S02, S05 | 33 |
+| [Danh sách khôi phục](screenshots/c6-04-restored-list.jpg) | Chrome Emulator từ clone sạch: 36 hồ sơ, 4 trang | S04, S05 | 34 |
+| [Hồ sơ khôi phục](screenshots/c6-05-restored-profile.jpg) | Nguyễn Văn Rin và ảnh từ gói portable | R10, S04 | 34 |
+
+C6 kiểm tra clone public ở commit `6ee9d10` kèm bản sửa `tsconfig.json` được đưa vào checkpoint cuối. Lần đầu TypeScript thiếu kiểu CSS do chưa sinh expo-env.d.ts; khai báo expo/types trực tiếp giúp clone sạch kiểm tra được trước khi chạy Expo. Không bỏ hoặc tắt kiểm tra. [Biên nhận clone](evidence/clean-clone-check.json) ghi rõ base commit/bản sửa, install, 8 test cơ bản, 18 Firebase, web export và khôi phục. Android export ở repo chính cũng qua.
+
+[Đối chiếu cloud cuối](evidence/final-cloud-data-check.json): 36 document đúng bốn khóa, khớp toàn bộ users.json; hồ sơ quay thử đã dọn. Ảnh Console bốn trường dùng C2-11; không tạo ảnh mới trùng nội dung. Một số ảnh terminal cài ban đầu/restore và lịch sử GitHub chưa chụp riêng; kết quả thật có biên nhận và lịch sử Git, không dựng lại.
+
+### Báo cáo cuối và video
+
+[Báo cáo Word](submition.docx): **Nguyễn Văn Rin — 23IT231 — Phát triển ứng dụng di động đa nền tảng (5)**. Times New Roman, body 13 pt; tiêu đề và chú thích hình không đánh số. Giữ nguyên nội dung khởi tạo và hai ảnh gốc, đối chiếu byte ảnh. Đã render và xem đủ 36 trang; bản render QA giữ riêng.
+
+| Trang sau render | Nội dung |
+| --- | --- |
+| 1–4 | Thông tin sinh viên, yêu cầu, hai ảnh khởi tạo gốc |
+| 5–10 | Công cụ, cấu trúc, đăng nhập/quyền, Storage và schema |
+| 11–16 | Code và thao tác thêm, xem, sửa, xóa |
+| 17–22 | Chọn/chụp/cắt/nén/upload, mất mạng/thử lại và web cùng dữ liệu |
+| 23–31 | Tra cứu/phân trang, nhập/xuất JSON, thẻ và PDF |
+| 32–36 | Backup, clone sạch/khôi phục, kiểm thử/giới hạn và cách chạy |
+
+Video chưa có link: sinh viên tự quay theo [checklist và phím quay](../08-kich-ban-video.md). S06 còn chờ bổ sung; không đưa bản quay thử tự động vào bài nộp.
 
 ## Chụp các đoạn code quan trọng
 
@@ -227,4 +244,4 @@ Có thể khoanh đỏ, đóng khung hoặc thêm mũi tên để chỉ lệnh, 
 
 Sau khi chụp: thêm link file thật, thời điểm/thiết bị hoặc trình duyệt, thao tác/lệnh, kết quả quan sát, mã yêu cầu và vị trí trong Word. Không dùng vị trí trang dự kiến; chỉ ghi trang sau render cuối. Nếu ảnh có bí mật/thông tin ngoài bài, chụp lại vùng phù hợp trước khi đưa vào Git.
 
-Cuối bài ráp ảnh/ghi chú thành Word. Báo cáo phải có ảnh và giải thích ngắn, không chỉ dẫn người chấm sang thư mục ảnh. Chưa có JSON/video hoàn chỉnh; chỉ cập nhật thành đã có khi file thật và link mở được. File khóa Word và bản render QA không đưa Git.
+Cuối bài ráp ảnh/ghi chú thành Word. Báo cáo phải có ảnh và giải thích ngắn, không chỉ dẫn người chấm sang thư mục ảnh. JSON/ảnh đã có và khôi phục được; video chờ sinh viên quay và bổ sung link. File khóa Word và bản render QA không đưa Git.

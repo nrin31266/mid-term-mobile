@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-11-10T14:06:46.984615+00:00",
+  "report": "docs/submition/submition.docx",
+  "sha256": "c45605965d5e73f3f4358a9448fd7466bcc9030ca6aa68496aadb3a26c53795a",
+  "pages": 36,
+  "allPagesVisuallyReviewed": true,
+  "originalTextPreserved": true,
+  "originalTwoImagesByteIdentical": true,
+  "bodyFont": "Times New Roman",
+  "bodySizePt": 13,
+  "numberedHeadings": false,
+  "numberedFigures": false,
+  "lintPassed": true,
+  "typecheckPassed": true,
+  "unitTestsPassed": 8,
+  "firebaseTestsPassedInCleanClone": 18,
+  "video": "student records and adds public link",
+  "iosRuntimeTested": false,
+  "legacySharedKeyAlert": "still open; old app key not revoked"
+}

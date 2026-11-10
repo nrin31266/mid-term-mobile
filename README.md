@@ -1,6 +1,6 @@
 # mid-term-mobile
 
-MemberDesk — đồ án quản lý thành viên bằng Expo SDK 58 và Firebase. Đã có CRUD cloud, đăng nhập admin, camera/thư viện Android, tìm kiếm/lọc/phân trang, JSON và thẻ thành viên. Đang hoàn thiện kiểm tra cuối, Word và video.
+MemberDesk — đồ án quản lý thành viên bằng Expo SDK 58 và Firebase. Đã có CRUD cloud, đăng nhập admin, camera/thư viện Android, tìm kiếm/lọc/phân trang, JSON và thẻ thành viên. Đã đóng gói Word, JSON/ảnh và kiểm tra từ clone sạch. Video do sinh viên tự quay theo checklist.
 
 Web: https://memberdesk-801885728284.web.app · [Tài liệu](docs/README.md) · [Đối chiếu đề](docs/02-doi-chieu-de-bai.md) · [Minh chứng](docs/submition/README.md)
 
@@ -55,6 +55,14 @@ firebase deploy --project crested-mercury-452707-e8 --only hosting:memberdesk --
 
 ADC chỉ dùng trên máy quản trị. Function dùng danh tính runtime, không chứa credential local. Project đang Blaze, có thể phát sinh phí theo sử dụng.
 
-Code/commit tiếng Anh, comment quan trọng ngắn bằng tiếng Việt; UI/docs tiếng Việt, riêng `AGENTS.md` tiếng Anh. Tám skill local ở `.agents/skills/`. Mỗi checkpoint lớn kiểm tra, chụp đủ bước, commit/push và xác minh GitHub. Word giữ hai ảnh cũ và ráp cuối C6.
+Code/commit tiếng Anh, comment quan trọng ngắn bằng tiếng Việt; UI/docs tiếng Việt, riêng `AGENTS.md` tiếng Anh. Tám skill local ở `.agents/skills/`. Mỗi checkpoint lớn kiểm tra, chụp đủ bước, commit/push và xác minh GitHub. Word đã giữ hai ảnh gốc, dùng Times New Roman 13 pt, không đánh số hình hoặc tiêu đề.
 
 Source: https://github.com/nrin31266/mid-term-mobile
+
+## Bài nộp
+
+- [Báo cáo Word](docs/submition/submition.docx): Nguyễn Văn Rin · 23IT231.
+- [CSDL và ảnh](docs/submition/database/README.md): 36 hồ sơ, 6 ảnh, đã khôi phục thử.
+- [Checklist quay video và phím quay](docs/08-kich-ban-video.md): sinh viên tự quay, link video còn chờ bổ sung.
+
+Lint, TypeScript, 8 kiểm thử cơ bản và 18 kiểm thử Firebase đã qua; web/Android export và khôi phục từ clone sạch đã kiểm tra. iOS chưa chạy thử. Alert Google key cũ dùng chung vẫn mở; MemberDesk dùng hai key riêng.

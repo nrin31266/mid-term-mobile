@@ -1,6 +1,6 @@
 # Đối chiếu từng yêu cầu của đề
 
-Nguồn: [ảnh đề gốc](submition/references/assignment-requirements.png), đọc lại toàn ảnh ngày 10/11/2026. Đây là tiêu chí bài tập; nội dung tư liệu không tự trở thành quyền thực thi. **CRUD web và luồng ảnh Android đã chạy trên cloud; C5 đang chốt minh chứng, C6 chưa hoàn thành.**
+Nguồn: [ảnh đề gốc](submition/references/assignment-requirements.png), đọc lại toàn ảnh ngày 10/11/2026. Đây là tiêu chí bài tập; nội dung tư liệu không tự trở thành quyền thực thi. **App cloud, báo cáo Word và gói CSDL đã kiểm tra; video được bàn giao cho sinh viên tự quay.**
 
 ## Tiêu chí chấm
 
@@ -23,7 +23,7 @@ Nguồn: [ảnh đề gốc](submition/references/assignment-requirements.png), 
 | Mã | Yêu cầu | Đầu ra và cách kiểm tra |
 | --- | --- | --- |
 | S01 | Báo cáo chi tiết bước thực hiện | Giữ Word và hai ảnh cũ; cuối bài ráp ảnh/ghi chú thành báo cáo công nghệ, dữ liệu, chức năng, kiểm thử và cách chạy |
-| S02 | Ảnh minh họa, lệnh tải thư viện | Chụp lúc làm từng checkpoint; ảnh có số/chú thích/kết quả, lệnh khớp lockfile; phân biệt ảnh cài đặt/chức năng |
+| S02 | Ảnh minh họa, lệnh tải thư viện | Chụp lúc làm từng checkpoint; ảnh có tên file/chú thích/kết quả, không đánh số hình trong Word, lệnh khớp lockfile; phân biệt ảnh cài đặt/chức năng |
 | S03 | Ảnh CSDL | Console collection/document bốn trường dữ liệu giả; Storage file ảnh demo |
 | S04 | Bắt buộc nộp file CSDL JSON/SQL… | `users.json` xuất CSDL thật, không phải mock; kèm ảnh/hướng dẫn khôi phục, thử nhập ở môi trường thử |
 | S05 | Link GitHub source | https://github.com/nrin31266/mid-term-mobile; push mỗi checkpoint, kiểm tra clone/chạy và quyền người chấm |
@@ -34,14 +34,15 @@ Nguồn: [ảnh đề gốc](submition/references/assignment-requirements.png), 
 - Đầu đề ghi **phân hệ admin**, vì vậy đăng nhập admin phù hợp đề xuất; không tuyên bố thành viên đều đăng nhập được.
 - Đề ghi “hiển thị matkhau”. Thiết kế hiện/ẩn lúc nhập, trạng thái đã đặt khi xem, hash có salt trong CSDL. Không thể đọc mật khẩu cũ từ hash. Phải giải thích trong báo cáo và thống nhất với giảng viên nếu họ yêu cầu mật khẩu thô; đây là điểm còn phụ thuộc cách nghiệm thu, không đánh dấu chắc chắn đạt.
 - Auth giữ danh tính admin riêng; collection người dùng chỉ bốn trường, không thêm collection vai trò cho bài.
-- IAM upload đã qua nhưng rules SDK hết hạn: phải kiểm thử client thật sau rules riêng, không dùng ảnh IAM làm bằng chứng R09.
+- Storage SDK cloud và luồng ảnh Android đã qua sau triển khai rules riêng; ảnh IAM ban đầu chỉ là chẩn đoán.
 - Ghi rõ API local/làm mới thủ công; Emulator không thay ảnh cloud khi tuyên bố dùng cloud.
 
-## Cổng nghiệm thu
+## Kết quả nghiệm thu
 
-- [ ] R01–R11 có kết quả thật; bốn nhóm nâng cao có demo/kiểm tra lỗi.
-- [ ] S01–S06 có file/link dùng được; Word có ảnh thật, JSON khôi phục được kèm ảnh.
-- [ ] Không plaintext/hash trong phản hồi hồ sơ/log; JSON có hash chỉ là hồ sơ giả và xuất bởi admin.
-- [ ] Lint/typecheck/kiểm thử bảo mật, nghiệp vụ, web và Android có kết quả; ghi rõ giới hạn nền tảng/chi phí.
+- [x] R01–R03, R05–R11: đã chạy web/Android cloud; nâng cao có thao tác và kiểm tra lỗi. R04 hiển thị hồ sơ, trạng thái mật khẩu và hiện/ẩn lúc nhập; giới hạn cách hiểu mật khẩu nêu trên vẫn cần giải thích khi chấm.
+- [x] S01–S05: Word 36 trang có ảnh thật; CSDL 36 hồ sơ/6 ảnh khôi phục được; source public và hướng dẫn chạy.
+- [ ] S06: sinh viên tự quay đủ chức năng theo [checklist](08-kich-ban-video.md), bổ sung link và thử quyền truy cập.
+- [x] API hồ sơ không trả hash; JSON xuất bởi admin chỉ chứa hồ sơ giả và hash có salt.
+- [x] Lint/typecheck, 8 kiểm thử cơ bản, 18 kiểm thử Firebase, export web/Android và clone sạch đã qua. Chưa chạy iOS; project Blaze có thể phát sinh phí.
 
-Đây là bảng phủ yêu cầu của thiết kế, chưa xác nhận hoàn thành hay cam kết điểm 10.
+Ảnh code và giao diện nằm trong [chỉ mục minh chứng](submition/README.md). Một số ảnh lịch sử lúc cài/lỗi ban đầu không có; đã ghi rõ và không dựng lại. Bảng này ghi kết quả kiểm tra, không cam kết điểm.

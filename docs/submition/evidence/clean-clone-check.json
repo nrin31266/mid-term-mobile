@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-11-10T13:40:47.629728+00:00",
+  "clone": "https://github.com/nrin31266/mid-term-mobile.git",
+  "baseCommit": "6ee9d10d0cef7b1592f6bfc03034da91dfd17415",
+  "patch": [
+    "tsconfig.json compilerOptions.types = [expo/types]"
+  ],
+  "installFrozenLockfile": true,
+  "lintPassed": true,
+  "typecheckPassed": true,
+  "unitTests": 8,
+  "firebaseTests": 18,
+  "webExportPassed": true,
+  "restore": {
+    "members": 36,
+    "images": 6,
+    "exactFourFields": true,
+    "imageContentVerified": true
+  },
+  "browser": "Chrome + Firebase Emulator",
+  "restoredProfile": "rin@example.com",
+  "iosRuntimeTested": false
+}
