@@ -32,6 +32,20 @@ yarn-error.*
 
 # local env files
 .env*.local
+.env
+.env.*
+!.env.example
+
+# Private credentials and local Firebase artifacts
+*service-account*.json
+*serviceAccount*.json
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+.firebase/
+firebase-export-*/
+docs/private/
+.~lock.*#
 
 # typescript
 *.tsbuildinfo

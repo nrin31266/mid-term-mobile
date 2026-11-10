@@ -1,56 +1,28 @@
-# Welcome to your Expo app 👋
+# mid-term-mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Đồ án giữa kỳ Lập trình đa nền tảng: **MemberDesk — quản lý thành viên** bằng Expo/React Native và Firebase.
 
-## Get started
+Hiện tại: lên ý tưởng, thiết lập công cụ và tài liệu; chưa triển khai nghiệp vụ. Thiết kế đang chờ duyệt.
 
-1. Install dependencies
+- [Bộ tài liệu tiếng Việt](docs/README.md)
+- [Ý tưởng và phạm vi](docs/01-y-tuong-va-pham-vi.md)
+- [Đối chiếu tiêu chí chấm](docs/02-doi-chieu-de-bai.md)
+- [Kiến trúc và dữ liệu](docs/03-kien-truc-va-du-lieu.md)
+- [Thiết lập và kết quả kiểm tra](docs/04-thiet-lap.md)
+- [Kế hoạch thực hiện và bài nộp](docs/05-ke-hoach-va-bai-nop.md)
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Chạy dự án mẫu
 
 ```bash
-npm run reset-project
+pnpm install --frozen-lockfile
+pnpm exec expo start
+pnpm exec expo start --web
+pnpm exec expo lint
+pnpm exec tsc --noEmit
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Dự án dùng Expo SDK 58 và pnpm. Xem các lỗi nền đã phát hiện trong tài liệu thiết lập; hiện chưa đạt lint/typecheck sạch.
 
-### Other setup steps
+Code/định danh tiếng Anh; comment ngắn ở chỗ quan trọng bằng tiếng Việt. Tài liệu tiếng Việt, riêng AGENTS.md tiếng Anh. Dữ liệu chỉ có email, matkhau, hoten, hinhanh theo đề.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Repository: https://github.com/nrin31266/mid-term-mobile
