@@ -1,0 +1,15 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-10T11:08:00Z" },
+  "title": "MemberDesk",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 390, "h": 844, "title": "Di động · Thành viên" },
+    "Profile.dc.html": { "x": 470, "y": 0, "w": 390, "h": 844, "title": "Di động · Hồ sơ" },
+    "Web.dc.html": { "x": 0, "y": 964, "w": 1280, "h": 900, "title": "Web · Quản trị", "expand": "fill" }
+  },
+  "order": ["Main.dc.html", "Profile.dc.html", "Web.dc.html"],
+  "notes": {},
+  "designSystems": []
+}

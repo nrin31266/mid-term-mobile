@@ -2,6 +2,10 @@
 
 Cập nhật ngày 10/11/2026. Tài liệu mô tả trạng thái thực tế, không thay thế các ràng buộc trong `AGENTS.md`.
 
+Theo yêu cầu mới, dùng skill cá nhân `claude-design` đã có sẵn để dựng ba màn tại `designs/memberdesk/project/`: danh sách mobile, form mobile và quản trị web. Cùng màu/theme của ứng dụng, dữ liệu thiết kế ghi rõ minh họa. Công cụ `check` báo 0 vấn đề cấu trúc; chưa coi đó là kiểm thử giao diện chạy thật. Không cài thêm skill global.
+
+Đã cài `react-native-svg` 15.16.0 qua Expo SDK 58 và `lucide-react-native` 1.70.0 để dùng icon chung ba nền tảng. `sharp` 0.35.5 chỉ ở server, đã thử encode/decode JPEG; chưa chứng minh luồng upload hồ sơ. Theme duy nhất vẫn là `src/constants/theme.ts`, không thêm UI framework khác.
+
 ## Tham khảo Lyreo có chọn lọc
 
 Đã đọc `AGENTS.md` và phần quy trình phát triển của dự án `lyreo-platform` trên máy. Áp dụng cách đọc tài liệu theo mức ảnh hưởng, xác định nguồn dữ liệu đúng, bảo toàn phần người dùng đã làm và kết thúc bằng bằng chứng. Không đưa Spring Boot, Docker, CodeGraph, monorepo hay hệ thống Make của Lyreo vào bài Expo nhỏ.
